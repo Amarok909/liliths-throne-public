@@ -380,8 +380,8 @@ public class RoomPlayer {
 					}
 				} else {
 					start.add("Picking up a bar of soap, [npc.name] assists [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" in cleaning your body. As [npc.she] sets about [npc.her] task, [npc.she] says,");
-					start.add("Stepping forwards, with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body, saying as [npc.she] does so,");
-					start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] starts cleaning your body, saying,");
+					start.add("[npc.Stepping] forwards, with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body, saying as [npc.she] does so,");
+					start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] starts cleaning your body, saying,");
 				}
 				speech.add("[npc.speech(I hope this is to your satisfaction, [pc.name].)]");
 				speech.add("[npc.speech(Please let me know if you need me to do anything differently, [pc.name].)]");
@@ -398,11 +398,11 @@ public class RoomPlayer {
 					}
 				} else {
 					if(npc.hasBreasts()) {
-						start.add("Stepping forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.her] [npc.breasts+] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.her] [npc.breasts+] against you, [npc.moaning],");
 					} else {
-						start.add("Stepping forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.herself] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.herself] against you, [npc.moaning],");
 					}
@@ -423,11 +423,11 @@ public class RoomPlayer {
 					}
 				} else {
 					if(npc.hasBreasts()) {
-						start.add("Stepping forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.her] [npc.breasts+] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.her] [npc.breasts+] against you, [npc.moaning],");
 					} else {
-						start.add("Stepping forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.herself] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.herself] against you, [npc.moaning],");
 					}
@@ -449,8 +449,8 @@ public class RoomPlayer {
 						}
 					} else {
 						start.add("Clutching a bar of soap, [npc.name] nervously shuffles forwards, before helping [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" to clean you. Raising [npc.her] voice a little, [npc.she] says,");
-						start.add("Stepping forwards with a bar of soap in [npc.hand], [npc.name] nervously sets about cleaning your body. Squeaking above the noise of running water, [npc.she] says,");
-						start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] blushes as [npc.she] starts to clean your body, saying,");
+						start.add("[npc.Stepping] forwards with a bar of soap in [npc.hand], [npc.name] nervously sets about cleaning your body. Squeaking above the noise of running water, [npc.she] says,");
+						start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] blushes as [npc.she] starts to clean your body, saying,");
 					}
 					if(npc.hasSlavePermissionSetting(SlavePermissionSetting.BEHAVIOUR_WHOLESOME)) {
 						speech.add("[npc.speech(I love being so close to you, [pc.name]?)]");
@@ -473,8 +473,8 @@ public class RoomPlayer {
 						}
 					} else {
 						start.add("Clutching a bar of soap, [npc.name] happily [npc.steps] forwards, before helping [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" to clean you. Raising [npc.her] voice, [npc.she] says,");
-						start.add("Stepping forwards with a bar of soap in [npc.hand], [npc.name] happily sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
-						start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
+						start.add("[npc.Stepping] forwards with a bar of soap in [npc.hand], [npc.name] happily sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
+						start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
 					}
 					if(npc.hasSlavePermissionSetting(SlavePermissionSetting.BEHAVIOUR_WHOLESOME)) {
 						speech.add("[npc.speech(I love being so close to you, [pc.name]. Please let me know if you want me to anything differently.)]");
@@ -497,8 +497,8 @@ public class RoomPlayer {
 						}
 					} else {
 						start.add("Clutching a bar of soap, [npc.name] [npc.steps] forwards, before helping [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" to clean you. Raising [npc.her] voice, [npc.she] says,");
-						start.add("Stepping forwards with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
-						start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
+						start.add("[npc.Stepping] forwards with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
+						start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
 					}
 					if(npc.hasSlavePermissionSetting(SlavePermissionSetting.BEHAVIOUR_WHOLESOME)) {
 						speech.add("[npc.speech(I love being so close to you, [pc.name]. Please let me know if you want me to anything differently.)]");
@@ -616,8 +616,8 @@ public class RoomPlayer {
 					}
 				} else {
 					start.add("Picking up a bar of soap, [npc.name] assists [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" in cleaning your body. As [npc.she] sets about [npc.her] task, [npc.she] says,");
-					start.add("Stepping forwards, with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body, saying as [npc.she] does so,");
-					start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] starts cleaning your body, saying,");
+					start.add("[npc.Stepping] forwards, with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body, saying as [npc.she] does so,");
+					start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] starts cleaning your body, saying,");
 				}
 				speech.add("[npc.speech(I hope this is to your satisfaction, [pc.name].)]");
 				speech.add("[npc.speech(Please let me know if you need me to do anything differently, [pc.name].)]");
@@ -634,11 +634,11 @@ public class RoomPlayer {
 					}
 				} else {
 					if(npc.hasBreasts()) {
-						start.add("Stepping forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.her] [npc.breasts+] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.her] [npc.breasts+] against you, [npc.moaning],");
 					} else {
-						start.add("Stepping forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.herself] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.herself] against you, [npc.moaning],");
 					}
@@ -659,11 +659,11 @@ public class RoomPlayer {
 					}
 				} else {
 					if(npc.hasBreasts()) {
-						start.add("Stepping forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.her] [npc.breasts+] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.her] [npc.breasts+] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.her] [npc.breasts+] against you, [npc.moaning],");
 					} else {
-						start.add("Stepping forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
+						start.add("[npc.Stepping] forwards, [npc.name] presses [npc.herself] against your back, before seductively [npc.moaning],");
 						start.add("Rubbing a bar of soap over your back, [npc.name] suddenly [npc.steps] forwards, pressing [npc.herself] against you as [npc.she] seductively [npc.moans],");
 						start.add("Deciding to start by cleaning your back, [npc.name] [npc.steps] around behind you, before leaning forwards and pressing [npc.herself] against you, [npc.moaning],");
 					}
@@ -685,8 +685,8 @@ public class RoomPlayer {
 						}
 					} else {
 						start.add("Clutching a bar of soap, [npc.name] nervously shuffles forwards, before helping [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" to clean you. Raising [npc.her] voice a little, [npc.she] says,");
-						start.add("Stepping forwards with a bar of soap in [npc.hand], [npc.name] nervously sets about cleaning your body. Squeaking above the noise of running water, [npc.she] says,");
-						start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] blushes as [npc.she] starts to clean your body, saying,");
+						start.add("[npc.Stepping] forwards with a bar of soap in [npc.hand], [npc.name] nervously sets about cleaning your body. Squeaking above the noise of running water, [npc.she] says,");
+						start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] blushes as [npc.she] starts to clean your body, saying,");
 					}
 					if(npc.hasSlavePermissionSetting(SlavePermissionSetting.BEHAVIOUR_WHOLESOME)) {
 						speech.add("[npc.speech(I love being so close to you, [pc.name]?)]");
@@ -709,8 +709,8 @@ public class RoomPlayer {
 						}
 					} else {
 						start.add("Clutching a bar of soap, [npc.name] happily [npc.steps] forwards, before helping [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" to clean you. Raising [npc.her] voice, [npc.she] says,");
-						start.add("Stepping forwards with a bar of soap in [npc.hand], [npc.name] happily sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
-						start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
+						start.add("[npc.Stepping] forwards with a bar of soap in [npc.hand], [npc.name] happily sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
+						start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
 					}
 					if(npc.hasSlavePermissionSetting(SlavePermissionSetting.BEHAVIOUR_WHOLESOME)) {
 						speech.add("[npc.speech(I love being so close to you, [pc.name]. Please let me know if you want me to anything differently.)]");
@@ -733,8 +733,8 @@ public class RoomPlayer {
 						}
 					} else {
 						start.add("Clutching a bar of soap, [npc.name] [npc.steps] forwards, before helping [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+" to clean you. Raising [npc.her] voice, [npc.she] says,");
-						start.add("Stepping forwards with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
-						start.add("Stepping up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
+						start.add("[npc.Stepping] forwards with a bar of soap in [npc.hand], [npc.name] sets about cleaning your body. Raising [npc.her] voice above the noise of running water, [npc.she] says,");
+						start.add("[npc.Stepping] up beside [npc.her] fellow "+(washingNice.size()>2?"slaves":"slave")+", [npc.name] smiles as [npc.she] starts to clean your body, saying,");
 					}
 					if(npc.hasSlavePermissionSetting(SlavePermissionSetting.BEHAVIOUR_WHOLESOME)) {
 						speech.add("[npc.speech(I love being so close to you, [pc.name]. Please let me know if you want me to anything differently.)]");
@@ -985,6 +985,7 @@ public class RoomPlayer {
 				sb.append("<p>"
 							+ "Assigned to your room "+(soloSlave?"is your slave":"are your slaves")+"; "+Util.stringsToStringList(names, false)+".");
 				
+				List<NPC> lamiaTail = charactersPresent.stream().filter(npc -> npc.getLegConfiguration()==LegConfiguration.TAIL_LONG).collect(Collectors.toList());
 				List<NPC> greetings = charactersPresent.stream().filter(npc -> npc.hasSlaveJobSetting(SlaveJob.BEDROOM, SlaveJobSetting.BEDROOM_GREETING)).collect(Collectors.toList());
 				names = new ArrayList<>();
 				for(NPC npc : greetings) {
@@ -992,11 +993,20 @@ public class RoomPlayer {
 				}
 				soloSlave = greetings.size()==1;
 				if(!greetings.isEmpty()) {
-					sb.append(" Having been instructed to greet you upon your arrival, "
-								+(soloSlave
-										?UtilText.parse(charactersPresent.get(0), "[npc.she] [npc.steps] forwards and welcomes you back.")
-										:Util.stringsToStringList(names, false)+" step forwards and welcome you back.")
-							+ "</p>");
+					sb.append(" Having been instructed to greet you upon your arrival,");
+					if(soloSlave) {
+						sb.append(" [npc.she] [npc.steps] forwards and welcomes you back.");
+					} else {
+						sb.append( Util.stringsToStringList(names, false) );
+						if(lamiaTail.size()==greetings.size()) {
+							sb.append(" slide forwards and welcome you back.");
+						} else if(lamiaTail.size()==0) {
+							sb.append(" step forwards and welcome you back.");
+						} else {
+							sb.append(" come forwards and welcome you back.");
+						}
+					}
+					sb.append("</p>");
 
 					List<NPC> greetingsNice = greetings.stream().filter(npc -> npc.getObedienceBasic()==ObedienceLevelBasic.OBEDIENT || npc.getAffectionLevelBasic(Main.game.getPlayer())==AffectionLevelBasic.LIKE).collect(Collectors.toList());
 					for(NPC npc : greetingsNice) {
@@ -1269,7 +1279,7 @@ public class RoomPlayer {
 
 				sb.append("<p>"
 						+ "Feeling tired and in need of some rest, you head over to your bed and collapse down onto the mattress, before pulling back the covers and slipping beneath them."
-						+ " Realising that you want to go to sleep, "+Util.stringsToStringList(names, false)+(soloSlave?" quickly draws the curtains":" quickly draw the curtains")+", before stepping back over towards you."
+						+ " Realising that you want to go to sleep, "+Util.stringsToStringList(names, false)+(soloSlave?" quickly draws the curtains":" quickly draw the curtains")+", before [npc.Stepping] back over towards you."
 					+ "</p>");
 
 				// Sleeping arrangements:
@@ -1291,8 +1301,8 @@ public class RoomPlayer {
 						onBedSlaves.stream().forEach((npc) -> onBedNames.add(npc.getName()));
 						if(!floorSlaves.isEmpty()) {
 							sb.append(soloOnBed
-									?UtilText.parse(onBedSlaves.get(0),  "Stepping past "+Util.stringsToStringList(floorNames, false)+", [npc.name] climbs up onto your bed, before letting out a relaxed sigh and curling up on your covers.")
-									:"Stepping past "+(soloFloor?UtilText.parse(floorSlaves.get(0), "[npc.name]"):"your slaves on the floor")
+									?UtilText.parse(onBedSlaves.get(0),  "[npc.Stepping] past "+Util.stringsToStringList(floorNames, false)+", [npc.name] climbs up onto your bed, before letting out a relaxed sigh and curling up on your covers.")
+									:"[npc.Stepping] past "+(soloFloor?UtilText.parse(floorSlaves.get(0), "[npc.name]"):"your slaves on the floor")
 										+", "+Util.stringsToStringList(onBedNames, false)+" climb up onto your bed, before each letting out relaxed sighs and curling up on your covers.");
 						} else {
 							sb.append(soloOnBed
@@ -1783,7 +1793,7 @@ public class RoomPlayer {
 								
 							} else {
 								Main.game.getTextStartStringBuilder().append(
-										"After a while, you feel as though you've spent enough time in the shower, and after turning off the tap and drying yourself with a fluffy towel, you get dressed and step back into your room...");
+										"After a while, you feel as though you've spent enough time in the shower, and after turning off the tap and drying yourself with a fluffy towel, you get dressed and [pc.step] back into your room...");
 							}
 						Main.game.getTextStartStringBuilder().append("</p>");
 					}
@@ -1865,7 +1875,7 @@ public class RoomPlayer {
 			UtilText.nodeContentSB.append("<p>");
 				UtilText.nodeContentSB.append(
 						"Wanting to spend some time thoroughly cleaning yourself, you [pc.step] into your large ensuite bathroom and decide upon taking a long shower."
-						+ " Disrobing, you leave your clothing by the door, before [npc.stepping] over to your luxurious marble-and-glass walk-in shower.");
+						+ " Disrobing, you leave your clothing by the door, before [pc.stepping] over to your luxurious marble-and-glass walk-in shower.");
 			UtilText.nodeContentSB.append("</p>");
 			
 			if(!slavesWashing.isEmpty()) {
@@ -1901,7 +1911,7 @@ public class RoomPlayer {
 								
 							} else {
 								Main.game.getTextStartStringBuilder().append(
-										"After a while, you feel as though you've spent enough time in the shower, and after turning off the tap and drying yourself with a fluffy towel, you get dressed and step back into your room...");
+										"After a while, you feel as though you've spent enough time in the shower, and after turning off the tap and drying yourself with a fluffy towel, you get dressed and [pc.step] back into your room...");
 							}
 						Main.game.getTextStartStringBuilder().append("</p>");
 					}
