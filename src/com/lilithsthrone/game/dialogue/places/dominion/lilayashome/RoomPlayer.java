@@ -810,9 +810,13 @@ public class RoomPlayer {
 		return sb.toString();
 	}
 	
+	private static Boolean MascAttraction() {
+		return Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC 
+		|| (Util.random.nextInt(50)<25 && Main.game.getPlayer().getSexualOrientation()==SexualOrientation.AMBIPHILIC);		//Amarok, Remove before flight
+	}
 	/** Calendar's associated animal-morphs are based on the twelve animals of the Chinese zodiac, with the Monkey being replaced with a demon, the Rooster with a harpy, and the Snake with a lamia.
 	 *  The ordering of the demon and harpy have also been switched, so that October has demons.<br/>
-	 *  There is also a 20% chance of giving a different, random animal-morph for each month.<br/>
+	 *  There is also a 30% chance of giving a different, random animal-morph for each month.<br/>
 	 * Animals are:<br/>
 	 * Rat, Cow, Tiger, Rabbit, Dragon, Lamia (Snake), Horse, Sheep/Goat, Harpy (Rooster), Demon (Monkey), Dog, Pig
 	 */
@@ -822,28 +826,30 @@ public class RoomPlayer {
 		sb.append("<p>"
 				+ "Flicking through the calendar until you're looking at the page for "+month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)+", you see that this month's image is now of ");
 		
-		if(Util.random.nextInt()<15) {
-			if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+		if(Util.random.nextInt(50)<15) {
+			if(MascAttraction()) {
 				sb.append(UtilText.returnStringAtRandom(
 						"a handsome merman, who's busily flexing his muscles while perched on a wave-swept rock.",
-						"muscular reindeer-boy, who's grinning as he presents his huge cock to you."));
+						"a muscular reindeer-boy, who's grinning as he presents his huge cock to you.",
+						"a trio of fit, spotted hyena-boys lay on a large bed, groping at each others muscles and cocks as their fur glistens from sweat. In the midst of their euphoria, they look at you longingly, almoust as if begging you to join them."));
 			} else {
 				sb.append(UtilText.returnStringAtRandom(
 						"a beautiful mermaid, who's happily showing off her exposed breasts while perched on a wave-swept rock.",
-						"a curvy reindeer-girl, who's bending over a wooden table and presenting her wet pussy to you."));
+						"a curvy reindeer-girl, who's bending over a wooden table and presenting her wet pussy to you.",
+						"a pair of muscular spotted hyena-girls sit on the edge of a bed, their thick clit-dicks glisting from arousal. One is turned away in a seductive pose, coyly looking over her shoulder whilst the other is directly facing you with arms outstreched, beckoing you to join them."));
 			}
 			
 		} else {
 			switch(month) {
 				case JANUARY:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a toned "+Subspecies.RAT_MORPH.getSingularMaleName(null)+", who's grinning mischievously at you while stroking his fat, erect cock.");
 					} else {
 						sb.append("a horny "+Subspecies.RAT_MORPH.getSingularFemaleName(null)+", who's bent over a table in order to present her dripping pussy to you.");
 					}
 					break;
 				case FEBRUARY:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a topless "+Subspecies.COW_MORPH.getSingularMaleName(null)+"."
 								+ " His huge muscles are flexing as he carries a felled tree over one shoulder, while between his legs, you can't help but notice that he's got a massive bulge pressing out against the fabric of his shorts.");
 					} else {
@@ -852,7 +858,7 @@ public class RoomPlayer {
 					}
 					break;
 				case MARCH:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a fierce-looking "+Subspecies.getSubspeciesFromId("innoxia_panther_subspecies_tiger").getSingularMaleName(null)+"."
 								+ " Striking a dominant pose, he's flashing you a toothy grin, clearly excited by the fact that his huge feline cock is fully on display.");
 					} else {
@@ -861,14 +867,14 @@ public class RoomPlayer {
 					}
 					break;
 				case APRIL:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a handsome "+Subspecies.RABBIT_MORPH.getSingularMaleName(null)+", who's holding his massive cock in one hand while giving you a suggestive wink.");
 					} else {
 						sb.append("three blushing "+Subspecies.RABBIT_MORPH.getPluralFemaleName(null)+", who are down on all fours, side-by-side, presenting their pussies to you.");
 					}
 					break;
 				case MAY:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a powerful dragon, who's sitting on a golden throne perched on the top of a huge pile of treasure."
 								+ " His huge, scaly cock is fully on display, and with a grin on his face, he's giving you an expectant look, as though he's waiting for you to climb up and get a taste of it.");
 					} else {
@@ -877,7 +883,7 @@ public class RoomPlayer {
 					}
 					break;
 				case JUNE:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("an exotic-looking male lamia."
 								+ " He's quite clearly turned on and eager to have sex with someone, for his twin-cocks have pushed out from his cloaca; their heads already glistening in the sun from the slimy precum they're starting to exude.");
 					} else {
@@ -886,21 +892,21 @@ public class RoomPlayer {
 					}
 					break;
 				case JULY:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("an impressively-endowed "+Subspecies.HORSE_MORPH.getSingularMaleName(null)+", who's flexing his muscles as he presents his fully-erect flared cock to you.");
 					} else {
 						sb.append("a fit "+Subspecies.HORSE_MORPH.getPluralFemaleName(null)+", who's leaning against a fence, flicking her tail to one side in order to present her animalistic-pussy to you.");
 					}
 					break;
 				case AUGUST:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a sheep-boy and goat-boy, standing side-by-side and presenting their erect cocks as they wink playfully at you.");
 					} else {
 						sb.append("a woolly sheep-girl and goat-girl, who are lying back and spreading their legs, presenting you with their tight, wet pussies.");
 					}
 					break;
 				case SEPTEMBER:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("an unusually-masculine harpy."
 								+ " Although the size of his cock is nothing to write home about, he's extremely handsome, and you feel your heart beating faster as you see him winking at you.");
 					} else {
@@ -910,21 +916,21 @@ public class RoomPlayer {
 					}
 					break;
 				case OCTOBER:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a fit, handsome "+Subspecies.DEMON.getSingularMaleName(null)+", who's suggestively winking at you as he runs his fingers over his huge, erect cock.");
 					} else {
 						sb.append("a fit, beautiful "+Subspecies.DEMON.getSingularFemaleName(null)+", wearing nothing but a witch's hat, who's suggestively winking at you as she runs her fingers over her wet pussy and huge breasts.");
 					}
 					break;
 				case NOVEMBER:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("an energetic-looking "+Subspecies.DOG_MORPH.getSingularMaleName(null)+", who's smiling at you as he strokes his erect, knotted dog-cock.");
 					} else {
 						sb.append("an excited-looking "+Subspecies.DOG_MORPH.getPluralFemaleName(null)+", who's down on all fours, raising her hips in order to present you with her wet pussy.");
 					}
 					break;
 				case DECEMBER:
-					if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
+					if(MascAttraction()) {
 						sb.append("a muscular boar-boy, who's grinning at you in anticipation as he strokes his huge cock and pair of massive, cum-filled balls.");
 					} else {
 						sb.append("a pretty, blushing pig-girl, who's leaning back against a wall and reaching down to spread her puffy pink pussy to you.");
@@ -2101,13 +2107,17 @@ public class RoomPlayer {
 			StringBuilder sb = new StringBuilder();
 			
 			sb.append("<p>"
-					+ "You step over to one side of your room, where a calendar has been pinned to the wall."
+					+ "You [pc.step] over to one side of your room, where a calendar has been pinned to the wall."
 					+ " It's quite obviously enchanted, for as you flick through the pages, you discover that each month's picture changes based on your current train of thought.");
 						
 			if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.ANDROPHILIC) {
 				sb.append(" As you think about each month, a thematically-dressed man, incubus, or some kind of animal-boy appears on the page.");
-			} else {
+			} else if(Main.game.getPlayer().getSexualOrientation()==SexualOrientation.GYNEPHILIC) {
 				sb.append(" As you think about each month, a thematically-dressed woman, succubus, or some kind of animal-girl appears on the page.");
+			} else {
+				sb.append(UtilText.returnStringAtRandom(
+						" As you think about each month, a thematically-dressed man, demon, or some kind of animal-girl appears on the page.",
+						" As you think about each month, a thematically-dressed woman, demon, or some kind of animal-boy appears on the page."));
 			}
 			
 			if(Main.game.getPlayer().getCorruptionLevel()==CorruptionLevel.ZERO_PURE) {
