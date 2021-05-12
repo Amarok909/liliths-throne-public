@@ -21,6 +21,7 @@ import com.lilithsthrone.game.character.attributes.IntelligenceLevel;
 import com.lilithsthrone.game.character.attributes.ObedienceLevelBasic;
 import com.lilithsthrone.game.character.effects.StatusEffect;
 import com.lilithsthrone.game.character.npc.NPC;
+import com.lilithsthrone.game.character.npc.NPCFlagValue;
 import com.lilithsthrone.game.character.persona.SexualOrientation;
 import com.lilithsthrone.game.character.race.Subspecies;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
@@ -195,6 +196,7 @@ public class RoomPlayer {
 				} else {
 					return new Response("<span style='color:"+PresetColour.GENERIC_EXCELLENT.toWebHexString()+";'>Calendar</span>", "There's a calendar pinned up on one wall. Take a closer look at it.", AUNT_HOME_PLAYERS_ROOM_CALENDAR);
 				}
+
 			}
 			
 			List<NPC> charactersPresent = LilayaHomeGeneric.getSlavesAndOccupantsPresent();
@@ -221,6 +223,34 @@ public class RoomPlayer {
 						}
 					}
 				};
+				
+			} else if (index == indexPresentStart + charactersPresent.size()) {	//TODO
+				List<NPC> greetings = charactersPresent.stream().filter(npc -> npc.hasSlaveJobSetting(SlaveJob.BEDROOM, SlaveJobSetting.BEDROOM_GREETING)).collect(Collectors.toList());
+				List<NPC> greetingsNice = greetings.stream().filter(npc -> npc.getObedienceBasic()==ObedienceLevelBasic.OBEDIENT || npc.getAffectionLevelBasic(Main.game.getPlayer())==AffectionLevelBasic.LIKE).collect(Collectors.toList());
+				List<NPC> greetingsRude = new ArrayList<>(greetings);
+				greetingsRude.removeAll(greetingsNice);
+				
+				if(greetings.size()==0) {
+					return new Response("Resolve situation", "You do not have any slaves assigned to your bedroom, so there's no argument to resolve...", null);
+				
+				} else if(!(greetingsNice.size()>=1 && greetingsRude.size()>=1)) {
+					return new Response("Resolve situation", "The slaves assigned to your bedroom aren't feuding, so there's no argument to resolve...", null);
+				
+				} else if(charactersPresent.stream().allMatch(s->s.NPCFlagValues.contains(NPCFlagValue.flagSlaveResolved))) {
+					return new Response("Resolve situation", "You've already told off your slaves for feuding, so they're behaving themselves, for now...", null);
+				
+				} else if(charactersPresent.stream().anyMatch(s->s.NPCFlagValues.contains(NPCFlagValue.flagSlaveResolved))) {
+					return new Response("Resolve situation", "Although you've already told off some of your slaves for feuding, it seems some others did not get the memo...", RoomFeud.FEUD_START) {};
+				}
+					return new Response("Resolve situation", "Try and resolve the feud among your slaves.</br><i>Work in progress</i>", RoomFeud.FEUD_START);
+	
+				
+			//	AUNT_HOME_PLAYERS_ROOM_BATH
+			//	NPCFlagValues.contains(NPCFlagValue.flagSlaveSmallTalk);
+			//	if(!slavesWashing.stream().anyMatch(s->s.isAttractedTo(Main.game.getPlayer()))) {};
+			//	[#npc.setAffection(pc, 0)] [#npc.setObedience(0)]
+				
+				
 			}
 			
 		} else if(responseTab==2) {
@@ -1178,24 +1208,79 @@ public class RoomPlayer {
 					}
 
 					
-					if(greetingsNice.size()>=1 || greetingsRude.size()>=1) {
-						List<String> npcNice = new ArrayList<>();
-						for(NPC npc : greetingsNice) {
-							npcNice.add(npc.getName());
-						}
-						List<String> npcRude = new ArrayList<>();
-						for(NPC npc : greetingsRude) {
-							npcRude.add(npc.getName());
-						}
-						
+					/*Lead in dialogue for resolving slaves angst with each other
+					 * will let the player increase kindness and obideience from all slaves in room by various means
+					 * TODO
+					 * [#npc.setAffection(pc, 0)] [#npc.setObedience(0)] 
+					 */
+					List<String> npcNice = new ArrayList<>();
+					for(NPC npc : greetingsNice) {
+						npcNice.add(npc.getName());
+					}
+					List<String> npcRude = new ArrayList<>();
+					for(NPC npc : greetingsRude) {
+						npcRude.add(npc.getName());
+					}
+					
+					String npcNiceHer = npcNice.size()==1 ? greetingsNice.get(0).getGender().getThirdPerson() : Main.game.getPlayer().getGender().getThirdPerson();
+					String npcRudeHer = npcRude.size()==1 ? greetingsRude.get(0).getGender().getThirdPerson() : Main.game.getPlayer().getGender().getThirdPerson();
+					String npcRudeTwo = Util.intToString(npcRude.size());
+					
+					
+					if (charactersPresent.stream().allMatch(s->s.NPCFlagValues.contains(NPCFlagValue.flagSlaveResolved))
+							&& npcNice.size()>=1 && npcRude.size()>=1) {
 						sb.append("<p>"
-								+ "annoyed with how " + Util.stringsToStringList(npcRude, false) + " rudely greeted you,"
-								+ "your loyal slaves " + Util.stringsToStringList(npcNice, false) + " start glowering at them."
-								+ "worring that this might spark an all out fight between your slaves, you find your fears assured when "
-								+ Util.stringsToStringList(npcRude, false) + " only respond with a few rude gestures."
-								+ "<br/>"
-								+ "[pc.thought(Whew, that was lucky. Though I should probably do something about this)]"
+								+ "although they are still annoyed with one another, " + Util.stringsToStringList(names, false)
+								+ " are following your orders and keeping peace with each other."
+								+ " Although they are doing so reluctantly, as you can tell by their grumbling"
 								+ "</p>");
+						
+					} else if(npcNice.size()>=1 && npcRude.size()>=1) {
+						sb.append("<p>"
+							+ "Annoyed with how " + Util.stringsToStringList(npcRude, false) + " rudely greeted you,"
+							+ " your loyal" + (npcNice.size()==1?" slave, ":" slaves, ")
+							+ Util.stringsToStringList(npcNice, false) + (npcNice.size()==1?" starts ":" start ") 
+							+ "glaring at " + (npcRude.size()==1?npcRudeHer:"the "+npcRudeTwo+" of them") 
+							+ ", making "+(npcNice.size()==1?npcNiceHer:"their")+" fiery feelings known. "
+							
+							+ "Looking back at " + (npcNice.size()==1?npcNiceHer:"them") + " incredulously, "
+							+ Util.stringsToStringList(npcRude, false) + (npcRude.size()==1?" only responds":" only respond") 
+							+ " with some rude gestures, mocking " + (npcNice.size()==1?npcNiceHer:"their") + " devotion to you. "
+							
+							+ "Worried that " + Util.stringsToStringList(npcRude, false)
+							+ "'s retaliation to " + Util.stringsToStringList(npcNice, false)
+							+ "'s loyalty could escalate into a fight, you prepare to intervene, but find yourself not needing to."
+							+ "</p>"
+							
+							+ "<p>"
+							+ "Although not fully resolved, your fears about an immediate altercation are put to rest as "
+							+ Util.stringsToStringList(npcNice, false) + (npcNice.size()==1?" simply just rolls " + npcNiceHer:" simply just roll their")
+							+ " eyes at " + (npcRude.size()==1?npcRudeHer:"them")
+							+ " and then procede to ignore " + (npcRude.size()==1?npcRudeHer:"the "+npcRudeTwo+" of them") + " completly. "
+							
+							+ "Your slaves may not tearing each other to shreads at the moment, but their prickly attitudes make certain the feud on your hands.<br/>"
+							
+							+ "[pc.thought(Hmm, I should probably do something about this before it does blow up)],"
+							+ " you think to yourself as you wonder how to resolve the situation."
+									
+					//		+ "<hr/>"
+					//		+ "<hr/>"
+					//		+ "Worring that this might spark an all out fight between your slaves, you find your fears assured when "
+					//		+ Util.stringsToStringList(npcRude, false) + (npcRude.size()==1?" only responds":" only respond") + " with a few rude gestures."
+							
+					//		+ "<br/>"
+					//		+ "[pc.thought(Whew, that was lucky. Though I should probably do something about this)]"
+					//		+ "<br/><br/>"
+							
+					//		+ "although you managed to brush off the rude responces from RUDENPC, KINDNPC wasn't able to. "
+					//		+ "their glares are met by even stonger glares in return and you can tell that if you don't do something about this, it may just boil over"
+					//		+ "displeased with how RUDENPC is treating you, your loyal slace NICENPC speaks up,"
+					//		+ " 'I can't belive you have the audacity to speak like that to [npc.petName(pc)]."
+					//		+ "<br/>"
+					//		+ "RUDENUP looks back in disgust, 'I can't belive you're so infatuated with [pc.him], If you love [pc.him] so much why don't you suck [pc.his] big fat cock'"
+						+ "</p>");
+					} else if(npcNice.size()==0 && npcRude.size()>=1) {
+						
 					}
 					
 				}
