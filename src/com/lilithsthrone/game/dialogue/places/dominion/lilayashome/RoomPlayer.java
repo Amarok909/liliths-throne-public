@@ -1209,7 +1209,7 @@ public class RoomPlayer {
 
 					
 					/*Lead in dialogue for resolving slaves angst with each other
-					 * will let the player increase kindness and obideience from all slaves in room by various means
+					 * will let the player increase kindness and obedience from all slaves in room by various means
 					 * TODO
 					 * [#npc.setAffection(pc, 0)] [#npc.setObedience(0)] 
 					 */
@@ -1253,15 +1253,15 @@ public class RoomPlayer {
 							+ "</p>"
 							
 							+ "<p>"
-							+ "Although not fully resolved, your fears about an immediate altercation are put to rest as "
+							+ "Your fears over an immediate altercation are put to rest as "
 							+ Util.stringsToStringList(npcNice, false) + (npcNice.size()==1?" simply just rolls " + npcNiceHer:" simply just roll their")
 							+ " eyes at " + (npcRude.size()==1?npcRudeHer:"them")
-							+ " and then procede to ignore " + (npcRude.size()==1?npcRudeHer:"the "+npcRudeTwo+" of them") + " completly. "
+							+ " and turn away, ignoring " + (npcRude.size()==1?npcRudeHer:"the "+npcRudeTwo+" of them") + " completly. "
 							
-							+ "Your slaves may not tearing each other to shreads at the moment, but their prickly attitudes make certain the feud on your hands.<br/>"
+							+ "Your slaves may not tearing each other to shreads at the moment, but their prickly attitudes make certain the feud that you have on your hands.<br/>"
 							
-							+ "[pc.thought(Hmm, I should probably do something about this before it does blow up)],"
-							+ " you think to yourself as you wonder how to resolve the situation."
+							+ "Concerned about a lack of resolution, you wonder how to mend the situation,<br/>"
+							+ " [pc.thought(Hmm, I should probably do something about this before it really does blow up)]."
 									
 					//		+ "<hr/>"
 					//		+ "<hr/>"

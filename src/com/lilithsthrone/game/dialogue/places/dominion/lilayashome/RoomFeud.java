@@ -33,7 +33,7 @@ public class RoomFeud {
 	private static int commandTool = 0;
 	private static int commandVibe = 0;
 	
-	private static int isDiscordantStart() {
+	private static boolean isDiscordantStart() {
 		float sumRelations = 0;
 		float minRelations = 100;
 		
@@ -49,14 +49,16 @@ public class RoomFeud {
 		sumRelations = sumRelations/(2 * greetingsNice.size() * greetingsRude.size());
 		
 		if(sumRelations < AffectionLevel.ZERO_NEUTRAL.getMinimumValue()) {
-			return 0;
+			return true;
 		} else if(minRelations < AffectionLevel.NEGATIVE_ONE_ANNOYED.getMedianValue() && Util.random.nextInt(5)<3) {
-			return 0;
+			return true;
+		} else if(Util.random.nextInt(5)<2) {
+			return true;
 		}
-		return 1;
+		return false;
 	}
 	
-	private static float sumRelations() {
+	private static float sumRelations() {				//temp method, delete later
 		float sumRelations = 0;
 		float minRelations = 100;
 		
@@ -73,7 +75,7 @@ public class RoomFeud {
 		return sumRelations;
 	}
 	
-	public static final DialogueNode FEUD_START = new DialogueNode("Attempt resolution", "Try and resolve the standoff between your slaves", true, true) {
+	public static final DialogueNode FEUD_START = new DialogueNode("Attempt resolution", "Try and resolve the stand off between your slaves", true, true) {
 
 		@Override
 		public String getAuthor() {
@@ -90,11 +92,15 @@ public class RoomFeud {
 		
 		@Override
 		public String getContent() {
-			Main.game.getTextStartStringBuilder().append(Util.intToString(Math.round(sumRelations())));
-			Main.game.getTextStartStringBuilder().append(sumRelations());
+			Main.game.getTextStartStringBuilder().append(Util.intToString(Math.round(sumRelations()))+"<br/>");
+			Main.game.getTextStartStringBuilder().append(sumRelations()+"<br/>");
+			Main.game.getTextStartStringBuilder().append(isDiscordantStart()+"<br/>");
+			Main.game.getTextStartStringBuilder().append(greetings.size()+"<br/>");
 			
-			StringBuilder sb = new StringBuilder();
-			if(isDiscordantStart()==0) {			//Bad Relations
+			StringBuilder sb = new StringBuilder("");
+			sb.append("");
+			
+			if(isDiscordantStart()) {			//Bad Relations
 				sb.append("<p>"
 						+ "Deciding that now is the best time to try an fix this stouch between your slaves,"
 						+ " and having some idea of what you want to say to them, you open your mouth, ready to lecture them—"
@@ -108,15 +114,15 @@ public class RoomFeud {
 						+ " Exactly, you realise how unbearable you lot are? your attitude to everything is so damn annoying to put up with."
 						+ " 'Well, what can you do, it's not RUDE's fault that she's a brain-dead cow. Heck, she can't even tell food apart from scrap' smirks NICE3, 'right RUDE'"
 						+ "</p>");
-			} else if(isDiscordantStart()==1) {		//Mixed Relations
+			} else {							//Mixed Relations
 				sb.append("<p>"
 						+ "Deciding that now is the best time to try fix this stouch between your slaves,"
 						+ " and having some idea of what you want to say to them, you clear your throat. Gaining their attention, you prepare to lecture them."
-						+ " Look, I realize there are some personal issues between you, but if this feud isn't resolved then—<br/>"
+						+ " Look, I realize there are some personal issues between you, but you all should—<br/>"
 						
-						+ "Oh? <i>issues?</i> Like how NICE is a insufferable biych who keeps kissing up to your ass, RUDE snaps, interrupting you, 'guess that's why you have slave'"
+						+ "Oh? <i>issues?</i> Like how you own us? like how NICE is a insufferable biychs who keeps kissing up to your ass, RUDE snaps, interrupting you, 'guess that's why you have slaves, so you can fell so damn superior'"
 						+ " yep, all that ass kissing must have rotted all of your brains, or maybe you were just always full of shit, adds RUDE2, smirking as NICE and NICE2's faces start twitching"
-						+ " well, it would explain a lot, RUDE3 chimes in, a look of bitter contept on her face.<br/>"
+						+ " well, it would explain a lot, RUDE3 chimes in, a look of bitter contempt on her face.<br/>"
 						
 						+ "NICE's head snaps towards them, The fuck you say skank!? you leave Pc out of this you deluded whore because the only rotten ones here are you two"
 						+ " Exactly, you realise how unbearable you lot are? your whinging drives <i>everyone</i> in this mansion to insanity"
@@ -125,11 +131,19 @@ public class RoomFeud {
 			}
 			
 			sb.append("<p>"
-					+ "standing back you try and shout overthem, in an attempt to shut them up.<br/>"
+					+ "Not willing to take these insults standing, RUDE fire back herself, insulting them and their behaviour towards you."
+					+ " And NICE are all to happy to retaliate back, deriding them as hard."
+					
+					+ "As this back and forth goes on, the attacks getting harsher and their posture becoming more aggressive"
+					+ "standing back you try and shout over them, in an attempt to shut them up.<br/>"
+					+ "Hey! Can you—<br/>"
+					
+					+ "Do actually have any free will left? Or did PC fuck all of it out of you?"
+					+ "Lilith's Ass! No-one could mistake you for a virgin, not with that giant stick up your ass"
 					
 					+ "tempers flaring and snarky comments giving way to outright verbal abuse, the two groups move from their sides of the room to get in each other's faces."
-					+ " size nor sex matters, the battle lings have been drawn and neithr side is going to back down now"
-					+ "and although NPC is outnumbered, that dosen't stop her from treating the others.<br/>"
+					+ " size nor sex matters, the battle lings have been drawn and neither side is going to back down now"
+					+ "and although NPC is outnumbered, that doesn't stop her from treating the others.<br/>"
 					+ ""
 					+ "as they start barking in each other's faces, you realize you need to do something fast before someone throws a punch, or they get loud enough that liliya storms up here.<br/>"
 					+ ""
@@ -165,6 +179,16 @@ public class RoomFeud {
 				return new Response("Weapon", "Threaten to use your weaponry upon your slaves if they don't start behaving right now", FEUD_IN_CHARGE) {
 					@Override public void effects() {commandTool = 3;}
 				};
+			} else if(index==0){
+				
+				return new Response("Back", "Decide against looking for someone to approach.", Main.game.getDefaultDialogue(false)) {
+					@Override public void effects() {
+						for(NPC npc : greetings) {
+							npc.NPCFlagValues.remove(NPCFlagValue.flagSlaveResolved);
+						}
+						RoomPlayer.applySleep(5);
+					}
+				};
 			}
 			return null;
 		}
@@ -176,12 +200,30 @@ public class RoomFeud {
 		@Override
 		public String getContent() {
 			// TODO Auto-generated method stub
-			return null;
+			StringBuilder sb = new StringBuilder();
+			if (commandTool==1) {
+				sb.append("Text A");
+			} else if (commandTool==2) {
+				sb.append("Text B");
+			} else if (commandTool==3) {
+				sb.append("Text C");
+			}
+			return sb.toString();
 		}
 
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			// TODO Auto-generated method stub
+			if(index==0){
+				return new Response("Back", "Decide against looking for someone to approach.", Main.game.getDefaultDialogue(false)) {
+					@Override public void effects() {
+						for(NPC npc : greetings) {
+							npc.NPCFlagValues.remove(NPCFlagValue.flagSlaveResolved);
+						}
+						RoomPlayer.applySleep(5);
+					}
+				};
+			}
 			return null;
 		}
 		
