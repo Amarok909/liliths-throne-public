@@ -26,6 +26,7 @@ import com.lilithsthrone.game.character.quests.QuestLine;
 import com.lilithsthrone.game.character.race.Race;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
 import com.lilithsthrone.game.dialogue.DialogueNode;
+import com.lilithsthrone.game.dialogue.companions.CompanionManagement;
 import com.lilithsthrone.game.dialogue.responses.Response;
 import com.lilithsthrone.game.dialogue.responses.ResponseCombat;
 import com.lilithsthrone.game.dialogue.responses.ResponseSex;
@@ -2264,53 +2265,16 @@ public class KaysWarehouse {
 						+ "All Slaves"
 					+ "</div>");
 			
-			if(Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)) {			//Modified by Amarok
-				UtilText.nodeContentSB.append(UtilText.parse(kay, 
-					"<p style='text-align:center; margin-top:4px;'>"
-						+ "<i>If [npc.name] is told to call you 'Mum' or 'Dad', 'Mummy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir' and so on,"
-						+ " then [npc.she] will automatically switch to the appropriate paired name depending on the femininity of your character.</i>"
-					+ "</p>"
-				+ "</div>"));
-			} else {
-				UtilText.nodeContentSB.append(UtilText.parse(kay, 
-					"<p style='text-align:center; margin-top:4px;'>"
-						+ "<i>If [npc.name] is told to call you 'Mom' or 'Dad', 'Mommy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir' and so on,"
-						+ " then [npc.she] will automatically switch to the appropriate paired name depending on the femininity of your character.</i>"
-					+ "</p>"
-				+ "</div>"));
-			}
+			UtilText.nodeContentSB.append(UtilText.parse(kay, 
+				"<p style='text-align:center; margin-top:4px;'>"
+				+ (Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)
+					? "<i>If [npc.name] is told to call you 'Mum' or 'Dad', 'Mummy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir' and so on,"
+					: "<i>If [npc.name] is told to call you 'Mom' or 'Dad', 'Mommy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir' and so on,")
+					+ " then [npc.she] will automatically switch to the appropriate paired name depending on the femininity of your character.</i>"
+				+ "</p>"
+			+ "</div>"));
 			
-			UtilText.nodeContentSB.append(UtilText.parse(kay,""
-					+ "<div class='container-full-width' style='width:50%; float:centre; margin:0 0% 0 25%; padding:12 8 0; text-align:center;'>"
-						+ "<i>Full list of paired names</i>"
-						+ "<hr/>"
-					+ "</div>"
-					+ "<div class='container-full-width' style='width:25%; float:left; font-weight:bold; margin:0 0% 0 25%; padding:0 8 8; text-align:right;'>"
-						+ "[style.colourFeminineStrong(Feminine)]<br/>"
-						+ "#IF(game.isCommonwealthMum())"
-							+ "Mum<br/>"
-							+ "Mummy<br/>"
-						+ "#ELSE"
-							+ "Mom<br/>"
-							+ "Mommy<br/>"
-						+ "#ENDIF"
-						+ "Mama<br/>"
-						+ "Mother<br/>"
-						+ "My Lady<br/>"
-						+ "Mistress<br/>"
-						+ "Ma'am<br/>"
-					+ "</div>"
-					+ "<div  class='container-full-width' style='width:25%; float:right; font-weight:bold; margin:0 25% 0 0; padding:0 8 8; text-align:left;'>"
-						+ "[style.colourMasculineStrong(Masculine)]<br/>"
-						+ "Dad<br/>"
-						+ "Daddy<br/>"
-						+ "Papa<br/>"
-						+ "Father<br/>"
-						+ "My Lord<br/>"
-						+ "Master<br/>"
-						+ "Sir<br/>"
-					+ "</div>"));
-			//Add more definitions at src/com/lilithsthrone/game/character/GameCharacter.java
+			UtilText.nodeContentSB.append(CompanionManagement.genderFullList(kay));
 			
 			UtilText.nodeContentSB.append("<p id='hiddenFieldName' style='display:none;'></p>");
 			
