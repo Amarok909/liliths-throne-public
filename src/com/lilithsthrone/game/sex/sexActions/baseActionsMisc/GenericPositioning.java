@@ -316,11 +316,11 @@ public class GenericPositioning {
 				if(generatePerformerOralData(Main.sex.getCharacterTargetedForSexAction(this), Main.sex.getCharacterPerformingAction()).get(0)==SexSlotStanding.PERFORMING_ORAL) {
 					if(SexSlotStanding.PERFORMING_ORAL.isStanding(Main.sex.getCharacterTargetedForSexAction(this))) {
 						return "Wanting [npc2.name] to perform oral on [npc.herHim], [npc.name] [npc.verb(position)] [npc2.herHim] so that [npc2.sheIs] standing beneath [npc.her] lower [npc.legRace]'s body."
-								+ " Stepping forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
+								+ " [npc.Stepping] forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
 								+ " [npc.speech(Go on, put that mouth of yours to use!)]";
 					} else {
 						return "Wanting [npc2.name] to perform oral on [npc.herHim], [npc.name] [npc.verb(push)] [npc2.herHim] down so that [npc2.sheIs] kneeling beneath [npc.her] lower [npc.legRace]'s body."
-								+ " Stepping forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
+								+ " [npc.Stepping] forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
 								+ " [npc.speech(Go on, put that mouth of yours to use!)]";
 					}
 				} else {
@@ -562,7 +562,12 @@ public class GenericPositioning {
 		public String getDescription() {
 			if(!Main.sex.getCharacterPerformingAction().isTaur()) { // Biped body:
 				if(SexSlotStanding.PERFORMING_ORAL.isStanding(Main.sex.getCharacterTargetedForSexAction(this))) {
-					return "Wanting [npc2.name] to perform oral on [npc.herHim], [npc.name] [npc.verb(reposition)] [npc2.herHim] so that [npc2.sheIs] standing in front of [npc.herHim]."
+					return "Wanting [npc2.name] to perform oral on [npc.herHim], [npc.name] [npc.verb(reposition)] [npc2.herHim] so that [npc2.sheIs] "
+							+ "#IF(#npc2.getLegConfiguration()==LEG_CONFIGURATION_TAIL_LONG)"
+								+ "raised up in front of [npc.herHim]."
+							+ "#ELSE"
+								+ "standing in front of [npc.herHim]."
+							+ "#ENDIF"
 							+ " Grinning down at [npc2.herHim], [npc.name] [npc.verb(order)],"
 							+ " [npc.speech(Go on, put that mouth of yours to use!)]";
 				} else {
@@ -574,11 +579,11 @@ public class GenericPositioning {
 			} else { // Taur body:
 				if(SexSlotStanding.PERFORMING_ORAL.isStanding(Main.sex.getCharacterTargetedForSexAction(this))) {
 					return "Wanting [npc2.name] to perform oral on the underside of [npc.her] lower [npc.legRace]'s body, [npc.name] [npc.verb(reposition)] [npc2.herHim] so that [npc2.sheIs] standing beneath [npc.herHim]."
-							+ " Stepping forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
+							+ " [npc.Stepping] forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
 							+ " [npc.speech(Go on, put that mouth of yours to use!)]";
 				} else {
 					return "Wanting [npc2.name] to perform oral on the underside of [npc.her] lower [npc.legRace]'s body, [npc.name] [npc.verb(reposition)] and [npc.verb(push)] [npc2.herHim] down so that [npc2.sheIs] kneeling beneath [npc.herHim]."
-							+ " Stepping forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
+							+ " [npc.Stepping] forwards and pushing [npc.herself] against [npc2.herHim], [npc.name] [npc.verb(call)] out,"
 							+ " [npc.speech(Go on, put that mouth of yours to use!)]";
 				}
 			}
@@ -2174,11 +2179,11 @@ public class GenericPositioning {
 			} else {
 				if(!Main.sex.getCharacterTargetedForSexAction(this).isTaur()) {
 					return "Wanting [npc2.name] to fuck [npc.herHim], [npc.name] [npc.verb(turn)] around and [npc.verb(present)] the rear end of [npc.her] feral [npc.legRace]'s body to [npc2.herHim]."
-							+ " Stepping back and pushing [npc.her] [npc.ass+] against [npc2.namePos] groin, [npc.she] [npc.verb(look)] back over [npc.her] shoulder and [npc.moansVerb],"
+							+ " [npc.Stepping] back and pushing [npc.her] [npc.ass+] against [npc2.namePos] groin, [npc.she] [npc.verb(look)] back over [npc.her] shoulder and [npc.moansVerb],"
 							+ " [npc.speech(Come on, fuck me like an animal!)]";
 				} else {
 					return "Wanting [npc2.name] to mount [npc.herHim] and start rutting [npc.herHim], [npc.name] [npc.verb(present)] the rear end of [npc.her] feral [npc.legRace]'s body to [npc2.herHim]."
-							+ " Stepping back and pushing [npc.her] [npc.ass+] against [npc2.name], [npc.she] [npc.verb(force)] [npc2.herHim] to rear up and mount [npc.herHim]."
+							+ " [npc.Stepping] back and pushing [npc.her] [npc.ass+] against [npc2.name], [npc.she] [npc.verb(force)] [npc2.herHim] to rear up and mount [npc.herHim]."
 							+ " Looking back over [npc.her] shoulder, [npc.she] [npc.moansVerb],"
 							+ " [npc.speech(That's right, fuck me like an animal!)]";
 				}
@@ -2281,11 +2286,11 @@ public class GenericPositioning {
 			} else {
 				if(!Main.sex.getCharacterTargetedForSexAction(this).isTaur()) {
 					return "Wanting [npc2.name] to fuck [npc.herHim], [npc.name] [npc.verb(turn)] around and [npc.verb(present)] the rear end of [npc.her] feral [npc.legRace]'s body to [npc2.herHim]."
-							+ " Stepping back and pushing [npc.her] [npc.ass+] against [npc2.namePos] groin, [npc.she] [npc.verb(look)] back over [npc.her] shoulder and [npc.verb(plead)],"
+							+ " [npc.Stepping] back and pushing [npc.her] [npc.ass+] against [npc2.namePos] groin, [npc.she] [npc.verb(look)] back over [npc.her] shoulder and [npc.verb(plead)],"
 							+ " [npc.speech(Please, fuck me like an animal!)]";
 				} else {
 					return "Wanting [npc2.name] to mount [npc.herHim] and start rutting [npc.herHim] like an animal, [npc.name] [npc.verb(present)] the rear end of [npc.her] feral [npc.legRace]'s body to [npc2.herHim]."
-							+ " Stepping back and pushing [npc.her] [npc.ass+] against [npc2.name], [npc.she] [npc.verb(look)] back over [npc.her] shoulder and [npc.verb(plead)],"
+							+ " [npc.Stepping] back and pushing [npc.her] [npc.ass+] against [npc2.name], [npc.she] [npc.verb(look)] back over [npc.her] shoulder and [npc.verb(plead)],"
 							+ " [npc.speech(Please, fuck me like an animal!)]";
 				}
 			}
@@ -2346,7 +2351,7 @@ public class GenericPositioning {
 							+ " [npc.speech(Time to fuck you like an animal!)]";
 				} else {
 					return "Wanting to mount [npc2.name] and start rutting [npc2.herHim] like an animal, [npc.name] [npc.verb(push)] [npc2.herHim] down onto all fours before [npc.herHim]."
-							+ " Stepping over [npc2.herHim] so that [npc2.sheIs] under [npc.her] feral [npc.legRace]'s body, [npc.she] [npc.verb(bend)] [npc.her] [npc.legs] a little and [npc.moansVerb],"
+							+ " [npc.Stepping] over [npc2.herHim] so that [npc2.sheIs] under [npc.her] feral [npc.legRace]'s body, [npc.she] [npc.verb(bend)] [npc.her] [npc.legs] a little and [npc.moansVerb],"
 							+ " [npc.speech(Oh yes, now to fuck you like an animal!)]";
 				}
 				
@@ -2550,12 +2555,12 @@ public class GenericPositioning {
 		}
 		@Override
 		public String getActionDescription() {
-			return "Get [npc2.name] to sit down on a nearby surface, before stepping over [npc2.herHim] with your lower animalistic body, ready to start fucking [npc2.herHim].";
+			return "Get [npc2.name] to sit down on a nearby surface, before [npc.stepping] over [npc2.herHim] with your lower animalistic body, ready to start fucking [npc2.herHim].";
 		}
 		@Override
 		public String getDescription() {
 			return "Deciding that [npc.she] [npc.verb(want)] to switch into a different position, [npc.name] [npc.verb(get)] [npc2.name] to sit down on a nearby raised surface."
-					+ " Stepping up over the top of [npc.her] partner, [npc.name] [npc.moansVerb], "
+					+ " [npc.Stepping] up over the top of [npc.her] partner, [npc.name] [npc.moansVerb], "
 					+ "[npc.speech(Yes... It should be fun fucking you like this...)]";
 		}
 		@Override
@@ -2595,7 +2600,7 @@ public class GenericPositioning {
 		}
 
 		@Override
-		public String getDescription() {
+		public String getDescription() {			//TODO Needs a complete rewrite for leg configuration content
 			boolean isHappy = ((NPC)Main.sex.getCharacterPerformingAction()).isHappyToBeInSlot(
 					Main.sex.getPositionRequest().getPosition(),
 					Main.sex.getPositionRequest().getPartnerSlots().get(0),
@@ -2608,12 +2613,12 @@ public class GenericPositioning {
 					switch(Main.sex.getSexPace(Main.sex.getCharacterPerformingAction())) {
 						case DOM_ROUGH:
 							return "[npc.speech(Don't think that this means you're the one in charge!)]"
-									+ " [npc.name] growls, before "+(standing?"stepping forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your groin."
+									+ " [npc.name] growls, before "+(standing?"[npc.stepping] forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your groin."
 									+ " Reaching up to roughly grab hold of your [pc.hips], [npc.she] looks up into your [pc.eyes] and snarls,"
 									+ " [npc.speech(Just stay still and be thankful that I wanted to do this!)]";
 						default:
 							return "[npc.speech(Oh, yeah, that'd be fun!)]"
-									+ " [npc.name] happily replies, before "+(standing?"stepping forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your groin."
+									+ " [npc.name] happily replies, before "+(standing?"[npc.stepping] forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your groin."
 									+ " Reaching up to take hold of your [pc.hips], [npc.she] looks up into your [pc.eyes] and [npc.moansVerb],"
 									+ " [npc.speech(Now stay still and enjoy this!)]";
 					}
@@ -2629,12 +2634,12 @@ public class GenericPositioning {
 					switch(Main.sex.getSexPace(Main.sex.getCharacterPerformingAction())) {
 						case DOM_ROUGH:
 							return "[npc.speech(Don't think that this means you're the one in charge!)]"
-									+ " [npc.name] growls, before "+(standing?"stepping forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your [pc.ass+]."
+									+ " [npc.name] growls, before "+(standing?"[npc.stepping] forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your [pc.ass+]."
 									+ " Reaching up to roughly grab hold of your [pc.hips], [npc.she] snarls,"
 									+ " [npc.speech(Just stay still and be thankful that I wanted to do this!)]";
 						default:
 							return "[npc.speech(Oh, yeah, that'd be fun!)]"
-									+ " [npc.name] happily replies, before "+(standing?"stepping forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your [pc.ass+]."
+									+ " [npc.name] happily replies, before "+(standing?"[npc.stepping] forwards":"kneeling down")+" and bringing [npc.her] [npc.face] to your [pc.ass+]."
 									+ " Reaching up to take hold of your [pc.hips], [npc.she] [npc.moansVerb],"
 									+ " [npc.speech(Now stay still and enjoy this!)]";
 					}
@@ -2693,7 +2698,7 @@ public class GenericPositioning {
 												+ " [npc.She] lets out a desperate [npc.moan] in response to your eager move, and,"
 													+ " allowing you to use [npc.her] body to support your weight, [npc.she] prepares for you to start rutting [npc.herHim] like an animal."
 											:"<br/>"
-												+ "Doing as [npc.she] asks, you step forwards so that you're standing over [npc.herHim], before lowering yourself down a little in order to mount [npc.herHim]."
+												+ "Doing as [npc.she] asks, you [npc.step] forwards so that you're standing over [npc.herHim], before lowering yourself down a little in order to mount [npc.herHim]."
 												+ " [npc.She] lets out a desperate [npc.moan] in response to your eager move, and prepares for you to start rutting [npc.herHim] like an animal.")
 										:"<br/>"
 											+ "Doing as [npc.she] asks, you "+(standingPlayer?"step":"drop to your knees and shuffle")+" forwards so that your groin is pressing against [npc.her] [npc.ass+]."
@@ -2718,10 +2723,10 @@ public class GenericPositioning {
 										+(!bipedPlayer
 											?(!biped
 												?" rearing up and jolting forwards, mounting you with [npc.her] feral [npc.legRace] body."
-												:(standing?"stepping forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your feral [pc.legRace] body.")
+												:(standing?"[npc.stepping] forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your feral [pc.legRace] body.")
 											:(!biped
-												?" stepping forwards over the top of you, mounting you with [npc.her] feral [npc.legRace] body."
-												:(standing?"stepping forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your [pc.ass+]."))
+												?" [npc.stepping] forwards over the top of you, mounting you with [npc.her] feral [npc.legRace] body."
+												:(standing?"[npc.stepping] forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your [pc.ass+]."))
 									+ " Bucking [npc.her] [pc.hips], [npc.she] snarls,"
 									+ " [npc.speech(Be thankful that I wanted to fuck you like the dirty animal you are!)]");
 							break;
@@ -2731,10 +2736,10 @@ public class GenericPositioning {
 										+(!bipedPlayer
 											?(!biped
 												?" rearing up and jolting forwards, mounting you with [npc.her] feral [npc.legRace] body."
-												:(standing?"stepping forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your feral [pc.legRace] body.")
+												:(standing?"[npc.stepping] forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your feral [pc.legRace] body.")
 											:(!biped
-												?" stepping forwards over the top of you, mounting you with [npc.her] feral [npc.legRace] body."
-												:(standing?"stepping forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your [pc.ass+]."))
+												?" [npc.stepping] forwards over the top of you, mounting you with [npc.her] feral [npc.legRace] body."
+												:(standing?"[npc.stepping] forwards":"dropping to [npc.her] knees, shuffling forwards,")+" and pressing [npc.her] groin against your [pc.ass+]."))
 									+ " Bucking [npc.her] [pc.hips], [npc.she] [npc.moansVerb],"
 									+ " [npc.speech(Now be a good [pc.girl] and enjoy your fucking!)]");
 							break;

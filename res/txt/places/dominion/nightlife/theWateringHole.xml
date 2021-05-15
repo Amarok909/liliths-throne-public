@@ -49,7 +49,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_ENTRANCE"><![CDATA[
 	<p>
-		Walking up to the entrance of the club, you push the front door open and step inside. As it swings shut behind you, you find yourself standing in a large, well-lit entrance hall, and before you, a winding queue leads up to a pair of white doors. The walls have been decorated with savannah-themed murals, which, combined with the club's name 'The Watering Hole', as well as the pair of imposing zebra-boy bouncers standing guard at the front of the queue, gives the club an African theme.
+		Walking up to the entrance of the club, you push the front door open and [pc.step] inside. As it swings shut behind you, you find yourself standing in a large, well-lit entrance hall, and before you, a winding queue leads up to a pair of white doors. The walls have been decorated with savannah-themed murals, which, combined with the club's name 'The Watering Hole', as well as the pair of imposing zebra-boy bouncers standing guard at the front of the queue, gives the club an African theme.
 	</p>
 	<p>
 		The larger of the two zebra-boys catches sight of you as you enter, and, calling out over the faint background bass of the club's music system, he addresses you, [jules.speech(Hey, you at the back! You can skip the queue if you want!)]
@@ -71,7 +71,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_ENTRANCE_REPEAT"><![CDATA[
 	<p>
-		Walking up to the entrance of the club once again, you push the front door open and step inside. As it swings shut behind you, you find yourself standing in a large, well-lit entrance hall, and before you, a winding queue leads up to a pair of white doors. The walls have been decorated with savannah-themed murals, which, combined with the club's name 'The Watering Hole', as well as the pair of imposing zebra-boy bouncers standing guard at the front of the queue, gives the club an African theme.
+		Walking up to the entrance of the club once again, you push the front door open and [pc.step] inside. As it swings shut behind you, you find yourself standing in a large, well-lit entrance hall, and before you, a winding queue leads up to a pair of white doors. The walls have been decorated with savannah-themed murals, which, combined with the club's name 'The Watering Hole', as well as the pair of imposing zebra-boy bouncers standing guard at the front of the queue, gives the club an African theme.
 	</p>
 	<p>
 		The usual pair of zebra-boys are standing guard at the front of the queue, and as you enter, Jules sees you and calls out over the faint background bass of the club's music system,
@@ -134,7 +134,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_ENTRANCE_WAITING"><![CDATA[
 	<p>
-		Deciding that you're definitely <i>not</i> going to suck Jules's cock, you step forwards and take your place at the back of the queue.
+		Deciding that you're definitely <i>not</i> going to suck Jules's cock, you [pc.step] forwards and take your place at the back of the queue.
 	</p>
 	<p>
 		It takes about thirty minutes before you're standing before the pair of zebra-boy bouncers. After just a minute more, Jules steps to one side in order to let you pass. [jules.speech(Go on in then.)]
@@ -280,7 +280,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_MAIN_FLIRT"><![CDATA[
 	<p>
-		You step up close to [npc.name], and, in order to make yourself heard over the background noise, lean in towards [npc.herHim] and raise your voice as you offer [npc.herHim] a compliment on [npc.her] appearance.
+		You [pc.step] up close to [npc.name], and, in order to make yourself heard over the background noise, lean in towards [npc.herHim] and raise your voice as you offer [npc.herHim] a compliment on [npc.her] appearance.
 	</p>
 	]]>
 	</htmlContent>
@@ -382,7 +382,7 @@
 		#ENDIF
 	</p>
 	<p>
-		You step back, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
+		You [pc.step] back, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -418,7 +418,7 @@
 		Although there's no wall to partition these seating areas from the crowds that fill the main floor, they're still the quietest parts of the club, by virtue of being the furthest you can get from the loud speakers positioned above the central dance floor. 
 	</p>
 	<p>
-		If you were to find someone to start chatting to back out in the main area of the club, you could come and sit with them in one of these booths, but by yourself, there's not much to do in here. Turning around to face the main body of the club, you prepare to step back out into the crowds...
+		If you were to find someone to start chatting to back out in the main area of the club, you could come and sit with them in one of these booths, but by yourself, there's not much to do in here. Turning around to face the main body of the club, you prepare to [pc.step] back out into the crowds...
 	</p>
 	]]>
 	</htmlContent>
@@ -516,7 +516,7 @@
 				Due to the fact that the two of you have rather unusual lower bodies, you and [npc.name] have ended up sitting down with your humanoid upper-bodies next to one another. In such a position, it'd be impossible to reach over far enough to give [npc.namePos] groin a grope, so, thinking up a quick excuse to move over to [npc.her] lower half, you tell [npc.herHim] that the sofa's cushion looks to be about to fall off.
 			<p>
 			<p>
-				Telling your partner to remain seated, you stand up and quickly step forwards, before kneeling down and patting the sofa's cushion. Instead of then standing up again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before moving down to [npc.her] groin and starting to grope and stroke [npc.her] crotch.
+				Telling your partner to remain seated, you stand up and quickly [pc.step] forwards, before [pc.kneeling] down and patting the sofa's cushion. Instead of then standing up again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before moving down to [npc.her] groin and starting to grope and stroke [npc.her] crotch.
 				#IF(npc.hasPenis())
 					 Running your [pc.fingers] over the [npc.penisSize] bulge of [npc.her] cock, you let out a cheeky laugh before giving it a few firm strokes.
 				#ENDIF
@@ -575,14 +575,14 @@
 				#ENDIF
 			</p>
 			<p>
-				You step back, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
+				You [pc.step] back and apologise, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
 			</p>
 		#ELSE
 			<p>
 				Due to the fact that the two of you have rather unusual lower bodies, you and [npc.name] have ended up sitting down with your humanoid upper-bodies next to one another. In such a position, it'd be impossible to reach over far enough to give [npc.namePos] groin a grope, so, thinking up a quick excuse to move over to [npc.her] lower half, you tell [npc.herHim] that the sofa's cushion looks to be about to fall off.
 			<p>
 			<p>
-				Telling your partner to remain seated, you stand up and quickly step forwards, before kneeling down and patting the sofa's cushion. Instead of then standing up again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before starting to move your touch over between [npc.her] hind legs.
+				Telling your partner to remain seated, you stand up and quickly step forwards, before [pc.kneeling] down and patting the sofa's cushion. Instead of then standing up again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before starting to move your touch over between [npc.her] hind legs.
 			</p>
 			<p>
 				#IF(npc.isShy())
@@ -617,7 +617,7 @@
 			</p>
 		#ELSE
 			<p>
-				Sliding off the semi-circular sofa, you kneel down beside [npc.namePos] hind-quarters, which results in [npc.herHim] letting out a hungry [npc.moan]. Taking that as a sign of consent, you reach forwards and give [npc.her] groin a firm stroke, before leaning in and planting a kiss on [npc.her] animalistic crotch.
+				Sliding off the semi-circular sofa, you [pc.kneel(false, down)] beside [npc.namePos] hind-quarters, which results in [npc.herHim] letting out a hungry [npc.moan]. Taking that as a sign of consent, you reach forwards and give [npc.her] groin a firm stroke, before leaning in and planting a kiss on [npc.her] animalistic crotch.
 			</p>
 			<p>
 				[npc.Name] responds to your move by first letting out yet another horny [npc.moan], and then, taking care not to tread on you, by getting up to [npc.her] feet and stepping forwards in order to fully present [npc.her] rear end to you. [npc.speech(~Mmm~ Come on then,)] [npc.she] [npc.moans], looking back over [npc.her] shoulder, [npc.speech(There's plenty of room here for us to have some fun...)]
@@ -958,7 +958,7 @@
 		#ENDIF
 	</p>
 	<p>
-		You step back and lean against the bar in order to give [npc.name] some space. As [npc.her] expression softens a little, you wonder what to do next...
+		You [pc.step] back and lean against the bar in order to give [npc.name] some space. As [npc.her] expression softens a little, you wonder what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -1073,7 +1073,7 @@
 		Doing as you're instructed, you walk down to the far end of the bar, where you meet Kalahari as she steps out from behind the counter. Excitedly reaching down to grab your [pc.hand], the energetic lioness presses herself against you, before starting to pull you over to one corner of the club. [kalahari.speech(Come on! Let's go sit in the VIP area!)]
 	</p>
 	<p>
-		Allowing Kalahari lead the way, you soon find yourself standing before the pair of lion bouncers who are guarding the entrance to the VIP seating area. Seeing Kalahari, they both step to one side and let the two of you in. As you step foot into the exclusive area of the club, you glance around, noting that the area has several semi-enclosed seating booths in it, furnished with expensive-looking leather sofas and black marble tables.
+		Allowing Kalahari lead the way, you soon find yourself standing before the pair of lion bouncers who are guarding the entrance to the VIP seating area. Seeing Kalahari, they both step to one side and let the two of you in. As you [pc.step] into the exclusive area of the club, you glance around, noting that the area has several semi-enclosed seating booths in it, furnished with expensive-looking leather sofas and black marble tables.
 	</p>
 	<p>
 		Instead of leading you over to one of the empty booths, Kalahari pulls you towards one of the very few that are already occupied. [kalahari.speech(Come on, I've got to introduce you to the boss before we can have some fun!)]
@@ -1317,7 +1317,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_VIP_KRUGER"><![CDATA[
 	<p>
-		Deciding that you'll pay Kruger a visit, you step forwards into the VIP area and start walking towards the far end of the room. Immediately, you spot the large lion sitting down in his usual booth, surrounded by the regular group of zebra-girls and lionesses. Kruger notices your approach, and nods his head to the seat beside him, indicating that you should come and sit next to him.
+		Deciding that you'll pay Kruger a visit, you [pc.step] forwards into the VIP area and start walking towards the far end of the room. Immediately, you spot the large lion sitting down in his usual booth, surrounded by the regular group of zebra-girls and lionesses. Kruger notices your approach, and nods his head to the seat beside him, indicating that you should come and sit next to him.
 	</p>
 	<p>
 		[kruger.speech(Move it, Zoya,)] Kruger growls to the zebra-girl next to him. Zoya quickly stands up, vacating the sofa in order for you to take her place.
@@ -1600,7 +1600,7 @@
 		#ENDIF
 	</p>
 	<p>
-		You step back, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
+		You [pc.step] back, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -1656,7 +1656,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_START_USING"><![CDATA[
 	<p>
-		Having already waited long enough, you quickly step up to the glory hole,
+		Having already waited long enough, you quickly [pc.step] up to the glory hole,
 		#IF(pc.hasPenis())
 			 preparing to have your [pc.cock+] sucked by the stranger on the other side.
 		#ELSEIF(pc.hasVagina())
@@ -1679,17 +1679,17 @@
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_USING_POST_SEX"><![CDATA[
 	<p>
-		You step back from the glory hole, grinning as you hear [npc.name] let out a happy little [npc.moan]. As you get your things in order, you see a flash of movement through the hole, before the creak of a stall's door announces the horny slut's exit.
+		You [pc.step] back from the glory hole, grinning as you hear [npc.name] let out a happy little [npc.moan]. As you get your things in order, you see a flash of movement through the hole, before the creak of a stall's door announces the horny slut's exit.
 	</p>
 	<p>
-		Just a moment later, you're ready to continue back out into the club, and, reaching down to unlock the door of your stall, you open it and step back out into the toilets.
+		Just a moment later, you're ready to continue back out into the club, and, reaching down to unlock the door of your stall, you open it and [pc.step] back out into the toilets.
 	</p>
 	]]>
 	</htmlContent>
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_SERVICING_GET_READY"><![CDATA[
 	<p>
-		Feeling horny and eager to pleasure some stranger's cocks, you step into the cum-splattered stall. Having seen you enter, someone quickly steps into the stall adjacent to yours, before quickly pushing [npc.her] [npc.a_cock+] through the hole. As you look across at the [npc.cock+], its owner
+		Feeling horny and eager to pleasure some stranger's cocks, you [pc.step] into the cum-splattered stall. Having seen you enter, someone quickly steps into the stall adjacent to yours, before quickly pushing [npc.her] [npc.a_cock+] through the hole. As you look across at the [npc.cock+], its owner
 		#IFnpc.isFeminine()
 		#THEN barks out a sharp command,
 		#ELSE lets out a deep grunt,
@@ -1714,21 +1714,21 @@
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_START_SERVICING_PUBLIC"><![CDATA[
 	<p>
-		Deciding to leave the stall's door open, so that anyone can come and watch you servicing these strangers' cocks, you kneel down on the floor of the toilet. Biting your lip, you can't help but let out [pc.a_moan+] as you prepare to show everyone what a dirty slut you are...
+		Deciding to leave the stall's door open, so that anyone can come and watch you servicing these strangers' cocks, you [pc.kneel] down on the floor of the toilet. Biting your lip, you can't help but let out [pc.a_moan+] as you prepare to show everyone what a dirty slut you are...
 	</p>
 	]]>
 	</htmlContent>
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_START_SERVICING"><![CDATA[
 	<p>
-		Closing and locking the stall's door, you kneel down on the floor of the toilet, ready to service these strangers' cocks. Biting your lip, you can't help but let out [pc.a_moan+] as you prepare to show them what a dirty slut you are...
+		Closing and locking the stall's door, you [pc.kneel] down on the floor of the toilet, ready to service these strangers' cocks. Biting your lip, you can't help but let out [pc.a_moan+] as you prepare to show them what a dirty slut you are...
 	</p>
 	]]>
 	</htmlContent>
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_SERVICING_POST_SEX_PUBLIC"><![CDATA[
 	<p>
-		You step back from the glory holes, grinning to yourself as you hear the strangers letting out a satisfied groan. The crowd that gathered to watch your slutty display starts to disperse, and as they leave, you start to get your things in order.
+		You [pc.step] back from the glory holes, grinning to yourself as you hear the strangers letting out a satisfied groan. The crowd that gathered to watch your slutty display starts to disperse, and as they leave, you start to get your things in order.
 	</p>
 	<p>
 		Just a moment later, you're ready to continue back out into the club, and, stepping out of your stall, you head back out into the toilets. Glancing back at the stalls that were to either side of yours, you see that the occupants have already departed, leaving you with no clue as to whose cocks you just serviced...
@@ -1738,10 +1738,10 @@
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_GLORY_HOLE_SERVICING_POST_SEX"><![CDATA[
 	<p>
-		You step back from the glory holes, grinning to yourself as you hear the strangers letting out a satisfied groan. As you get your things in order, you see flashes of movement through the holes to either side of you, before the creaking of doors announces each of the strangers' exits.
+		You [pc.step] back from the glory holes, grinning to yourself as you hear the strangers letting out a satisfied groan. As you get your things in order, you see flashes of movement through the holes to either side of you, before the creaking of doors announces each of the strangers' exits.
 	</p>
 	<p>
-		Just a moment later, you're ready to continue back out into the club, and, reaching down to unlock the door of your stall, you open it and step back out into the toilets. Glancing back at the stalls that were to either side of yours, you see that the occupants have already departed, leaving you with no clue as to whose cocks you just serviced...
+		Just a moment later, you're ready to continue back out into the club, and, reaching down to unlock the door of your stall, you open it and [pc.step] back out into the toilets. Glancing back at the stalls that were to either side of yours, you see that the occupants have already departed, leaving you with no clue as to whose cocks you just serviced...
 	</p>
 	]]>
 	</htmlContent>
@@ -1768,7 +1768,7 @@
 		[npc.speech(Fuck... That was great...)] [npc.name] sighs, smiling happily at you.
 	</p>
 	<p>
-		You agree with [npc.namePos] assessment, and after the two of you have got your things in order, you unlock the stall's door and step over to the sinks. [npc.Name] splashes some water on [npc.her] face, before turning to smile at you.
+		You agree with [npc.namePos] assessment, and after the two of you have got your things in order, you unlock the stall's door and move over to the sinks. [npc.Name] splashes some water on [npc.her] face, before turning to smile at you.
 		#IF npc.isShy()
 		#THEN [npc.speech(I-I need to get going now. I'll meet you here again another time, right?)]
 		#ELSE
@@ -1786,7 +1786,7 @@
 		Having had your fun with [npc.name], the two of you collapse back against the toilet stall's walls, panting from exertion. After a moment, [npc.name] crosses [npc.her] [npc.arms] and lets out a frustrated huff, [npc.speech(You didn't exactly satisfy me, you know...)]
 	</p>
 	<p>
-		After the two of you have got your things in order, you unlock the stall's door and step over to the sinks. [npc.Name] splashes some water on [npc.her] face, before turning to smile at you.
+		After the two of you have got your things in order, you unlock the stall's door and move over to the sinks. [npc.Name] splashes some water on [npc.her] face, before turning to smile at you.
 		#IF npc.isShy()
 		#THEN [npc.speech(I-I need to get going now. That wasn't the best sex, but I still had fun... I'll meet you here again another time, right?)]
 		#ELSE
@@ -1870,7 +1870,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_TOILETS_WASH"><![CDATA[
 	<p>
-		Feeling like you could do with having a quick clean, you step over to the sinks and thoroughly wash your [pc.hands], before splashing some water on your [pc.face]. Grabbing a paper towel from the nearby dispenser, you quickly dry yourself off, before turning to face the room and wondering what to do next...
+		Feeling like you could do with having a quick clean, you [pc.step] over to the sinks and thoroughly wash your [pc.hands], before splashing some water on your [pc.face]. Grabbing a paper towel from the nearby dispenser, you quickly dry yourself off, before turning to face the room and wondering what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -2354,7 +2354,7 @@
 		[npc.speech(Eugh, you ungrateful [pc.bitch]!)] [npc.name] snaps, before turning towards the barmaid who stepped forwards to take [npc.her] order. [npc.speech(Forget it, I'm not ordering anything. Go serve someone else.)]
 	</p>
 	<p>
-		You step back from [npc.name], frowning at [npc.herHim] in response to [npc.her] uncalled-for insult. Before you can say anything regarding the matter, [npc.she] moves back up beside you and apologises, [npc.speech(Sorry, [pc.babe]. I shouldn't have said that. Anyway, no harm done, right?)]
+		You [pc.step] back from [npc.name], frowning at [npc.herHim] in response to [npc.her] uncalled-for insult. Before you can say anything regarding the matter, [npc.she] moves back up beside you and apologises, [npc.speech(Sorry, [pc.babe]. I shouldn't have said that. Anyway, no harm done, right?)]
 	</p>
 	<p>
 		[pc.speech(I suppose,)] you reply, wondering if you should ditch this rude [npc.race]...
@@ -2914,7 +2914,7 @@
 				#ENDIF
 			#ELSE
 				<p>
-					Due to the fact that you have a rather unusual lower body, your rear end is quite outside of [npc.namePos] reach. This proves to be an issue for your partner, as, after making a feeble excuse about the cushion you're sitting on about to fall off the sofa, [npc.she] stands up and quickly moves over to kneel down beside your hind-quarters.
+					Due to the fact that you have a rather unusual lower body, your rear end is quite outside of [npc.namePos] reach. This proves to be an issue for your partner, as, after making a feeble excuse about the cushion you're sitting on about to fall off the sofa, [npc.she] stands up and quickly moves over to [npc.kneel] down beside your hind-quarters.
 				<p>
 				#IF(npc.isKind())
 					After giving the sofa's cushion a quick pat, [npc.name] makes playful, flirtatious remark, before placing [npc.her] [npc.hand] on your [pc.hips+]. As [npc.she] starts to slide [npc.her] touch down between your [pc.legs], you wonder if you should play along, and let [npc.herHim] get a good feel of your lower half, or quickly put a stop to this unsolicited contact.
@@ -3453,7 +3453,7 @@
 		[npc.speech(Oh... Well, bye, I guess,)] [npc.name] responds, clearly a little flustered by your abrupt change in attitude.
 	</p>
 	<p>
-		[pc.speech(Don't bother saying hello if you see me at the club again,)] you call out behind you as you pull open the front door. Before [npc.name] can even respond, you step out and slam it behind you, before making your way down the stairs and out into the street beyond.
+		[pc.speech(Don't bother saying hello if you see me at the club again,)] you call out behind you as you pull open the front door. Before [npc.name] can even respond, you [pc.step] out and slam it behind you, before making your way down the stairs and out into the street beyond.
 	</p>
 	<p>
 		Happy that you didn't get carried away and have sex with [npc.name], you set off on your way...
@@ -3551,7 +3551,7 @@
 		As [npc.name] crudely compliments you, you start getting your own things sorted out, but before you've finished, your partner suddenly opens the stall door, exposing you to the rest of the room. Completely oblivious to what [npc.sheIs] doing, [npc.name] steps out of the stall, and in front of everyone, asks, [npc.speech(You'll come find me in the club if you want another good fuck, won't you [pc.name]?)]
 	</p>
 	<p>
-		Hurriedly getting the last of your things in order, you step forwards and reply...
+		Hurriedly getting the last of your things in order, you [pc.step] forwards and reply...
 	</p>
 	]]>
 	</htmlContent>
@@ -3561,7 +3561,7 @@
 		Putting an end to the sex, you quickly start getting your things back in order, ignoring [npc.name] as [npc.she] complains, [npc.speech(You haven't even satisfied me, and you want to stop fucking? For fuck's sake... I would've been better off bringing some other slut back here.)]
 	</p>
 	<p>
-		As [npc.name] continues to blather on, you step past [npc.herHim] and open the stall door, exposing [npc.herHim] to the rest of the room. Quickly getting [npc.her] clothes back in order, [npc.name] follows you as you step out of the stall, and in front of everyone, [npc.she] asks, [npc.speech(You'll come find me in the club if you want a real fuck, won't you [pc.name]? You've got to make it up to me for what you just did back there.)]
+		As [npc.name] continues to blather on, you [pc.step] past [npc.herHim] and open the stall door, exposing [npc.herHim] to the rest of the room. Quickly getting [npc.her] clothes back in order, [npc.name] follows you as you [pc.step] out of the stall, and in front of everyone, [npc.she] asks, [npc.speech(You'll come find me in the club if you want a real fuck, won't you [pc.name]? You've got to make it up to me for what you just did back there.)]
 	</p>
 	<p>
 		Turning around to face [npc.name], you give [npc.herHim] your reply...

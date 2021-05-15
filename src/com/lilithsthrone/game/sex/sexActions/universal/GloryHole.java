@@ -84,26 +84,26 @@ public class GloryHole {
 		
 		@Override
 		public String getActionTitle() {
-			return "Kneel";
+			return "[pc.Kneel]";
 		}
 
 		@Override
 		public String getActionDescription() {
 			if(Main.sex.getTotalParticipantCount(false)==3) {
-				return "Kneel down on the floor, ready to service the glory holes with your mouth.";
+				return "[pc.Kneel] down on the floor, ready to service the glory holes with your mouth.";
 			} else {
-				return "Kneel down on the floor, ready to service the glory hole with your mouth.";
+				return "[pc.Kneel] down on the floor, ready to service the glory hole with your mouth.";
 			}
 		}
 
 		@Override
 		public String getDescription() {
 			if(Main.sex.getTotalParticipantCount(false)==3) {
-				return "Pulling away from the glory holes, [npc.name] [npc.verb(take)] a step back, before kneeling down on the floor between them."
+				return "Pulling away from the glory holes, [npc.name] [npc.verb([npc.step])] back, before [npc.kneeling(false, down)] on the floor between them."
 						+ " Looking back and forth at the genitals on display, [npc.she] [npc.verb(let)] out [npc.a_moan+], before getting ready to use [npc.her] mouth.";
 				
 			} else {
-				return "Pulling away from the glory hole, [npc.name] [npc.verb(take)] a step back, before kneeling down on the floor before it."
+				return "Pulling away from the glory hole, [npc.name] [npc.verb([npc.step])] back, before [npc.kneeling(false, down)] on the floor before it."
 						+ " Grinning hungrily at the genitals on display, [npc.she] [npc.verb(let)] out [npc.a_moan+], before leaning forwards and getting ready to use [npc.her] mouth.";
 			}
 		}
@@ -164,7 +164,7 @@ public class GloryHole {
 		public String getDescription() {
 			if(Main.sex.getTotalParticipantCount(false)==3) {
 				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction())==SexSlotUnique.GLORY_HOLE_KNEELING) {
-					return "Standing up, [npc.name] [npc.verb(step)] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
+					return "Standing up, [npc.name] [npc.verb([npc.step])] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
 							+ " Leaning forwards, [npc.she] [npc.verb(position)] [npc.herself] so that [npc.her] mouth is just [unit.sizes] away from the hole on the opposite side of the stall,"
 								+ " and, letting out [npc.a_moan+], [npc.she] [npc.verb(prepare)] to have [npc.her] [npc.asshole+] and mouth used at the same time.";
 					
@@ -176,7 +176,7 @@ public class GloryHole {
 				
 			} else {
 				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction())==SexSlotUnique.GLORY_HOLE_KNEELING) {
-					return "Standing up, [npc.name] [npc.verb(step)] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
+					return "Standing up, [npc.name] [npc.verb([npc.step])] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
 							+ " Letting out [npc.a_moan+], [npc.she] [npc.verb(press)] back against the wall, preparing to have [npc.her] [npc.asshole+] used.";
 					
 				} else {
@@ -247,7 +247,7 @@ public class GloryHole {
 		public String getDescription() {
 			if(Main.sex.getTotalParticipantCount(false)==3) {
 				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction())==SexSlotUnique.GLORY_HOLE_KNEELING) {
-					return "Standing up, [npc.name] [npc.verb(step)] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
+					return "Standing up, [npc.name] [npc.verb([npc.step])] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
 							+ " Leaning forwards, [npc.she] [npc.verb(position)] [npc.herself] so that [npc.her] mouth is just [unit.sizes] away from the hole on the opposite side of the stall,"
 								+ " and, letting out [npc.a_moan+], [npc.she] [npc.verb(prepare)] to have [npc.her] [npc.pussy+] and mouth used at the same time.";
 					
@@ -259,7 +259,7 @@ public class GloryHole {
 				
 			} else {
 				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction())==SexSlotUnique.GLORY_HOLE_KNEELING) {
-					return "Standing up, [npc.name] [npc.verb(step)] over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
+					return "Standing up, [npc.name] [npc.verb([npc.step]) over towards [npc2.name], before bending down and pushing [npc.her] [npc.ass+] up against the glory hole."
 							+ " Letting out [npc.a_moan+], [npc.she] [npc.verb(press)] back against the wall, preparing to have [npc.her] [npc.pussy+] used.";
 					
 				} else {
