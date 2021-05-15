@@ -1860,7 +1860,8 @@ public class UtilText {
 				true,
 				false,
 				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."
+				"Use when describing movement from a sitting position or such to a standing position"
+				+ "Returns the appropriate past participle verb for this character's individual movement action."
 				+ "returns either (raise yourself, raises himself, raises herself, stand, or stands) based on non-legged leg configuration (lamia and scyallia) and third/first person"
 				+ "next word is the word after 'stand' or 'raise yourself', works around text complexity"){
 			@Override
@@ -1900,6 +1901,231 @@ public class UtilText {
 				}
 			}
 		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"standing",
+						"raisingSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Use when describing movement from a sitting position or such to a standing position"
+				+ "Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raising " + UtilText.parse(character, "[npc.herself]")) : ("rising "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raising " + UtilText.parse(character, "[npc.herself()]")) : ("rising "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "standing" : ("standing "+arg2);
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"stood",
+						"raisedSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Use when describing movement from a sitting position or such to a standing position"
+				+ "Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raised " + UtilText.parse(character, "[npc.herself]")) : ("rose "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raised " + UtilText.parse(character, "[npc.herself()]")) : ("rose "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "stood" : ("stood "+arg2);
+				}
+			}
+		});
+		
+		//Continuing verb section
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"standCont",
+						"standsCont",
+						"raiseSelfCont"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Use when describing the continuing action of standing, rather than moving into a standing position"
+				+ "Returns the appropriate past participle verb for this character's individual movement action."
+				+ "returns either (raise yourself, raises himself, raises herself, stand, or stands) based on non-legged leg configuration (lamia and scyallia) and third/first person"
+				+ "next word is the word after 'stand' or 'raise yourself', works around text complexity"){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;					
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+									
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raise " + UtilText.parse(character, "[npc.herself]")) : ("rise "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raises " + UtilText.parse(character, "[npc.herself()]")) : ("rises "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						if(arg1.equals("false") && character.isPlayer()) {
+							return arg2.equals("") ? "stand" : ("stand "+arg2);
+						} else {
+							return arg2.equals("") ? "stands" : ("stands "+arg2);
+						}
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"standingCont",
+						"raisingSelfCont"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Use when describing the continuing action of standing, rather than moving into a standing position"
+				+ "Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raising " + UtilText.parse(character, "[npc.herself]")) : ("rising "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raising " + UtilText.parse(character, "[npc.herself()]")) : ("rising "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "standing" : ("standing "+arg2);
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"stoodCont",
+						"raisedSelfCont"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Use when describing the continuing action of standing, rather than moving into a standing position"
+				+ "Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raised " + UtilText.parse(character, "[npc.herself]")) : ("rose "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raised " + UtilText.parse(character, "[npc.herself()]")) : ("rose "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "stood" : ("stood "+arg2);
+				}
+			}
+		});
+		
 		//END snek section
 		
 		commandsList.add(new ParserCommand(
