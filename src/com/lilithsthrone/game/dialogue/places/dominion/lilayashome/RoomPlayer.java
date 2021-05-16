@@ -831,12 +831,12 @@ public class RoomPlayer {
 				sb.append(UtilText.returnStringAtRandom(
 						"a handsome merman, who's busily flexing his muscles while perched on a wave-swept rock.",
 						"a muscular reindeer-boy, who's grinning as he presents his huge cock to you.",
-						"a trio of fit, spotted hyena-boys lay on a large bed, groping at each others muscles and cocks as their fur glistens from sweat. In the midst of their euphoria, they look at you longingly, almoust as if begging you to join them."));
+						"a trio of fit, spotted hyena-boys lay on a large bed, fondeling each others glistening toned bodys and wet hard cocks. In the midst of their euphoria, they look at you longingly, as if they were desperate for you to join them."));
 			} else {
 				sb.append(UtilText.returnStringAtRandom(
 						"a beautiful mermaid, who's happily showing off her exposed breasts while perched on a wave-swept rock.",
 						"a curvy reindeer-girl, who's bending over a wooden table and presenting her wet pussy to you.",
-						"a pair of muscular spotted hyena-girls sit on the edge of a bed, their thick clit-dicks glisting from arousal. One is turned away in a seductive pose, coyly looking over her shoulder whilst the other is directly facing you with arms outstreched, beckoing you to join them."));
+						"a pair of muscular spotted hyena-girls sit on the edge of a bed, their thick clit-dicks glistening from arousal. One is turned away in a seductive pose, coyly looking over her shoulder at you whilst the other is directly facing you with arms outstreched, beckoing you to join them."));
 			}
 			
 		} else {
