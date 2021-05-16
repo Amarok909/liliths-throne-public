@@ -22849,7 +22849,7 @@ public abstract class GameCharacter implements XMLSaving {
 		postTransformationCalculation();
 	}
 
-	public void setFeral(boolean power, RaceStage stage) {		//Amarok Code
+	public void setFeral(boolean power, RaceStage stage) {
 		AbstractSubspecies subspecies = body.getSubspecies();
 		if (!subspecies.getFeralAttributes().isBreastsPresent() && this.hasIncubationLitter(SexAreaOrifice.NIPPLE)) {
 			this.endIncubationPregnancy(SexAreaOrifice.NIPPLE, true);
@@ -22859,7 +22859,8 @@ public abstract class GameCharacter implements XMLSaving {
 		body.setFeral(power, stage);
 		postTransformationCalculation();
 	}
-	public void setFeral(boolean power) {		//Amarok Code
+
+	public void setFeral(boolean power) {
 		AbstractSubspecies subspecies = body.getSubspecies();
 		if (!subspecies.getFeralAttributes().isBreastsPresent() && this.hasIncubationLitter(SexAreaOrifice.NIPPLE)) {
 			this.endIncubationPregnancy(SexAreaOrifice.NIPPLE, true);

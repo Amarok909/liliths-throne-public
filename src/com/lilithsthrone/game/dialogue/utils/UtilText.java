@@ -1304,18 +1304,6 @@ public class UtilText {
 	//Special utility parsing commands to expand capibilities of XML based modding
 	//Allows xml files with long sequences to acsess custom xml files in res/mods/AUTHORNAME/txt
 
-	// public String getTesting(String test) {			//yeah, shit finally works
-	// 	return test;
-	// }
-
-	// public String parsePlayerThought(String text, GameCharacter gc) {
-	// 	return parseThought(text, gc);
-	// }
-
-	// public String getMoarTesting() {
-	// 	return parseFromXMLFile("characters/dominion/rentalMommy", "ENCOUNTER");
-	// }
-
 	/**
 	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
 	 */
