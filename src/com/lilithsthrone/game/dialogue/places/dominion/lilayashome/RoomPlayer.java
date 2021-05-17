@@ -1240,8 +1240,8 @@ public class RoomPlayer {
 							+ "Annoyed with how " + Util.stringsToStringList(npcRude, false) + " rudely greeted you,"
 							+ " your loyal" + (npcNice.size()==1?" slave, ":" slaves, ")
 							+ Util.stringsToStringList(npcNice, false) + (npcNice.size()==1?" starts ":" start ") 
-							+ "glaring at " + (npcRude.size()==1?npcRudeHer:"the "+npcRudeTwo+" of them") 
-							+ ", making "+(npcNice.size()==1?npcNiceHer:"their")+" fiery feelings known. "
+							+ "glaring hard at " + (npcRude.size()==1?npcRudeHer:"the "+npcRudeTwo+" of them") + ". "
+					//		+ ", making "+(npcNice.size()==1?npcNiceHer:"their")+" fiery feelings known. "
 							
 							+ "Looking back at " + (npcNice.size()==1?npcNiceHer:"them") + " incredulously, "
 							+ Util.stringsToStringList(npcRude, false) + (npcRude.size()==1?" only responds":" only respond") 

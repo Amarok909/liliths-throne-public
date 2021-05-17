@@ -1,8 +1,10 @@
 varoius activities
     Improve Friendliness
-        play boardgame
+        play board-game
         cook meal
     Improve Obedience
+    	human furniture
+    	menial house labour
     Switch Friendliness for Obedience
     Switch Obedience for Friendliness
 
@@ -20,6 +22,7 @@ Unsorted ideas
         get rose to help you fuck them into submission
         tie them up outside during an arcane thunderstorm, lily will ask you to take them to the square
         tie them up in the house, and let your slaves have fun with them
+        make them mud wrestle
     Unite their behaviour
         Make them all 
             pity you

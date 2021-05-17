@@ -23,6 +23,11 @@ import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.colours.Colour;
 
+/**
+ * @since 0.3.21
+ * @version 0.3.21
+ * @author Amarok
+ */
 public class RoomFeud {
 	
 	static List<NPC> charactersPresent = LilayaHomeGeneric.getSlavesAndOccupantsPresent();
@@ -48,11 +53,11 @@ public class RoomFeud {
 	
 		sumRelations = sumRelations/(2 * greetingsNice.size() * greetingsRude.size());
 		
-		if(sumRelations < AffectionLevel.ZERO_NEUTRAL.getMinimumValue()) {
+		if(sumRelations < AffectionLevel.ZERO_NEUTRAL.getMinimumValue()) {		//if there is overall low sentiment
 			return true;
-		} else if(minRelations < AffectionLevel.NEGATIVE_ONE_ANNOYED.getMedianValue() && Util.random.nextInt(5)<3) {
+		} else if(minRelations < AffectionLevel.NEGATIVE_ONE_ANNOYED.getMedianValue() && Util.random.nextInt(5)<3) {	//if there is one really strong dislike
 			return true;
-		} else if(Util.random.nextInt(5)<2) {
+		} else if(Util.random.nextInt(5)<1) {	//random temper issues
 			return true;
 		}
 		return false;
@@ -92,6 +97,20 @@ public class RoomFeud {
 		
 		@Override
 		public String getContent() {
+			
+			List<String> npcNice = new ArrayList<>();
+			for(NPC npc : greetingsNice) {
+				npcNice.add(npc.getName());
+			}
+			List<String> npcRude = new ArrayList<>();
+			for(NPC npc : greetingsRude) {
+				npcRude.add(npc.getName());
+			}
+			
+			String npcNiceHer = npcNice.size()==1 ? greetingsNice.get(0).getGender().getThirdPerson() : Main.game.getPlayer().getGender().getThirdPerson();
+			String npcRudeHer = npcRude.size()==1 ? greetingsRude.get(0).getGender().getThirdPerson() : Main.game.getPlayer().getGender().getThirdPerson();
+			String npcRudeTwo = Util.intToString(npcRude.size());
+			
 			Main.game.getTextStartStringBuilder().append(Util.intToString(Math.round(sumRelations()))+"<br/>");
 			Main.game.getTextStartStringBuilder().append(sumRelations()+"<br/>");
 			Main.game.getTextStartStringBuilder().append(isDiscordantStart()+"<br/>");
@@ -107,12 +126,12 @@ public class RoomFeud {
 						+ " but are cut off as RUDE suddenly speaks up.<br/>"
 						
 						+ "Oh what, going to keep ignoring us are you, fine by me bitches, all you do is kiss up to <i>Master</i> pc's ass."
-						+ " yep, you two are both certainly his pet bitches through and through, RUDE2 says smugly before shaking her head, no self respect at all, these slaves"
+						+ " yep, you two are both certainly his pet bitches through and through, RUDE2 says smugly before shaking her head, 'no self respect at all, these slaves'"
 						+ " 'Oh master, i've been such a good boy, pet me, pet me I'm such a gooood little slave' lampoons RUDE3, mockingly impersonating NICE.<br/>"
 						
 						+ "The only dogs here are you barking mad cunts, you think you can just act like that to Pc and us, and actually get away with it!?"
 						+ " Exactly, you realise how unbearable you lot are? your attitude to everything is so damn annoying to put up with."
-						+ " 'Well, what can you do, it's not RUDE's fault that she's a brain-dead cow. Heck, she can't even tell food apart from scrap' smirks NICE3, 'right RUDE'"
+						+ " 'Well, what can you do, it's not RUDE's fault that she's a brain-dead cow. Heck, she can't even tell cum apart from toothpaste' smirks NICE3, 'isn't that right RUDE'"
 						+ "</p>");
 			} else {							//Mixed Relations
 				sb.append("<p>"
@@ -120,7 +139,7 @@ public class RoomFeud {
 						+ " and having some idea of what you want to say to them, you clear your throat. Gaining their attention, you prepare to lecture them."
 						+ " Look, I realize there are some personal issues between you, but you all should—<br/>"
 						
-						+ "Oh? <i>issues?</i> Like how you own us? like how NICE is a insufferable biychs who keeps kissing up to your ass, RUDE snaps, interrupting you, 'guess that's why you have slaves, so you can fell so damn superior'"
+						+ "Oh? <i>issues?</i> Like how you own us? like how NICE is a insufferable bitch who keeps kissing up to your ass, RUDE snaps, interrupting you, 'guess that's why you own people, so you can fell so damn superior'"
 						+ " yep, all that ass kissing must have rotted all of your brains, or maybe you were just always full of shit, adds RUDE2, smirking as NICE and NICE2's faces start twitching"
 						+ " well, it would explain a lot, RUDE3 chimes in, a look of bitter contempt on her face.<br/>"
 						
@@ -131,19 +150,21 @@ public class RoomFeud {
 			}
 			
 			sb.append("<p>"
-					+ "Not willing to take these insults standing, RUDE fire back herself, insulting them and their behaviour towards you."
+					+ "Not willing to take these insults standing, RUDE fires back herself, insulting them and their behaviour towards you."
 					+ " And NICE are all to happy to retaliate back, deriding them as hard."
 					
-					+ "As this back and forth goes on, the attacks getting harsher and their posture becoming more aggressive"
+					+ "As this back and forth goes on, the room seems become hotter as their tempers flare up. "
+					+ "Their snarky comments become harsher, quickly giving way to outright verbal abuse, the two groups move from their sides of the room to get in each other's faces."
 					+ "standing back you try and shout over them, in an attempt to shut them up.<br/>"
 					+ "Hey! Can you—<br/>"
+					+ "Your calls out to them are futile, no one is listening anymore, and it is only a matter of time before it becomes worse."
 					
 					+ "Do actually have any free will left? Or did PC fuck all of it out of you?"
 					+ "Lilith's Ass! No-one could mistake you for a virgin, not with that giant stick up your ass"
 					
-					+ "tempers flaring and snarky comments giving way to outright verbal abuse, the two groups move from their sides of the room to get in each other's faces."
-					+ " size nor sex matters, the battle lings have been drawn and neither side is going to back down now"
-					+ "and although NPC is outnumbered, that doesn't stop her from treating the others.<br/>"
+					+ "tempers flaring and snarky comments become harsher, giving way to outright verbal abuse, the two groups move from their sides of the room to get in each other's faces."
+					+ " size nor sex matters, the battle lines have been drawn and neither side is going to back down now"
+					+ "and although NPC is outnumbered, that doesn't stop her from threatening the others.<br/>"
 					+ ""
 					+ "as they start barking in each other's faces, you realize you need to do something fast before someone throws a punch, or they get loud enough that liliya storms up here.<br/>"
 					+ ""
@@ -161,7 +182,7 @@ public class RoomFeud {
 				
 				if(Main.game.getPlayer().getAttributeValue(Attribute.MAJOR_ARCANE)<50) {
 					return new Response("Arcane Overpower", "As you have not achieved <b>arcane prowess</b>,"
-						+ " you don't have enough arcane power to make everyone horny", null);
+						+ " you don't have enough arcane power to overpower everyone's aura horny", null);
 				}
 				
 				return new Response("Arcane Overpower", "Flare up your powerful arcane aura to make everyone too horny to fight", FEUD_IN_CHARGE) {
@@ -170,7 +191,7 @@ public class RoomFeud {
 				
 			} else if(index==1) {
 				
-				return new Response("Newspaper", "Roll up the newspaper that rose delivers to you daily, and use it to whap everyone's heads", FEUD_IN_CHARGE) {
+				return new Response("Newspaper", "Roll up the newspaper that rose delivers to you daily, and use it to whap everyone", FEUD_IN_CHARGE) {
 					@Override public void effects() {commandTool = 2;}
 				};
 				
