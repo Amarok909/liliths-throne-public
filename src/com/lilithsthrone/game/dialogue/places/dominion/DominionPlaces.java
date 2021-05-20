@@ -88,17 +88,28 @@ public class DominionPlaces {
 										:"Mommy's house is located down this street, and as you look over towards it, you see her sitting on her usual bench outside."
 											+ " Still wearing her 'Rental Mommy' t-shirt, she's quite clearly still open for business as usual...")
 								+ "</p>"));
-				break;
+				continue;
 			}
-			if(Main.game.getPlayer().getFriendlyOccupants().contains(npc.getId())) {
-				occupantSB.append(
-						UtilText.parse(npc,
-								"<p>"
-									+ "<b style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+";'>[npc.NamePos] Apartment:</b><br/>"
-									+ "[npc.Name], the [npc.race] that you rescued from a life of crime, lives in an apartment building nearby."
-									+ " If you wanted to, you could pay [npc.herHim] a visit..."
-								+ "</p>"));
-				break;
+			if(Main.game.getPlayer().getFriendlyOccupants().contains(npc.getId())) {		//TODO, swap out with a List name's apartments, listing eveyone as one paragraph. eg, your friend, as well  as your children all live in this complex, if you wanted to, you could go visit one of them
+				if(npc.isRelatedTo(Main.game.getPlayer())) {
+					occupantSB.append(
+							UtilText.parse(npc,
+									"<p>"
+										+ "<b style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+";'>[npc.NamePos] Apartment:</b><br/>"
+										+ "[npc.Name], your [npc.relation(pc)] that you rescued from a life of crime, lives in an apartment building nearby."
+										+ " If you wanted to, you could pay [npc.herHim] a visit..."
+									+ "</p>"));
+				} else {
+					occupantSB.append(
+							UtilText.parse(npc,
+									"<p>"
+										+ "<b style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+";'>[npc.NamePos] Apartment:</b><br/>"
+										+ "[npc.Name], the [npc.race] that you rescued from a life of crime, lives in an apartment building nearby."
+										+ " If you wanted to, you could pay [npc.herHim] a visit..."
+									+ "</p>"));
+				}
+				
+				continue;
 			}
 			
 			if(npc instanceof Cultist) {
@@ -107,7 +118,7 @@ public class DominionPlaces {
 							+ "<b style='color:"+PresetColour.GENERIC_ARCANE.toWebHexString()+";'>Cultist's Chapel:</b><br/>"
 							+ UtilText.parse(npc, "You remember that [npc.namePos] chapel is near here, and if you were so inclined, you could easily find it again...")
 						+ "</p>");
-				break;
+				continue;
 			}
 			
 			if(npc instanceof ReindeerOverseer) {
@@ -121,11 +132,100 @@ public class DominionPlaces {
 										+ " Their leader, [npc.a_race], is shouting out orders and travelling to-and-fro between the workers to make sure that the job is being done to [npc.her] satisfaction."
 										+ " Although the workers look to be far too busy to stop and talk, you'd probably be able to catch a word with the overseer if you wanted to."))
 						+ "</p>");
-				break;
+				continue;
 			}
 		}
 		
-		mommySB.append(cultistSB.toString()).append(occupantSB.toString()).append(reindeerSB.toString());
+		
+		
+		
+		
+		
+	//	
+	//	expoSB.append(Util.stringsToStringList(null, false));
+	//	expoSB.append(Util.toStringList(characters, (NPC o) -> Util.capitaliseSentence(o.getName()), "and"));
+	
+	//	Set<NPC> friendlies = new HashSet<>(Main.game.getPlayer().getFriendlyOccupants());
+	//	List<NPC> allPresent = new ArrayList<>(characters);
+	//	@SuppressWarnings("unchecked")
+	//	Set<NPC> friendlies = Main.game.getPlayer().getFriendlyOccupants().stream().collect(Collectors.toSet());
+	//	Set<NPC> residents = characters.stream().filter(Main.game.getPlayer().getFriendlyOccupants()::contains).collect(Collectors.toSet());
+		
+		List<NPC> residents = new ArrayList<>();
+		List<String> names = new ArrayList<>();
+		StringBuilder expoSB = new StringBuilder("");
+		
+		List<String> rel = new ArrayList<>();
+		List<String> fam = new ArrayList<>();
+		
+		for(NPC npc : characters) {
+			if(Main.game.getPlayer().getFriendlyOccupants().contains(npc.getId())) {
+				residents.add(npc);
+			
+				if(npc.isRelatedTo(Main.game.getPlayer()) && npc!=residents.get(0)) {
+					rel.add(npc.getName());
+				} else if(npc!=residents.get(0)) {
+					fam.add(npc.getName());
+				}
+			}
+		}
+		
+		names.addAll(rel);
+		names.addAll(fam);
+		
+	//	List<NPC> relatives = residents.stream().filter(npc ->  npc.isRelatedTo(Main.game.getPlayer())).collect(Collectors.toList());
+	//	List<NPC> familiars = residents.stream().filter(npc -> !npc.isRelatedTo(Main.game.getPlayer())).collect(Collectors.toList());
+		
+	//	Util.stringsToStringList(names, false);
+	//	List<NPC> residente = residents.stream().collect(Collectors.toList());
+	//	Set<NPC> nnn = Main.game.getAllNPCs().stream().collect(Collectors.toSet());
+		
+		if(residents.size()>=1) {
+		NPC first = residents.get(0);
+		
+		expoSB.append("<p><b style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+";'>"+Util.stringsToStringList(names, false)+"'s Apartment:</b><br/>");
+		
+		if(residents.size()==1) {
+			expoSB.append(UtilText.parse(first,
+				(first.isRelatedTo(Main.game.getPlayer())
+					? "[npc.Name], your [npc.relation(pc)] that you rescued from a life of crime, lives in an apartment building nearby."
+					: "[npc.Name], the [npc.race] that you rescued from a life of crime, lives in an apartment building nearby.")
+				+ " If you wanted to, you could pay [npc.herHim] a visit..."));
+		} else {
+			expoSB.append(UtilText.parse(first,
+				(first.isRelatedTo(Main.game.getPlayer())
+					? "[npc.Name], your [npc.relation(pc)] that you rescued from a life of crime, lives in an apartment building nearby."
+					: "[npc.Name], the [npc.race] that you rescued from a life of crime, lives in an apartment building nearby.")
+				+ " Also living in that same building are"));		//intro
+			//
+			if(rel.size()>=1) {
+				expoSB.append(" your children, " + Util.stringsToStringList(rel, false));		//children
+			}
+			//
+			if(fam.size()>=1) {
+				expoSB.append(
+					(rel.size()==0
+						? " your friends, "
+						: ". Sharing the building with them are your friends, ")
+					+ Util.stringsToStringList(fam, false));		//friends
+			}
+			//
+			expoSB.append(". If you wanted to, you could head inside the building and pay one of them a visit...");		//outro
+		}
+		
+		expoSB.append("</p>");
+		}
+	//	expoSB.append(
+	//			UtilText.parse(first,
+	//					"<p>"
+	//						+ "<b style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+";'>[npc.NamePos] Apartment:</b><br/>"
+	//						+ "[npc.Name], your [npc.relation(pc)] that you rescued from a life of crime, lives in an apartment building nearby."
+	//						+ " If you wanted to, you could pay [npc.herHim] a visit..."
+	//					+ "</p>"));
+		
+		
+
+		mommySB.append(cultistSB.toString()).append(occupantSB.toString()).append(reindeerSB.toString()).append(expoSB.toString());
 		
 		AbstractClothing collar = Main.game.getPlayer().getClothingInSlot(InventorySlot.NECK);
 		if(collar!=null && collar.getClothingType().getId().equals("innoxia_neck_filly_choker")) {
