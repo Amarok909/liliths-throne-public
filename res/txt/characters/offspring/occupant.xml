@@ -563,6 +563,9 @@
 			[pc.speech(You know, I was thinking that you could join our [npc.relation(pc)] and I in sharing some quality family bonding time together...)] you tease, addressing [npc2.name] as you turn to face both [npc2.herHim] and [npc.name], before biting your [pc.lip] and putting on your most submissive, seductive look.
 		</p>
 	#ELSEIF(npc.isRelatedTo(npc2) && npc2.isRelatedTo(pc))	<!-- npc2 is pc and npc's kid-->
+		<p>
+			[pc.speech(You know, I was thinking that you could join your [npc2.relation(npc)] and I in sharing some quality family bonding time together...)] you tease, addressing [npc.name] as you turn to face both [npc.herHim] and [npc2.name], before biting your [pc.lip] and putting on your most submissive, seductive look.
+		</p>
 	#ELSEIF(npc.isRelatedTo(pc))
 		<p>
 			[pc.speech(You know, I was thinking that you could join my [npc.relation(pc)] and I in sharing some quality family bonding time together...)] you tease, addressing [npc2.name] as you turn to face both [npc2.herHim] and [npc.name], before biting your [pc.lip] and putting on your most submissive, seductive look.
