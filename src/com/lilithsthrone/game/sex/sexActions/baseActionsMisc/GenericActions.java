@@ -426,14 +426,24 @@ public class GenericActions {
 
 				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.BACK_TO_WALL)) {
 					return UtilText.returnStringAtRandom(
-							"[npc.Name] lightly [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] gently [npc.verb(try)] to struggle out of [npc2.her] grip,"
+							"Smiling, [npc.Name] lightly [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] gently [npc.verb(try)] to struggle out of [npc2.her] grip,"
 									+ " but [npc.her] efforts prove to be in vain as [npc2.she] easily [npc2.verb(keep)] [npc.herHim] pinned back against the wall.",
 							
-							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
-									+ " but [npc2.her] grip is too strong for [npc.herHim], and [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pushed back against the wall.",
+							"Half-heartedly struggling against [npc2.name], [npc.name] [npc.verb(let)] out a fake [npc.sob+] between moans as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
+									+ " but as [npc.she] is not really trying to resist [npc2.her] strong grip, [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pushed back against the wall.",
 							
 							"Grinning as [npc.she] begs for [npc2.name] to leave [npc.herHim] alone, [npc.name] gently [npc.verb(struggle)] against [npc2.herHim],"
 									+ " [npc.moaning] in pleasure as [npc2.she] [npc2.verb(push)] [npc.herHim] back against the wall.");
+					
+				} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.ALL_FOURS)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] [npc.verb(try)] to crawl away from [npc2.name],"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.name] [npc2.verb(grab)] [npc.her] [npc.hips] and [npc2.verb(pull)] [npc.her] [npc.ass] back into [npc2.her] groin.",
+							
+							"Trying to crawl away from [npc2.name] on all fours, [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc2.she] [npc2.verb(grasp)] [npc.her] [npc.hips], before pulling [npc.herHim] back into position.",
+							
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(try)] to crawl away from [npc2.herHim],"
+									+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(take)] hold of [npc.her] [npc.hips] and [npc2.verb(pull)] [npc.herHim] back into [npc2.herHim].");
 					
 				}
 
