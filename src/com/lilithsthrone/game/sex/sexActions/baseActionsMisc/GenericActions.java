@@ -421,69 +421,89 @@ public class GenericActions {
 
 		@Override
 		public String getDescription() {
-			
-			if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.BACK_TO_WALL)) {
-				return UtilText.returnStringAtRandom(
-						"[npc.Name] [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] desperately [npc.verb(try)] to struggle out of [npc2.her] grip,"
-								+ " but [npc.her] efforts prove to be in vain as [npc2.she] easily [npc2.verb(keep)] [npc.herHim] pinned back against the wall.",
-						
-						"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
-								+ " but [npc2.her] grip is too strong for [npc.herHim], and [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pushed back against the wall.",
-						
-						"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
-								+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(push)] [npc.herHim] back against the wall.");
-				
-			} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.ALL_FOURS)) {
-				return UtilText.returnStringAtRandom(
-						"[npc.Name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] [npc.verb(try)] to crawl away from [npc2.name],"
-								+ " but [npc.her] efforts prove to be in vain as [npc2.name] [npc2.verb(grab)] [npc.her] [npc.hips] and [npc2.verb(pull)] [npc.her] [npc.ass] back into [npc2.her] groin.",
-						
-						"Trying to crawl away from [npc2.name] on all fours, [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc2.she] [npc2.verb(grasp)] [npc.her] [npc.hips], before pulling [npc.herHim] back into position.",
-						
-						"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(try)] to crawl away from [npc2.herHim],"
-								+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(take)] hold of [npc.her] [npc.hips] and [npc2.verb(pull)] [npc.herHim] back into [npc2.herHim].");
-				
-			} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.FACE_TO_WALL)) {
-				return UtilText.returnStringAtRandom(
-						"[npc.Name] [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] desperately [npc.verb(try)] to struggle out of [npc2.her] grip,"
-								+ " but [npc.her] efforts prove to be in vain as [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pinned up against the wall.",
-						
-						"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
-								+ " but [npc2.her] grip is too strong for [npc.herHim], and [npc2.she] easily [npc2.verb(keep)] [npc.herHim] pushed up against the wall.",
-						
-						"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
-								+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(push)] [npc.herHim] up against the wall.");
-				
-			} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.PERFORMING_ORAL)) {
-				return UtilText.returnStringAtRandom(
-						"[npc.Name] [npc.verb(try)] to push [npc2.namePos] groin away from [npc.her] [npc.face],"
-								+ " but [npc.her] efforts prove to be in vain as [npc2.name] [npc2.verb(grab)] hold of [npc.her] head and [npc2.verb(pull)] [npc.herHim] back into [npc2.her] crotch.",
-						
-						"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to pull [npc.her] [npc.face] away from [npc2.her] groin,"
-								+ " but [npc2.namePos] grasp on [npc.her] head is too strong, and [npc2.she] quickly [npc2.verb(force)] [npc.herHim] back into position.",
-								
-						"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
-								+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(pull)] [npc.her] [npc.face] back into [npc2.her] groin.");
-				
-			} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.LYING_DOWN)) {
-				return UtilText.returnStringAtRandom(
-						"[npc.Name] [npc.verb(try)] to push [npc2.name] off of [npc.herHim] as [npc.she] desperately [npc.verb(try)] to wriggle out from under [npc2.herHim],"
-								+ " but [npc.her] efforts prove to be in vain as [npc2.name] easily [npc2.verb(pin)] [npc.herHim] to the floor.",
-						
-						"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out from under [npc2.herHim],"
-								+ " but [npc2.name] [npc2.verb(press)] [npc2.her] body down onto [npc.hers], preventing [npc.herHim] from getting away.",
-						
-						"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
-								+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(use)] [npc2.her] body to pin [npc.herHim] to the floor.");
-				
+
+			if(Main.sex.getCharacterTargetedForSexAction(this).hasFetish(Fetish.FETISH_NON_CON_SUB)) {
+
+				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.BACK_TO_WALL)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] lightly [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] gently [npc.verb(try)] to struggle out of [npc2.her] grip,"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.she] easily [npc2.verb(keep)] [npc.herHim] pinned back against the wall.",
+							
+							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
+									+ " but [npc2.her] grip is too strong for [npc.herHim], and [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pushed back against the wall.",
+							
+							"Grinning as [npc.she] begs for [npc2.name] to leave [npc.herHim] alone, [npc.name] gently [npc.verb(struggle)] against [npc2.herHim],"
+									+ " [npc.moaning] in pleasure as [npc2.she] [npc2.verb(push)] [npc.herHim] back against the wall.");
+					
+				}
+
+				else {return "";}
+
 			} else {
-				return UtilText.returnStringAtRandom(
-						"[npc.Name] [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] desperately [npc.verb(try)] to struggle out of [npc2.her] grip,"
-								+ " but [npc.her] efforts prove to be in vain as [npc2.she] easily [npc2.verb(continue)] restraining [npc.herHim].",
-								
-						"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp.",
-						
-						"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim], [npc.sobbing] in distress as [npc2.she] easily [npc2.verb(hold)] [npc.herHim] in place.");
+			
+				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.BACK_TO_WALL)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] desperately [npc.verb(try)] to struggle out of [npc2.her] grip,"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.she] easily [npc2.verb(keep)] [npc.herHim] pinned back against the wall.",
+							
+							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
+									+ " but [npc2.her] grip is too strong for [npc.herHim], and [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pushed back against the wall.",
+							
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
+									+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(push)] [npc.herHim] back against the wall.");
+					
+				} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.ALL_FOURS)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] [npc.verb(try)] to crawl away from [npc2.name],"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.name] [npc2.verb(grab)] [npc.her] [npc.hips] and [npc2.verb(pull)] [npc.her] [npc.ass] back into [npc2.her] groin.",
+							
+							"Trying to crawl away from [npc2.name] on all fours, [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc2.she] [npc2.verb(grasp)] [npc.her] [npc.hips], before pulling [npc.herHim] back into position.",
+							
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(try)] to crawl away from [npc2.herHim],"
+									+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(take)] hold of [npc.her] [npc.hips] and [npc2.verb(pull)] [npc.herHim] back into [npc2.herHim].");
+					
+				} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.FACE_TO_WALL)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] desperately [npc.verb(try)] to struggle out of [npc2.her] grip,"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.name] easily [npc2.verb(keep)] [npc.herHim] pinned up against the wall.",
+							
+							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp,"
+									+ " but [npc2.her] grip is too strong for [npc.herHim], and [npc2.she] easily [npc2.verb(keep)] [npc.herHim] pushed up against the wall.",
+							
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
+									+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(push)] [npc.herHim] up against the wall.");
+					
+				} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.PERFORMING_ORAL)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(try)] to push [npc2.namePos] groin away from [npc.her] [npc.face],"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.name] [npc2.verb(grab)] hold of [npc.her] head and [npc2.verb(pull)] [npc.herHim] back into [npc2.her] crotch.",
+							
+							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to pull [npc.her] [npc.face] away from [npc2.her] groin,"
+									+ " but [npc2.namePos] grasp on [npc.her] head is too strong, and [npc2.she] quickly [npc2.verb(force)] [npc.herHim] back into position.",
+									
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
+									+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(pull)] [npc.her] [npc.face] back into [npc2.her] groin.");
+					
+				} else if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.LYING_DOWN)) {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(try)] to push [npc2.name] off of [npc.herHim] as [npc.she] desperately [npc.verb(try)] to wriggle out from under [npc2.herHim],"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.name] easily [npc2.verb(pin)] [npc.herHim] to the floor.",
+							
+							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out from under [npc2.herHim],"
+									+ " but [npc2.name] [npc2.verb(press)] [npc2.her] body down onto [npc.hers], preventing [npc.herHim] from getting away.",
+							
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim],"
+									+ " [npc.sobbing] in distress as [npc2.she] [npc2.verb(use)] [npc2.her] body to pin [npc.herHim] to the floor.");
+					
+				} else {
+					return UtilText.returnStringAtRandom(
+							"[npc.Name] [npc.verb(slap)], [npc.verb(hit)], and [npc.verb(kick)] [npc2.name] as [npc.she] desperately [npc.verb(try)] to struggle out of [npc2.her] grip,"
+									+ " but [npc.her] efforts prove to be in vain as [npc2.she] easily [npc2.verb(continue)] restraining [npc.herHim].",
+									
+							"Struggling against [npc2.name], [npc.name] [npc.verb(let)] out [npc.a_sob+] as [npc.she] weakly [npc.verb(try)] to wriggle out of [npc2.her] grasp.",
+							
+							"Begging for [npc2.name] to leave [npc.herHim] alone, [npc.name] desperately [npc.verb(struggle)] against [npc2.herHim], [npc.sobbing] in distress as [npc2.she] easily [npc2.verb(hold)] [npc.herHim] in place.");
+				}
 			}
 		}
 		
@@ -921,11 +941,21 @@ public class GenericActions {
 									"[npc2.speechNoExtraEffects("+(nameKnown?"No, [npc.name]...":"No...")+")] [npc2.name] [npc2.verb(answer)], [npc2.speechNoExtraEffects(I'll try to hold back!)]"));
 					break;
 				case SUB_RESISTING:
-					UtilText.nodeContentSB.append(
+					if(Main.sex.getCharacterTargetedForSexAction(this).hasFetish(Fetish.FETISH_NON_CON_SUB)) {
+						UtilText.nodeContentSB.append(
+							UtilText.returnStringAtRandom(
+									"[npc2.speechNoExtraEffects("+(nameKnown?"No, [npc.name]...":"No...")+")] [npc2.name] [npc2.verb(reply)], [npc2.speechNoExtraEffects(I'll try to endure...)]",
+									"[npc2.speechNoExtraEffects("+(nameKnown?"No, [npc.name]...":"No...")+")] [npc2.name] [npc2.moansVerb], [npc2.speechNoExtraEffects(I'll do my best to hold back...)]",
+									"[npc2.speechNoExtraEffects("+(nameKnown?"No, [npc.name]...":"No...")+")] [npc2.name] [npc2.verb(answer)], [npc2.speechNoExtraEffects(I'll try to hold back!)]"));
+					} else {
+						UtilText.nodeContentSB.append(
 							UtilText.returnStringAtRandom(
 									"[npc2.speechNoExtraEffects(Just get away from me!)] [npc2.name] frantically [npc2.sobsVerb], [npc2.speechNoExtraEffects(I hate this!)]",
 									"[npc2.speechNoExtraEffects(Let go of me!)] [npc2.name] desperately [npc2.sobsVerb], trying to pull [npc2.herself] out of [npc.namePos] grasp, [npc2.speechNoExtraEffects(Stop it! Get away from me!)]",
 									"[npc2.speechNoExtraEffects(Why won't you just let me go?!)] [npc2.name] [npc2.sobsVerb] as [npc2.she] weakly [npc2.verb(try)] to pull away from [npc2.name], [npc2.speechNoExtraEffects(I don't want this!)]"));
+						
+					}
+					
 					break;
 				default:
 					break;
