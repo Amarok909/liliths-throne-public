@@ -160,6 +160,9 @@ public abstract class AbstractAnusType implements BodyPartTypeInterface {
 
 	@Override
 	public String getNameSingular(GameCharacter gc) {
+		if(Main.game.isSillyModeEnabled()) {
+			return UtilText.returnStringAtRandom("bussy", "bussy", "bunghole", "pooper");
+		}
 		if(names==null || names.isEmpty()) {
 			return UtilText.returnStringAtRandom("asshole", "back door", "rear entrance");
 		}
@@ -168,6 +171,9 @@ public abstract class AbstractAnusType implements BodyPartTypeInterface {
 	
 	@Override
 	public String getNamePlural(GameCharacter gc) {
+		if(Main.game.isSillyModeEnabled()) {
+			return UtilText.returnStringAtRandom("bussies", "bussies", "bungholes", "poopers");
+		}
 		if(namesPlural==null || namesPlural.isEmpty()) {
 			return UtilText.returnStringAtRandom("assholes", "back doors", "rear entrances");
 		}
