@@ -422,7 +422,7 @@ public class GenericActions {
 		@Override
 		public String getDescription() {
 
-			if(Main.sex.getCharacterTargetedForSexAction(this).hasFetish(Fetish.FETISH_NON_CON_SUB)) {
+			if(Main.sex.getCharacterTargetedForSexAction(this).hasFetish(Fetish.FETISH_NON_CON_SUB) && Main.sex.isConsensual()) {
 
 				if(Main.sex.getSexPositionSlot(Main.sex.getCharacterPerformingAction()).hasTag(SexSlotTag.BACK_TO_WALL)) {
 					return UtilText.returnStringAtRandom(
@@ -447,7 +447,7 @@ public class GenericActions {
 					
 				}
 
-				else {return "";}
+				else {return "[npc.Name] is actually enjoying being treated like this, despite all her carry on";}
 
 			} else {
 			

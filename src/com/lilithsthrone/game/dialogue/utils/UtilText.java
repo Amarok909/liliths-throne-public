@@ -3724,7 +3724,7 @@ public class UtilText {
 							} else {
 								return "";
 							}
-						case SUB_RESISTING:
+						case SUB_RESISTING:		//Marker
 							descriptors = Util.newArrayListOfValues("frantically", "desperately", "maniacally");
 							break;
 					}

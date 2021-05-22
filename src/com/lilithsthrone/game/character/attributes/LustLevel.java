@@ -305,7 +305,7 @@ public enum LustLevel {
 							break;
 					}
 					break;
-				case SUB_RESISTING:
+				case SUB_RESISTING:		//Marker
 					switch(this) {
 						case ZERO_COLD:
 							sb.append("[npc.NameIsFull] not at all interested in having sex right now, and [npc.is] desperately trying to resist what's currently happening to [npc.herHim].");

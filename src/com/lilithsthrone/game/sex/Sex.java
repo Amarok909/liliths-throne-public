@@ -2875,7 +2875,7 @@ public class Sex {
 						stringBuilderForAppendingDescriptions.append(UtilText.parse(entry.getKey(),
 								"[npc.Name] lets out "+(entry.getValue()==SexPace.SUB_RESISTING?"[npc.a_moan+] as [npc.she] starts getting more turned on":"a soft [npc.moan] as [npc.she] calms down a little")+"..."));
 						break;
-					case SUB_RESISTING:
+					case SUB_RESISTING:		//Marker
 						stringBuilderForAppendingDescriptions.append(UtilText.parse(entry.getKey(),
 								"[npc.Name] lets out an uncomfortable whine as [npc.she] suddenly finds [npc.herself] not happy with the current situation..."));
 						break;

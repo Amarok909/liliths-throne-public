@@ -66,7 +66,7 @@ public enum SexAreaPenetration implements SexAreaInterface {
 									sb.append("[npc.Name] [npc.sexPaceVerb] forced the [npc.cockHead] of [npc.her] [npc.cock+] between [npc2.namePos] [npc2.labia] and over [npc2.her] [npc2.clit],"
 											+ " cruelly teasing [npc2.herHim] with the promise of penetration.");
 									break;
-								case SUB_RESISTING:
+								case SUB_RESISTING:		//Marker
 									sb.append("[npc.Name] tried to resist as [npc.she] [npc.was] forced to rub [npc.her] [npc.cock+] over [npc2.namePos] [npc2.pussy] and [npc2.clit].");
 									break;
 							}

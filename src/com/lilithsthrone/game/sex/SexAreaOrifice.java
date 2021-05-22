@@ -72,7 +72,7 @@ public enum SexAreaOrifice implements SexAreaInterface {
 								case DOM_ROUGH:
 									sb.append("Bringing [npc.her] [npc.face] up to [npc2.namePos] groin, [npc.name] [npc.sexPaceVerb] wrapped [npc.her] [npc.lips+] around [npc2.her] [npc2.clit+] and performed oral on it.");
 									break;
-								case SUB_RESISTING:
+								case SUB_RESISTING:		//Marker
 									sb.append("[npc.Name] tried to struggle free, but was unable to stop [npc2.name] from pushing [npc2.her] [npc2.clit+] into [npc.her] mouth and forcing [npc.herHim] to perform oral on it.");
 									break;
 							}

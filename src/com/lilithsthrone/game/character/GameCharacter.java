@@ -9835,13 +9835,18 @@ public abstract class GameCharacter implements XMLSaving {
 							"Let's have some fun!");
 				}
 				break;
-			case SUB_RESISTING:
+			case SUB_RESISTING:		//Marker
 				if((this.isVaginaVirgin() || this.hasHymen()) && this.hasVagina()) {
 					returnedLine = UtilText.returnStringAtRandom(
 							"Go away! I-I'm still a virgin! Leave me alone!",
 							"Stop it! Just go away! I-I'm still a virgin!",
 							"Please stop! I don't want to lose my virginity!",
 							"Don't do this! I'm still a virgin!");
+				} else if(this.hasFetish(Fetish.FETISH_NON_CON_SUB)){
+					returnedLine = UtilText.returnStringAtRandom(
+							"Oh no, help help, someone save me",
+							"No, don't dominate me like this"
+					);
 				} else {
 					returnedLine = UtilText.returnStringAtRandom(
 							"Go away! Leave me alone!",
@@ -9905,7 +9910,7 @@ public abstract class GameCharacter implements XMLSaving {
 										"Keep going! I love this!",
 										"Oh yes!");
 								break;
-							case SUB_RESISTING:
+							case SUB_RESISTING:		//Marker 
 								returnedLine = UtilText.returnStringAtRandom(
 										"Get your [npc2.fingers] out of me! Stop! Please!",
 										"Stop fingering me! Please, no more!",
@@ -9951,7 +9956,7 @@ public abstract class GameCharacter implements XMLSaving {
 										"Don't stop! Fuck me!",
 										"Oh yes! Fuck me!");
 								break;
-							case SUB_RESISTING:
+							case SUB_RESISTING:		//Marker
 								returnedLine = UtilText.returnStringAtRandom(
 										"Get out of me! Stop! Please!",
 										"Please, no more! Take your cock out!",
