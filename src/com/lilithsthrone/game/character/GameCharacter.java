@@ -9740,10 +9740,17 @@ public abstract class GameCharacter implements XMLSaving {
 				
 			} else if(Main.sex.isCharacterEngagedInOngoingAction(this)) {
 				if(Main.sex.getSexPace(this)==SexPace.SUB_RESISTING) {
-					s = UtilText.returnStringAtRandom(
+					if(this.hasFetish(Fetish.FETISH_NON_CON_SUB)) {
+						s = UtilText.returnStringAtRandom(
+							"Stop ravishing me, please!",
+							"Noooo! Leave me alone!",
+							"Stop it! Leave this damsel alone!");
+					} else {
+						s = UtilText.returnStringAtRandom(
 							"Stop, please!",
 							"Leave me alone!",
 							"Stop it! Leave me alone!");
+					}
 					
 				} else {
 					s = UtilText.returnStringAtRandom(
@@ -9835,7 +9842,7 @@ public abstract class GameCharacter implements XMLSaving {
 							"Let's have some fun!");
 				}
 				break;
-			case SUB_RESISTING:		//Marker
+			case SUB_RESISTING:		//The logic here is that a Npc will value their virginity over their lover for non-con
 				if((this.isVaginaVirgin() || this.hasHymen()) && this.hasVagina()) {
 					returnedLine = UtilText.returnStringAtRandom(
 							"Go away! I-I'm still a virgin! Leave me alone!",
@@ -9845,7 +9852,8 @@ public abstract class GameCharacter implements XMLSaving {
 				} else if(this.hasFetish(Fetish.FETISH_NON_CON_SUB)){
 					returnedLine = UtilText.returnStringAtRandom(
 							"Oh no, help help, someone save me",
-							"No, don't dominate me like this"
+							"No, don't dominate me like this",
+							"Help, I'm being fucked like the slut I am against my will!"
 					);
 				} else {
 					returnedLine = UtilText.returnStringAtRandom(
@@ -16776,7 +16784,7 @@ public abstract class GameCharacter implements XMLSaving {
 							sb.append(" as [npc2.her] stomach visibly bulges out");
 						}
 						
-						if(penetrationType==SexAreaPenetration.PENIS && Main.sex.getSexPace(characterPenetrated)!=SexPace.SUB_RESISTING) {
+						if(penetrationType==SexAreaPenetration.PENIS && (Main.sex.getSexPace(characterPenetrated)!=SexPace.SUB_RESISTING || characterPenetrated.hasFetish(Fetish.FETISH_NON_CON_SUB))) {	//Marker Done
 							if(characterPenetrated.hasFetish(Fetish.FETISH_MASOCHIST)) {
 								sb.append(", [npc2.speechNoEffects(");
 								sb.append(UtilText.returnStringAtRandom(
@@ -16923,7 +16931,7 @@ public abstract class GameCharacter implements XMLSaving {
 				}
 				
 				if(length>uncomfortable) {
-					if(Main.sex.getSexPace(characterPenetrating)!=SexPace.SUB_RESISTING) {
+					if(Main.sex.getSexPace(characterPenetrating)!=SexPace.SUB_RESISTING || characterPenetrating.hasFetish(Fetish.FETISH_NON_CON_SUB)) {		//Marker Done
 						sb.append("<br/>");
 						sb.append("[npc.Name] [npc.verb(let)] out a disappointed "+(characterPenetrating.isFeminine()?"whine":"growl")+" as [npc.she] [npc.verb(feel)] that");
 						sb.append("[style.italicsBad(");

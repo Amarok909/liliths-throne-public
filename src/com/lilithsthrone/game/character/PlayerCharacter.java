@@ -2062,7 +2062,7 @@ public class PlayerCharacter extends GameCharacter implements XMLSaving {
 											+ " [npc.speech(Now that I've claimed your virginity, I'll show you how it feels to get a good, hard pounding!"
 												+ " You'll never forget this feeling of my "+penetration.getName(characterPenetrating, true)+" breaking you in!)]");
 									break;
-								case SUB_RESISTING:
+								case SUB_RESISTING:		//Marker
 									sb.append("[npc.speech(Stop it! I didn't want to do this!)] [npc.she] complains as [npc.she] realises that [npc.sheHas] taken your virginity,"
 											+ " [npc.speech(Just get off me and leave me alone!)]");
 									break;
