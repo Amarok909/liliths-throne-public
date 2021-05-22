@@ -79,7 +79,7 @@
 			#IF(pc.hasLegs())
 				 [jules.speech(Hey, my little cocksucker's back! Come over here and get on your knees, and you can skip the queue again!)]
 			#ELSE
-				 [jules.speech(Hey, my little cocksucker's back! Come over here and let me use your mouth like last time, and you can skip the queue again!)]
+				 [jules.speech(Hey, my little cocksucker's back! Come over here and blow me, and you can skip the queue again!)]
 			#ENDIF
 		#ELSE
 			 [jules.speech(Hey, it's you again! You gonna suck my cock this time, or what?)]
