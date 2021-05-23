@@ -2625,7 +2625,6 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		// Final for use
 		if(!noMarriage) {
-			
 			nodes = parentElement.getElementsByTagName("characterMarriages");							// Looks for the characterMarrages container in the xml file
 			element = (Element) nodes.item(0);															// finds the first instance of said container
 			if(element!=null) {																			// checks that it is there
@@ -4079,6 +4078,8 @@ public abstract class GameCharacter implements XMLSaving {
 					return target.isFeminine()?"auntie":"uncle";
 				case Spouse:
 					return target.isFeminine()?"wife":"husband";
+				case Partner:
+					return target.isFeminine()?"girlfriend":"boyfriend";
 			}
 		}
 		

@@ -29,7 +29,8 @@ public enum Relationship {
     Nibling("niece", "nephew", "nibling", 1.5),
     
     // For marriage//
-    Spouse("wife", "husband", "partner", 0);
+    Spouse("wife", "husband", "spouse", 0),
+	Partner("girlfriend", "boyfriend", "partner", 0);
 
     private final String displayF;
     private final String displayM;
