@@ -20,6 +20,8 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +49,7 @@ import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
 import com.lilithsthrone.game.character.attributes.IntelligenceLevel;
 import com.lilithsthrone.game.character.attributes.LustLevel;
+import com.lilithsthrone.game.character.attributes.MarriageLevel.*;
 import com.lilithsthrone.game.character.attributes.ObedienceLevel;
 import com.lilithsthrone.game.character.attributes.ObedienceLevelBasic;
 import com.lilithsthrone.game.character.body.Arm;
@@ -391,6 +394,7 @@ public abstract class GameCharacter implements XMLSaving {
 	/** String is character ID*/
 	private Map<String, Float> affectionMap;
 	private Map<String, Float> marriageMap;
+	private Map<String, Map<MaritalStatus, Float>> datingMap;
 	
 	
 	// Pregnancy:
@@ -545,6 +549,7 @@ public abstract class GameCharacter implements XMLSaving {
 
 		affectionMap = new HashMap<>();
 		marriageMap = new HashMap<>();
+		datingMap = new HashMap<>();
 		
 		obedience = 0;
 		
@@ -1242,8 +1247,74 @@ public abstract class GameCharacter implements XMLSaving {
 				XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
 				XMLUtil.addAttribute(doc, relationship, "value", String.valueOf(entry.getValue()));
 			}
+			if(this.isPlayer()) {	// Only the player really needs the timers
+				Element dating = doc.createElement("dating");
+				characterMarriage.appendChild(dating);
+				for(Entry<String, Float> entry : this.getMarriageMap().entrySet()){
+					Element datetimer = doc.createElement("waiting");
+					dating.appendChild(datetimer);
+					
+					XMLUtil.addAttribute(doc, datetimer, "character", entry.getKey());
+					XMLUtil.addAttribute(doc, datetimer, "time", String.valueOf(Main.game.getSecondsPassed() + 100000 + Util.random.nextInt(100000)));
+				}
+			}
 		}
+		/*	
+			
+			HashMap<String, HashMap<String, String>> Test = new HashMap<String, HashMap<String, String>>();
+			HashMap<String, String> m = new HashMap<>();
+			m.put("Beta", "Gamma");
+			Test.put("Alpha", m);
+			Test.put("V", new HashMap<String, String>());
+			Test.get("V").put("key2", "val2");
+			
+			Test.get("V").get("key2");
+			
+			
+			//Test.get("V").entrySet().iterator().n
+			Map.Entry<String, Map<String, String>> en = Test.entrySet().iterator().next();
+			
+			HashMap<String, HashMap<BondLevel, Float>> Test2 = new HashMap<String, HashMap<BondLevel, Float>>();
+			String A = Test2.entrySet().iterator().next().getKey();
+			BondLevel B = Test2.get(A).entrySet().iterator().next().getKey();
+			Float C = Test2.get(A).get(B);
+			
+			for(Entry<String, Map<String, String>> entry : Test.entrySet()) {
+			//	String A = entry.getKey();
+			//	Map<String, String> B = entry.getValue(); //.entrySet().sort;
+				for(Entry<String, String> entry2 : entry.getValue().entrySet()) {
+					String A2 = entry.getKey();
+					String B2 = entry2.getKey();
+					String C2 = entry2.getKey();
+				}
+			}
+			
+			
+			
+			
+	//		List<?> Test = new ArrayList<>();
+	//		Test.add("quality");
+	//		Test.add(1000 + Util.random.nextInt(8765));
+	//		Object Milk = Test.get(0);
+	//	}
 		
+		Element savedEnforcersNode = doc.createElement("savedEnforcers");
+		game.appendChild(savedEnforcersNode);
+		for(Entry<AbstractWorldType, List<List<String>>> entrySet : Main.game.savedEnforcers.entrySet()) {
+			Element element = doc.createElement("world");
+			savedEnforcersNode.appendChild(element);
+			XMLUtil.addAttribute(doc, element, "type", WorldType.getIdFromWorldType(entrySet.getKey()));
+			for(List<String> ids : entrySet.getValue()) {
+				Element enforcersElement = doc.createElement("enforcers");
+				element.appendChild(enforcersElement);
+				for(String s : ids) {
+					Element idElement = doc.createElement("id");
+					enforcersElement.appendChild(idElement);
+					idElement.setTextContent(s);
+				}
+			}
+		}
+		*/
 		
 		// ************** Slavery **************//
 
@@ -2603,12 +2674,14 @@ public abstract class GameCharacter implements XMLSaving {
 					String characterId = e.getAttribute("character");									// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
 					
 					if(!characterId.equals("NOT_SET")) {												// checks if character is a fully baked NPC
-						character.setAffection(characterId, Float.valueOf(e.getAttribute("value")));	// finally sets the bond value of this character to the target NPC of this instance
+						character.setBond(characterId, Float.valueOf(e.getAttribute("value")));			// finally sets the bond value of this character to the target NPC of this instance
 						Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Bond: "+characterId +" , "+ Float.valueOf(e.getAttribute("value")));
 					}
 				}
 			}
 		}
+		
+		
 		
 		
 		// ************** Slavery **************//
@@ -4669,10 +4742,80 @@ public abstract class GameCharacter implements XMLSaving {
 		return null;
 	}
 	
+	// Dating
+
+	public Map<String, Map<MaritalStatus, Float>> getDatingMap() {
+		return datingMap;
+	}
+	
+	public void clearDatingMap() {
+		datingMap.clear();
+	}
+
+	public MaritalStatus getMaritalStatus(GameCharacter character) {
+		String A = character.getId();
+		return datingMap.get(A).entrySet().iterator().next().getKey();
+	}
+	
+	public Float getBondLevel(GameCharacter character) {
+		String A = character.getId();
+		MaritalStatus B = getMaritalStatus(character);
+		return datingMap.get(A).get(B);
+	}
+	
+	public ArrayList<String> getDatingState(GameCharacter character) {
+		ArrayList<String> Profile = new ArrayList<>();
+		Profile.add(String.valueOf(character.getId()));
+		Profile.add(String.valueOf(getMaritalStatus(character)));
+		Profile.add(String.valueOf(getBondLevel(character)));
+		return Profile;
+			
+	}
+	
+	public void setDatingState(GameCharacter character, MaritalStatus status, Float bond) {
+		datingMap.put(character.getId(), new HashMap<MaritalStatus, Float>());
+		datingMap.get(character.getId()).put(status, Math.max(-100, Math.min(100, bond)));
+	}
+	
+	public void setBondLevel(GameCharacter character, Float bond) {
+		this.setDatingState(character, getMaritalStatus(character), bond);
+	}
+	
+	public void setMaritalStatus(GameCharacter character, MaritalStatus status) {
+		this.setDatingState(character, status, getBondLevel(character));
+	}
+	
+/*	public String incrementBond(GameCharacter character, float bondIncrement) {
+		return incrementBond(character, bondIncrement, "");
+	}
+	
+	/**
+	 * Increments this character's affection towards the supplied GameCharacter.
+	 * @param affectionChangeDescription The description to be added to the returned String. Is parsed with "npc" being this character, and "npc2" being the passed in character. 
+	 */							/*
+	public String incrementBond(GameCharacter character, float bondIncrement, String bondChangeDescription) {
+		setBondLevel(character, getBondLevel(character) + affectionIncrement);
+		
+		return UtilText.parse(this, character,
+				"<p style='text-align:center'>"
+					+ (bondChangeDescription!=null && !bondChangeDescription.isEmpty()?"<i>"+bondChangeDescription+"</i><br/>":"")
+					+ "[npc.Name] "+(bondIncrement>0?"[style.boldGood(gains)]":"[style.boldBad(loses)]")+" <b>"+Math.abs(bondIncrement)+"</b> [style.boldAffection(interest)] towards [npc2.name]!<br/>"
+					+ AffectionLevel.getDescription(this, character, getAffectionLevel(character), true)
+				+ "</p>");
+	}
+*/
 	// Marriage
 	
 	public Map<String, Float> getMarriageMap() {
 		return marriageMap;
+	}
+	
+	public void clearMarriageMap() {
+		marriageMap.clear();
+	}
+	
+	public List<String> getSpouces() {
+		return new ArrayList<String>(marriageMap.keySet());
 	}
 	
 	public boolean hasBondWith(GameCharacter character) {
@@ -4684,6 +4827,10 @@ public abstract class GameCharacter implements XMLSaving {
 			return Math.round(marriageMap.get(character.getId())*100)/100f;
 		}
 		return 0f;
+	}
+	
+	public void setBond(String id, float bond) {
+		marriageMap.put(id, Math.max(-100, Math.min(100, bond)));
 	}
 	
 	// Slavery:

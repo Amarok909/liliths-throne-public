@@ -363,10 +363,16 @@ public class OccupantDialogue {
 					}
 					
 					if(Main.game.getPlayer().hasBondWith(occupant())) {	// Dating Content Started
-						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name]"), null);
+						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getBond(npc)]"), null) {
+							@Override
+							public void effects() {
+								occupant().setBond(Main.game.getPlayer().getId(), occupant().getBond(Main.game.getPlayer()) + 20);
+								Main.game.getPlayer().setBond(occupant().getId(), Main.game.getPlayer().getBond(occupant()) + 20);
+							}
+						};
 					}
 					
-					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date"), null) {	// Start dating content
+					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getBond(npc)]"), null) {	// Start dating content
 						@Override
 						public void effects() {
 							occupant().getMarriageMap().putIfAbsent(Main.game.getPlayer().getId(), 0f);
