@@ -245,24 +245,34 @@ public class DominionAlleywayAttacker extends NPC {
 	
 	@Override
 	public String getDescription() {
-		if(this.getHistory()==Occupation.NPC_PROSTITUTE) {
-			if(this.isSlave()) {
-				return (UtilText.parse(this,
-						"[npc.NamePos] days of whoring [npc.herself] out in the back alleys of Dominion are now over. Having run afoul of the law, [npc.sheIs] now a slave, and is no more than [npc.her] owner's property."));
+	//	if(element.getElementsByTagName("description").getLength()!=0) {
+	//		character.setDescription(((Element)element.getElementsByTagName("description").item(0)).getAttribute("value"));
+	//		Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set description");
+	//	}
+	//	if LOADED DESC == "", then reset
+		if(description==null || description.isEmpty()) {
+			if(this.getHistory()==Occupation.NPC_PROSTITUTE) {
+				if(this.isSlave()) {
+					return (UtilText.parse(this,
+							"[npc.NamePos] days of whoring [npc.herself] out in the back alleys of Dominion are now over. Having run afoul of the law, [npc.sheIs] now a slave, and is no more than [npc.her] owner's property."));
+				} else {
+					return (UtilText.parse(this,
+							"[npc.Name] is a prostitute who whores [npc.herself] out in the backalleys of Dominion."));
+				}
+				
 			} else {
-				return (UtilText.parse(this,
-						"[npc.Name] is a prostitute who whores [npc.herself] out in the backalleys of Dominion."));
+				if(this.isSlave()) {
+					return (UtilText.parse(this,
+							"[npc.NamePos] days of prowling the back alleys of Dominion and mugging innocent travellers are now over. Having run afoul of the law, [npc.sheIs] now a slave, and is no more than [npc.her] owner's property."));
+				} else {
+					return (UtilText.parse(this,
+							"[npc.Name] is a resident of Dominion, who prowls the back alleys in search of innocent travellers to mug and rape."));
+				}
 			}
-			
 		} else {
-			if(this.isSlave()) {
-				return (UtilText.parse(this,
-						"[npc.NamePos] days of prowling the back alleys of Dominion and mugging innocent travellers are now over. Having run afoul of the law, [npc.sheIs] now a slave, and is no more than [npc.her] owner's property."));
-			} else {
-				return (UtilText.parse(this,
-						"[npc.Name] is a resident of Dominion, who prowls the back alleys in search of innocent travellers to mug and rape."));
-			}
+			return UtilText.parse(this, description);
 		}
+	//	else, return LOADED DESC, look at player for code?
 	}
 
 	@Override
