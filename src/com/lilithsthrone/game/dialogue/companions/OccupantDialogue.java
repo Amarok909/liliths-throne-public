@@ -354,8 +354,12 @@ public class OccupantDialogue {
 					}
 					
 				} else if (index == 8) {
+					if(occupant().isRelatedTo(Main.game.getPlayer()) && (!Main.game.isIncestEnabled() || !occupant().hasFetish(Fetish.FETISH_INCEST))) {
+						return new Response("Date", UtilText.parse(occupant(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
+					}
+					
 					if(Main.game.getPlayer().getBond(occupant())>=80) {	// Ready to Marry
-						return new Response("Marry", UtilText.parse(occupant(), "Marry [npc.Name]"), null);
+						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name]"), null);
 					}
 					
 					if(Main.game.getPlayer().hasBondWith(occupant())) {	// Dating Content Started
