@@ -172,6 +172,10 @@ public class DominionExpressCentaur extends NPC {
 	
 	@Override
 	public String getDescription() {
+		if(description!=null && !description.isEmpty()) {
+			return UtilText.parse(this, description);
+		}
+		
 		return UtilText.parse(this, "[npc.Name] is a slave at Dominion Express, and works hard every day to transport goods all over the city.");
 	}
 	

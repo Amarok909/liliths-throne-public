@@ -4014,6 +4014,10 @@ public abstract class GameCharacter implements XMLSaving {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public void resetDescription() {
+		this.description = null;
+	}
 
 	public String getBirthdayString() {
 		boolean bce = this.getBirthday().getYear()<0;

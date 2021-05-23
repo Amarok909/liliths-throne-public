@@ -192,6 +192,10 @@ public class NPCOffspring extends NPC {
 	
 	@Override
 	public String getDescription() {
+		if(description!=null && !description.isEmpty()) {
+			return UtilText.parse(this, description);
+		}
+		
 		int daysToBirth = (int) ChronoUnit.DAYS.between(this.getConceptionDate(), this.getBirthday());
 		
 		if(this.getMother()==null || this.getFather()==null) {

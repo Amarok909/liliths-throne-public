@@ -135,6 +135,14 @@ public class DominionClubNPC extends NPC {
 	}
 	
 	@Override
+	public String getDescription() {
+		if(description!=null && !description.isEmpty()) {
+			return UtilText.parse(this, description);
+		}
+		return "[npc.Name] is a resident of Dominion, who you met in one of Nightlife's clubs.";
+	}
+	
+	@Override
 	public boolean isAbleToBeImpregnated() {
 		return true;
 	}
