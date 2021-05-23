@@ -1232,16 +1232,17 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		// ************** Marriage **************//
 		
-		Element characterMarriage = doc.createElement("characterMarriages");
-		properties.appendChild(characterMarriage);
-		for(Entry<String, Float> entry : this.getMarriageMap().entrySet()){
-			Element relationship = doc.createElement("marriage");
-			characterMarriage.appendChild(relationship);
-			
-			XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
-			XMLUtil.addAttribute(doc, relationship, "value", String.valueOf(entry.getValue()));
+		if(this.getMarriageMap().size()>=1) {		//Keep the XML File clean, if no marriages, no need to add it in
+			Element characterMarriage = doc.createElement("characterMarriages");
+			properties.appendChild(characterMarriage);
+			for(Entry<String, Float> entry : this.getMarriageMap().entrySet()){
+				Element relationship = doc.createElement("marriage");
+				characterMarriage.appendChild(relationship);
+				
+				XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
+				XMLUtil.addAttribute(doc, relationship, "value", String.valueOf(entry.getValue()));
+			}
 		}
-		
 		
 		
 		// ************** Slavery **************//
@@ -1425,8 +1426,8 @@ public abstract class GameCharacter implements XMLSaving {
 		boolean noPregnancy = Arrays.asList(settings).contains(CharacterImportSetting.NO_PREGNANCY);
 		boolean noCompanions = Arrays.asList(settings).contains(CharacterImportSetting.NO_COMPANIONS);
 		boolean noElemental = Arrays.asList(settings).contains(CharacterImportSetting.NO_ELEMENTAL);
-		boolean noSlavery = Arrays.asList(settings).contains(CharacterImportSetting.CLEAR_SLAVERY);
 		boolean noMarriage = Arrays.asList(settings).contains(CharacterImportSetting.NO_MARRIAGE);
+		boolean noSlavery = Arrays.asList(settings).contains(CharacterImportSetting.CLEAR_SLAVERY);
 		boolean noLocationSetup = Arrays.asList(settings).contains(CharacterImportSetting.NO_LOCATION_SETUP);
 		boolean clearKeyItems = Arrays.asList(settings).contains(CharacterImportSetting.CLEAR_KEY_ITEMS);
 		boolean clearCombatHistory = Arrays.asList(settings).contains(CharacterImportSetting.CLEAR_COMBAT_HISTORY);
@@ -2591,39 +2592,6 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		// ************** Marriage **************//
 		
-
-		
-		// Refrence 
-		/**
-		Element characterRelationships = doc.createElement("characterRelationships");
-		properties.appendChild(characterRelationships);
-		for(Entry<String, Float> entry : this.getAffectionMap().entrySet()){
-			Element relationship = doc.createElement("relationship");
-			characterRelationships.appendChild(relationship);
-			
-			XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
-			XMLUtil.addAttribute(doc, relationship, "value", String.valueOf(entry.getValue()));
-		}
-		nodes = parentElement.getElementsByTagName("characterRelationships");
-		element = (Element) nodes.item(0);
-		if(element!=null) {
-			NodeList relationshipElements = element.getElementsByTagName("relationship");
-			for(int i=0; i<relationshipElements.getLength(); i++){
-				Element e = ((Element)relationshipElements.item(i));
-				String characterId = e.getAttribute("character");
-				if(Main.isVersionOlderThan(version, "0.3.5.9")) {
-					characterId = characterId.replaceAll("Alexa", "Helena");
-				}
-				if(!characterId.equals("NOT_SET")) {
-					character.setAffection(characterId, Float.valueOf(e.getAttribute("value")));
-					Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Relationship: "+characterId +" , "+ Float.valueOf(e.getAttribute("value")));
-				}
-			}
-		}		*/
-		
-		
-		
-		// Final for use
 		if(!noMarriage) {
 			nodes = parentElement.getElementsByTagName("characterMarriages");							// Looks for the characterMarrages container in the xml file
 			element = (Element) nodes.item(0);															// finds the first instance of said container
@@ -2634,10 +2602,6 @@ public abstract class GameCharacter implements XMLSaving {
 					Element e = ((Element)marriageElements.item(i));									// temp variable e is the currently selected marriage instance
 					String characterId = e.getAttribute("character");									// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
 					
-					if(Main.isVersionOlderThan(version, "0.3.5.9")) {
-						characterId = characterId.replaceAll("Alexa", "Helena");						// replaces Alexa with Helena for version consistancy, on the offchance you started dating her...
-					}
-					
 					if(!characterId.equals("NOT_SET")) {												// checks if character is a fully baked NPC
 						character.setAffection(characterId, Float.valueOf(e.getAttribute("value")));	// finally sets the bond value of this character to the target NPC of this instance
 						Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Bond: "+characterId +" , "+ Float.valueOf(e.getAttribute("value")));
@@ -2645,20 +2609,6 @@ public abstract class GameCharacter implements XMLSaving {
 				}
 			}
 		}
-		
-		// Writer 
-		/**
-		Element characterMarriage = doc.createElement("characterMarriages");
-		properties.appendChild(characterMarriage);
-		for(Entry<String, Float> entry : this.getMarriageMap().entrySet()){
-			Element relationship = doc.createElement("marriage");
-			characterMarriage.appendChild(relationship);
-			
-			XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
-			XMLUtil.addAttribute(doc, relationship, "value", String.valueOf(entry.getValue()));
-		}
-		*/
-		
 		
 		
 		// ************** Slavery **************//
