@@ -390,6 +390,7 @@ public abstract class GameCharacter implements XMLSaving {
 	// Relationship stats:
 	/** String is character ID*/
 	private Map<String, Float> affectionMap;
+	private Map<String, Float> marriageMap;
 	
 	
 	// Pregnancy:
@@ -543,6 +544,7 @@ public abstract class GameCharacter implements XMLSaving {
 		sexualOrientation = SexualOrientation.AMBIPHILIC; 
 
 		affectionMap = new HashMap<>();
+		marriageMap = new HashMap<>();
 		
 		obedience = 0;
 		
@@ -1230,10 +1232,20 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		// ************** Marriage **************//
 		
+	//	Element characterMarriage = doc.createElement("marriage");
+	//	properties.appendChild(characterMarriage);
+	//	for(Litter litter : this.getLittersImplanted()) {
+	//		litter.saveAsXML(characterMarriage, doc);
+	//	}
+		
 		Element characterMarriage = doc.createElement("marriage");
 		properties.appendChild(characterMarriage);
-		for(Litter litter : this.getLittersImplanted()) {
-			litter.saveAsXML(characterMarriage, doc);
+		for(Entry<String, Float> entry : this.getMarriageMap().entrySet()){
+			Element relationship = doc.createElement("relationship");
+			characterMarriage.appendChild(relationship);
+			
+			XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
+			XMLUtil.addAttribute(doc, relationship, "bond", String.valueOf(entry.getValue()));
 		}
 		
 		
@@ -4636,6 +4648,23 @@ public abstract class GameCharacter implements XMLSaving {
 	
 	public String getGiftReaction(AbstractCoreItem gift, boolean applyEffects) {
 		return null;
+	}
+	
+	// Marriage
+	
+	public Map<String, Float> getMarriageMap() {
+		return marriageMap;
+	}
+	
+	public boolean hasBondWith(GameCharacter character) {
+		return this.getMarriageMap().keySet().contains(character.getId());
+	}
+	
+	public float getBond(GameCharacter character) {
+		if(this.hasBondWith(character)) {
+			return Math.round(marriageMap.get(character.getId())*100)/100f;
+		}
+		return 0f;
 	}
 	
 	// Slavery:

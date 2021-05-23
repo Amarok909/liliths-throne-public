@@ -353,6 +353,23 @@ public class OccupantDialogue {
 						return new Response("Pettings", UtilText.parse(occupant(), "You've already given [npc.name] some pettings today."), null);
 					}
 					
+				} else if (index == 8) {
+					if(Main.game.getPlayer().getBond(occupant())>=80) {	// Ready to Marry
+						return new Response("Marry", UtilText.parse(occupant(), "Marry [npc.Name]"), null);
+					}
+					
+					if(Main.game.getPlayer().hasBondWith(occupant())) {	// Dating Content Started
+						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name]"), null);
+					}
+					
+					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date"), null) {	// Start dating content
+						@Override
+						public void effects() {
+							occupant().getMarriageMap().putIfAbsent(Main.game.getPlayer().getId(), 0f);
+							Main.game.getPlayer().getMarriageMap().putIfAbsent(occupant.getId(), 0f);
+						}
+					};
+					
 				} else if (index == 10) {
 					if(hasJob()) {
 						return new Response("Move out",
