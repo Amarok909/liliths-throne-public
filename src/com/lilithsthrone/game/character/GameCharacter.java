@@ -1228,6 +1228,16 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		
 		
+		// ************** Marriage **************//
+		
+		Element characterMarriage = doc.createElement("marriage");
+		properties.appendChild(characterMarriage);
+		for(Litter litter : this.getLittersImplanted()) {
+			litter.saveAsXML(characterMarriage, doc);
+		}
+		
+		
+		
 		// ************** Slavery **************//
 
 		Element slaveryElement = doc.createElement("slavery");
@@ -5457,6 +5467,9 @@ public abstract class GameCharacter implements XMLSaving {
 			result.add(Relationship.Cousin);
 		if(character.getNonCommonNodes(0,1).contains(this))
 			result.add(Relationship.Nibling);
+		if(this.getParents(0, null).contains(character) && character.getParents(0, null).contains(this)) {	//Impossible
+			result.add(Relationship.Spouse);
+		}
 
 		result.removeAll(Arrays.asList(excludedRelationships));
 		
