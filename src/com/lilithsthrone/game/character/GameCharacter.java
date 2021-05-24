@@ -295,7 +295,7 @@ import com.lilithsthrone.world.places.PlaceUpgrade;
  * 
  * @since 0.1.0
  * @version 0.4
- * @author Innoxia, orvail(relationship section)
+ * @author Innoxia, orvail(relationship section), Amarok(marriage section)
  */
 public abstract class GameCharacter implements XMLSaving {
 
@@ -391,8 +391,8 @@ public abstract class GameCharacter implements XMLSaving {
 	// Relationship stats:
 	/** String is character ID*/
 	private Map<String, Float> affectionMap;
-	private Map<String, Float> marriageMap;
-	private Map<String, Map<MaritalStatus, Float>> datingMap;// Rename the romance map
+	private Map<String, Long> datingMap;
+	private Map<String, Map<MaritalStatus, Float>> romanceMap;
 	
 	
 	// Pregnancy:
@@ -546,8 +546,8 @@ public abstract class GameCharacter implements XMLSaving {
 		sexualOrientation = SexualOrientation.AMBIPHILIC; 
 
 		affectionMap = new HashMap<>();
-		marriageMap = new HashMap<>();
 		datingMap = new HashMap<>();
+		romanceMap = new HashMap<>();
 		
 		obedience = 0;
 		
@@ -1235,92 +1235,37 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		// ************** Marriage **************//
 		
-		if(this.getMarriageMap().size()>=1) {		//Keep the XML File clean, if no marriages, no need to add it in
+		if(this.getRomanceMap().size()>=1) {		//Keep the XML File clean, if no marriages, no need to add it in
 			Element characterMarriage = doc.createElement("characterMarriages");
 			properties.appendChild(characterMarriage);
-			for(Entry<String, Float> entry : this.getMarriageMap().entrySet()){
+			for(Entry<String, Map<MaritalStatus, Float>> entry : this.getRomanceMap().entrySet()){
 				Element relationship = doc.createElement("marriage");
 				characterMarriage.appendChild(relationship);
 				
-				XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
-				XMLUtil.addAttribute(doc, relationship, "value", String.valueOf(entry.getValue()));
+				String A = entry.getKey();
+				MaritalStatus B = this.getRomanceMap().get(A).entrySet().iterator().next().getKey();
+				Float C = this.getRomanceMap().get(A).get(B);
+				
+				XMLUtil.addAttribute(doc, relationship, "character", A);
+				XMLUtil.addAttribute(doc, relationship, "status", String.valueOf(B));
+				XMLUtil.addAttribute(doc, relationship, "passion", String.valueOf(C));
+				
+			//	XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
+			//	XMLUtil.addAttribute(doc, relationship, "time", String.valueOf(Main.game.getSecondsPassed() + 100000 + Util.random.nextInt(100000)));
 			}
 			if(this.isPlayer()) {	// Only the player really needs the timers
 				Element dating = doc.createElement("dating");
 				characterMarriage.appendChild(dating);
-				for(Entry<String, Map<MaritalStatus, Float>> entry : this.getDatingMap().entrySet()){
-					Element datetimer = doc.createElement("countdown");
-					dating.appendChild(datetimer);
+				for(Entry<String, Long> entry : this.getDatingMap().entrySet()){
+					Element counter = doc.createElement("cooldown");
+					dating.appendChild(counter);
 					
-					String A = entry.getKey();
-					MaritalStatus B = this.getDatingMap().get(A).entrySet().iterator().next().getKey();
-					Float C = this.getDatingMap().get(A).get(B);
-					
-					XMLUtil.addAttribute(doc, datetimer, "character", A);
-					XMLUtil.addAttribute(doc, datetimer, "status", String.valueOf(B));
-					XMLUtil.addAttribute(doc, datetimer, "romance", String.valueOf(C));
-					
-				//	XMLUtil.addAttribute(doc, datetimer, "character", entry.getKey());
-					XMLUtil.addAttribute(doc, datetimer, "time", String.valueOf(Main.game.getSecondsPassed() + 100000 + Util.random.nextInt(100000)));
+					XMLUtil.addAttribute(doc, counter, "character", entry.getKey());
+					XMLUtil.addAttribute(doc, counter, "time", String.valueOf(entry.getValue()));
 				}
 			}
 		}
-		/*	
-			
-			HashMap<String, HashMap<String, String>> Test = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> m = new HashMap<>();
-			m.put("Beta", "Gamma");
-			Test.put("Alpha", m);
-			Test.put("V", new HashMap<String, String>());
-			Test.get("V").put("key2", "val2");
-			
-			Test.get("V").get("key2");
-			
-			
-			//Test.get("V").entrySet().iterator().n
-			Map.Entry<String, Map<String, String>> en = Test.entrySet().iterator().next();
-			
-			HashMap<String, HashMap<BondLevel, Float>> Test2 = new HashMap<String, HashMap<BondLevel, Float>>();
-			String A = Test2.entrySet().iterator().next().getKey();
-			BondLevel B = Test2.get(A).entrySet().iterator().next().getKey();
-			Float C = Test2.get(A).get(B);
-			
-			for(Entry<String, Map<String, String>> entry : Test.entrySet()) {
-			//	String A = entry.getKey();
-			//	Map<String, String> B = entry.getValue(); //.entrySet().sort;
-				for(Entry<String, String> entry2 : entry.getValue().entrySet()) {
-					String A2 = entry.getKey();
-					String B2 = entry2.getKey();
-					String C2 = entry2.getKey();
-				}
-			}
-			
-			
-			
-			
-	//		List<?> Test = new ArrayList<>();
-	//		Test.add("quality");
-	//		Test.add(1000 + Util.random.nextInt(8765));
-	//		Object Milk = Test.get(0);
-	//	}
 		
-		Element savedEnforcersNode = doc.createElement("savedEnforcers");
-		game.appendChild(savedEnforcersNode);
-		for(Entry<AbstractWorldType, List<List<String>>> entrySet : Main.game.savedEnforcers.entrySet()) {
-			Element element = doc.createElement("world");
-			savedEnforcersNode.appendChild(element);
-			XMLUtil.addAttribute(doc, element, "type", WorldType.getIdFromWorldType(entrySet.getKey()));
-			for(List<String> ids : entrySet.getValue()) {
-				Element enforcersElement = doc.createElement("enforcers");
-				element.appendChild(enforcersElement);
-				for(String s : ids) {
-					Element idElement = doc.createElement("id");
-					enforcersElement.appendChild(idElement);
-					idElement.setTextContent(s);
-				}
-			}
-		}
-		*/
 		
 		// ************** Slavery **************//
 
@@ -2670,47 +2615,40 @@ public abstract class GameCharacter implements XMLSaving {
 		// ************** Marriage **************//
 		
 		if(!noMarriage) {
-			nodes = parentElement.getElementsByTagName("characterMarriages");							// Looks for the characterMarriages container in the xml file
-			element = (Element) nodes.item(0);															// finds the first (and only) instance of said container
-			if(element!=null) {																			// checks that it is there
-				NodeList marriageElements = element.getElementsByTagName("marriage");					// creates a list of all the marriage tags in the container
-				for(int i=0; i<marriageElements.getLength(); i++){										// iterates through each instance of a marriage
-					
-					Element e = ((Element)marriageElements.item(i));									// temp variable e is the currently selected marriage instance
-					String characterId = e.getAttribute("character");									// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
-					
-					if(!characterId.equals("NOT_SET")) {												// checks if character is a fully baked NPC
-						character.setBond(characterId, Float.valueOf(e.getAttribute("value")));			// finally sets the bond value of this character to the target NPC of this instance
-						Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Bond: "+characterId +" , "+ Float.valueOf(e.getAttribute("value")));
+			nodes = parentElement.getElementsByTagName("characterMarriages");								// Looks for the characterMarriages container in the xml file
+			element = (Element) nodes.item(0);																// finds the first (and only) instance of said container
+			if(element!=null) {																				// checks that it is there
+				NodeList marriageElements = element.getElementsByTagName("marriage");						// creates a list of all the marriage tags in the container
+				for(int i=0; i<marriageElements.getLength(); i++){											// iterates through each instance of a countdown
+					Element e = ((Element)marriageElements.item(i));										// temp variable e is the currently selected countdown instance
+				
+					String characterId = e.getAttribute("character");										// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
+					MaritalStatus B = MaritalStatus.valueOf(e.getAttribute("status"));
+					Float C = Float.valueOf(e.getAttribute("passion"));
+				//	Float D = Float.valueOf(e.getAttribute("time"));
+	
+					if(!characterId.equals("NOT_SET")) {													// checks if character is a fully baked NPC
+						character.setRomanticState(characterId, B, C);
+						Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Relationship: "+characterId +" , "+ B);
 					}
+					
 				}
-																					// checks that this is the Pc, as only they need to harvest the info 
-				nodes = element.getElementsByTagName("dating");	
-				if(nodes.getLength()>0 && true) {		//Bad code is in this section								// Looks for the dating sub-container inside of characterMarriges
+		
+				nodes = element.getElementsByTagName("dating");												// Looks for the dating sub-container inside of characterMarriges
+				if(nodes.getLength()>0) {																	// checks that dating has any content
 					element = (Element) nodes.item(0);														// finds the first (and only) instance of said container
 					if(element!=null) {																		// checks that it is there
-						NodeList datingElements = element.getElementsByTagName("countdown");				// creates a list of all the countdown tags in the container
-						for(int i=0; i<datingElements.getLength(); i++){									// iterates through each instance of a countdown
+						NodeList datingElements = element.getElementsByTagName("cooldown");				// creates a list of all the countdown tags in the container
+						for(int i=0; i<datingElements.getLength(); i++){									// iterates through each instance of a marriage
+							Element e = ((Element)datingElements.item(i));									// temp variable e is the currently selected marriage instance
 						
-							Element e = ((Element)datingElements.item(i));									// temp variable e is the currently selected countdown instance
-						
-							String characterId = e.getAttribute("character");																				// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
-																						//	GameCharacter npc = Main.game.getNPCById(characterId);
-							Float B = Float.valueOf(e.getAttribute("romance"));
-							MaritalStatus C = MaritalStatus.valueOf(e.getAttribute("status"));
-							Float D = Float.valueOf(e.getAttribute("time"));
-			
-								if(!characterId.equals("NOT_SET")) {											// checks if character is a fully baked NPC
-						
-									character.setDatingState(characterId, C, B);
-							//		character.getDatingMap.put(characterId, new HashMap<MaritalStatus, Float>());
-							//		character.getDatingMap.get(characterId).put(C, Math.max(-100, Math.min(100, B)));
-				
-							//		character.setBondLevel(npc, Float.valueOf(romanceFloat));				// finally sets the bond value of this character to the target NPC of this instance
-							//		character.setMaritalStatus(npc, MaritalStatus.valueOf(maritalStatus));
-							//		Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Bond: "+characterId +" , "+ Float.valueOf(romanceFloat));
-								}
+							String characterId = e.getAttribute("character");								// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
 							
+							if(!characterId.equals("NOT_SET")) {											// checks if character is a fully baked NPC
+						//		character.setBond(characterId, Long.valueOf(e.getAttribute("time")));		// finally sets the bond value of this character to the target NPC of this instance
+								character.setNextDateTime(characterId, Long.valueOf(e.getAttribute("time")));
+								Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Date time: "+characterId +" , "+ Float.valueOf(e.getAttribute("value")));
+							}
 						}
 					}
 				}
@@ -4782,22 +4720,22 @@ public abstract class GameCharacter implements XMLSaving {
 		return null;
 	}
 	
-	// Dating
+	// Romance
 
-	public Map<String, Map<MaritalStatus, Float>> getDatingMap() {
-	//	return datingMap;
-		return this.datingMap;
+	public Map<String, Map<MaritalStatus, Float>> getRomanceMap() {
+	//	return romanceMap;
+		return this.romanceMap;
 	}
 	
-	public void clearDatingMap() {
-		datingMap.clear();
+	public void clearRomanceMap() {
+		this.romanceMap.clear();
 	}
 
-	public ArrayList<String> getDatingState(GameCharacter character) {
+	public ArrayList<String> getRomanticState(GameCharacter character) {
 		ArrayList<String> Profile = new ArrayList<>();
 		Profile.add(String.valueOf(character.getId()));
 		Profile.add(String.valueOf(getMaritalStatus(character)));
-		Profile.add(String.valueOf(getBondLevel(character)));
+		Profile.add(String.valueOf(getPassion(character)));
 		return Profile;
 	}
 	
@@ -4806,125 +4744,155 @@ public abstract class GameCharacter implements XMLSaving {
 			return MaritalStatus.NONE;
 		}
 		String A = character.getId();
-		return datingMap.get(A).entrySet().iterator().next().getKey();
+		return romanceMap.get(A).entrySet().iterator().next().getKey();
 	}
 	
-	public Float getBondLevel(GameCharacter character) {
+	public Float getPassion(GameCharacter character) {
 		if(!hasRelationshipWith(character)) {
 			return 0f;
 		}
 		String A = character.getId();
 		MaritalStatus B = getMaritalStatus(character);
-		return datingMap.get(A).get(B);
+		return romanceMap.get(A).get(B);
 	}
 	
 	
 	
-	public void setDatingState(String characterID, MaritalStatus status, Float bond) {
-		this.getDatingMap().put(characterID, new HashMap<MaritalStatus, Float>());
-		this.getDatingMap().get(characterID).put(status, Math.max(-100, Math.min(100, bond)));
+	public void setRomanticState(String characterID, MaritalStatus status, Float bond) {
+		try {
+			this.getRomanceMap().put(characterID, new HashMap<MaritalStatus, Float>());
+			this.getRomanceMap().get(characterID).put(status, Math.max(-100, Math.min(100, bond)));
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void setDatingState(GameCharacter character, MaritalStatus status, Float bond) {
-		setDatingState(character.getId(), status, bond);
+	public void setRomanticState(GameCharacter character, MaritalStatus status, Float bond) {
+		setRomanticState(character.getId(), status, bond);
 	}
 	
-	public void setBondLevel(GameCharacter character, Float bond) {
-		this.setDatingState(character, getMaritalStatus(character), bond);
+	public void setPassion(GameCharacter character, Float bond) {
+		this.setRomanticState(character, getMaritalStatus(character), bond);
 	}
 	
 	public void setMaritalStatus(GameCharacter character, MaritalStatus status) {
 		try {
-			this.setDatingState(character, status, getBondLevel(character));
+			this.setRomanticState(character, status, getPassion(character));
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	//[#pc.getRomanceMap()] [#pc.getDatingMap()] [#pc.removeRelationship(npc, false)] [#pc.getMaritalStatus(npc)]
 	
-	//[#pc.getDatingMap()] [#pc.getMarriageMap()] [#pc.removeRelationship(npc, false)] [#pc.getMaritalStatus(npc)]
-	public void initiateRelationship(GameCharacter character) {
+	public void createRelationship(GameCharacter character) {	// Creates for both parties
 		if( !(this.hasRelationshipWith(character) && character.hasRelationshipWith(this)) ) {
 			
 			Float bond = (this.getAffection(character) + character.getAffection(this))/4f;
-			this.setDatingState(character, MaritalStatus.DATING, bond);
-			character.setDatingState(this, MaritalStatus.DATING, bond);
+			this.setRomanticState(character, MaritalStatus.DATING, bond);
+			character.setRomanticState(this, MaritalStatus.DATING, bond);
 		}
 	}
 	
 	public boolean hasRelationshipWith(GameCharacter character) {
-		return getDatingMap().keySet().contains(character.getId());
+		return this.getRomanceMap().keySet().contains(character.getId());
 	}
 
-	public void removeRelationship(GameCharacter character, boolean removeAll) {
+	public void removeRelationship(GameCharacter character, boolean removeAll) {	// Removes the relationship for both parties
 		if(removeAll) {
-			for(Entry<String, Map<MaritalStatus, Float>> rel : this.getDatingMap().entrySet()) {
+			for(Entry<String, Map<MaritalStatus, Float>> rel : this.getRomanceMap().entrySet()) {
 				GameCharacter partner;
 				try {
 					partner = Main.game.getNPCById(rel.getKey());
+					this.getRomanceMap().remove(partner.getId());
 					this.getDatingMap().remove(partner.getId());
-					partner.getDatingMap().remove(this.getId());
+					partner.getRomanceMap().remove(this.getId());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		} else {
+			this.getRomanceMap().remove(character.getId());
 			this.getDatingMap().remove(character.getId());
-			character.getDatingMap().remove(this.getId());
+			character.getRomanceMap().remove(this.getId());
 		}
 	}
 	
 
 	
-/*	public String incrementBond(GameCharacter character, float bondIncrement) {
-		return incrementBond(character, bondIncrement, "");
+	public String incrementPassion(GameCharacter character, float passionIncrement) {
+		return incrementPassion(character, passionIncrement, "");
 	}
 	
 	/**
-	 * Increments this character's affection towards the supplied GameCharacter.
-	 * @param affectionChangeDescription The description to be added to the returned String. Is parsed with "npc" being this character, and "npc2" being the passed in character. 
-	 */							/*
-	public String incrementBond(GameCharacter character, float bondIncrement, String bondChangeDescription) {
-		setBondLevel(character, getBondLevel(character) + affectionIncrement);
+	 * Increments this character's passion towards the supplied GameCharacter.
+	 * @param passionChangeDescription The description to be added to the returned String. Is parsed with "npc" being this character, and "npc2" being the passed in character. 
+	 */
+	public String incrementPassion(GameCharacter character, float passionIncrement, String passionChangeDescription) {
+		setPassion(character, getPassion(character) + passionIncrement);
 		
 		return UtilText.parse(this, character,
 				"<p style='text-align:center'>"
-					+ (bondChangeDescription!=null && !bondChangeDescription.isEmpty()?"<i>"+bondChangeDescription+"</i><br/>":"")
-					+ "[npc.Name] "+(bondIncrement>0?"[style.boldGood(gains)]":"[style.boldBad(loses)]")+" <b>"+Math.abs(bondIncrement)+"</b> [style.boldAffection(interest)] towards [npc2.name]!<br/>"
-					+ AffectionLevel.getDescription(this, character, getAffectionLevel(character), true)
+					+ (passionChangeDescription!=null && !passionChangeDescription.isEmpty()?"<i>"+passionChangeDescription+"</i><br/>":"")
+					+ "[npc.Name] "+(passionIncrement>0?"[style.boldGood(gains)]":"[style.boldBad(loses)]")+" <b>"+Math.abs(passionIncrement)+"</b> [style.boldAffection(passion)] towards [npc2.name]!<br/>"
+					+ PassionLevel.getDescription(this, character, getAffectionLevel(character), true)
 				+ "</p>");
 	}
-*/
-	// Marriage
+
+	// Dating
 	
-	public Map<String, Float> getMarriageMap() {
-		return marriageMap;
+	public Map<String, Long> getDatingMap() {
+		return this.datingMap;
 	}
 	
-	public void clearMarriageMap() {
-		marriageMap.clear();
+	public void clearDatingMap() {
+		this.datingMap.clear();
+	}
+
+	public void setNextDateTime(String characterID, Long epoch) {
+		this.getDatingMap().put(characterID, epoch);
+		if(Main.game.getSecondsPassed()>epoch) {
+			this.getDatingMap().put(characterID, Main.game.getSecondsPassed());
+		}
+	}
+
+	public void setNextDateTime(GameCharacter character, Long epoch) {
+		setNextDateTime(character.getId(), epoch);
+	}
+
+	public long getNextDateTime(GameCharacter character) {
+		return this.getDatingMap().get(character.getId());
+	}
+
+	public boolean canHaveDate(GameCharacter character) {
+		long currentTime = Main.game.getSecondsPassed();
+		long dateTime = this.getNextDateTime(character);
+		if(currentTime>dateTime) {
+			return true;
+		}
+		return false;
 	}
 	
 	public List<String> getSpouces() {
-		return new ArrayList<String>(marriageMap.keySet());
+		return new ArrayList<String>(romanceMap.keySet());
 	}
 	
 	public boolean hasBondWith(GameCharacter character) {
-		return this.getMarriageMap().keySet().contains(character.getId());
+		return this.getRomanceMap().keySet().contains(character.getId());
 	}
 	
-	public float getBond(GameCharacter character) {
-		if(this.hasBondWith(character)) {
-			return Math.round(marriageMap.get(character.getId())*100)/100f;
-		}
-		return 0f;
-	}
+//	public float getBond(GameCharacter character) {
+//		if(this.hasBondWith(character)) {
+//			return Math.round(this.getDatingMap().get(character.getId())*100)/100f;
+//		}
+//		return 0f;
+//	}
 	
-	public void setBond(String id, float bond) {
-		marriageMap.put(id, Math.max(-100, Math.min(100, bond)));
-	}
+//	public void setBond(String id, long time) {
+//		datingMap.put(id, Math.max(-100, Math.min(100, time)));
+//	}
 	
 	// Slavery:
 	

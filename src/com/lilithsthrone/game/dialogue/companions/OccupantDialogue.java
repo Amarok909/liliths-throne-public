@@ -358,38 +358,30 @@ public class OccupantDialogue {
 						return new Response("Date", UtilText.parse(occupant(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
 					}
 					
-					if(Main.game.getPlayer().getBond(occupant())>=80) {	// Ready to Marry
-						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name] <br/>[#pc.getBond(npc)] <br/>[#pc.getBondLevel(npc)]"), null) {
+					if(Main.game.getPlayer().getPassion(occupant())>=80) {	// Ready to Marry
+						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
 							@Override
 							public void effects() {
-								Main.game.getPlayer().setBondLevel(occupant(), Main.game.getPlayer().getBondLevel(occupant()) + 10);
-								occupant().setBondLevel(Main.game.getPlayer(), occupant().getBondLevel(Main.game.getPlayer()) + 10);
-								
-								occupant().setBond(Main.game.getPlayer().getId(), occupant().getBond(Main.game.getPlayer()) + 20);
-								Main.game.getPlayer().setBond(occupant().getId(), Main.game.getPlayer().getBond(occupant()) + 20);
+								Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
+								occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
 							}
 						};
 					}
 					
-					if(Main.game.getPlayer().hasBondWith(occupant())) {	// Dating Content Started
-						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getBond(npc)] <br/>[#pc.getBondLevel(npc)]"), null) {
+					if(Main.game.getPlayer().hasRelationshipWith(occupant())) {	// Dating Content Started
+						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
 							@Override
 							public void effects() {
-								Main.game.getPlayer().setBondLevel(occupant(), Main.game.getPlayer().getBondLevel(occupant()) + 10);
-								occupant().setBondLevel(Main.game.getPlayer(), occupant().getBondLevel(Main.game.getPlayer()) + 10);
-								
-								occupant().setBond(Main.game.getPlayer().getId(), occupant().getBond(Main.game.getPlayer()) + 20);
-								Main.game.getPlayer().setBond(occupant().getId(), Main.game.getPlayer().getBond(occupant()) + 20);
+								Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
+								occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
 							}
 						};
 					}
 					
-					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getBond(npc)] <br/>[#pc.getBondLevel(npc)]"), null) {	// Start dating content
+					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getPassion(npc)]"), null) {	// Start dating content
 						@Override
 						public void effects() {
-							Main.game.getPlayer().initiateRelationship(occupant);
-							occupant().getMarriageMap().putIfAbsent(Main.game.getPlayer().getId(), 0f);
-							Main.game.getPlayer().getMarriageMap().putIfAbsent(occupant.getId(), 0f);
+							Main.game.getPlayer().createRelationship(occupant);
 						}
 					};
 					

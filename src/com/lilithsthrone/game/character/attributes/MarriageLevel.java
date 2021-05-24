@@ -11,7 +11,8 @@ import com.lilithsthrone.utils.colours.PresetColour;
  * @author Amarok
  */
 public class MarriageLevel {
-	public enum BondLevel {
+	
+	public enum PassionLevel {
 		
 		/** -100 to -30*/
 		DIVORCING("divorcing", -100, -30, PresetColour.AFFECTION_NEGATIVE_TWO),
@@ -27,7 +28,7 @@ public class MarriageLevel {
 		private int minimumValue, maximumValue;
 		private Colour colour;
 	
-		private BondLevel(String name, int minimumValue, int maximumValue, Colour colour) {
+		private PassionLevel(String name, int minimumValue, int maximumValue, Colour colour) {
 			this.name = name;
 			this.minimumValue = minimumValue;
 			this.maximumValue = maximumValue;
@@ -143,8 +144,8 @@ public class MarriageLevel {
 			return colour;
 		}
 	
-		public static BondLevel getBondLevelFromValue(float value){
-			for(BondLevel al : BondLevel.values()) {
+		public static PassionLevel getBondLevelFromValue(float value){
+			for(PassionLevel al : PassionLevel.values()) {
 				if(value>=al.getMinimumValue() && value<al.getMaximumValue())
 					return al;
 			}
