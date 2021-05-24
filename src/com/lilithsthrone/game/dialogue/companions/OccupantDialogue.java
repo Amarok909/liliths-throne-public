@@ -359,22 +359,35 @@ public class OccupantDialogue {
 					}
 					
 					if(Main.game.getPlayer().getBond(occupant())>=80) {	// Ready to Marry
-						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name]"), null);
-					}
-					
-					if(Main.game.getPlayer().hasBondWith(occupant())) {	// Dating Content Started
-						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getBond(npc)]"), null) {
+						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name] <br/>[#pc.getBond(npc)] <br/>[#pc.getBondLevel(npc)]"), null) {
 							@Override
 							public void effects() {
+								Main.game.getPlayer().setBondLevel(occupant(), Main.game.getPlayer().getBondLevel(occupant()) + 10);
+								occupant().setBondLevel(Main.game.getPlayer(), occupant().getBondLevel(Main.game.getPlayer()) + 10);
+								
 								occupant().setBond(Main.game.getPlayer().getId(), occupant().getBond(Main.game.getPlayer()) + 20);
 								Main.game.getPlayer().setBond(occupant().getId(), Main.game.getPlayer().getBond(occupant()) + 20);
 							}
 						};
 					}
 					
-					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getBond(npc)]"), null) {	// Start dating content
+					if(Main.game.getPlayer().hasBondWith(occupant())) {	// Dating Content Started
+						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getBond(npc)] <br/>[#pc.getBondLevel(npc)]"), null) {
+							@Override
+							public void effects() {
+								Main.game.getPlayer().setBondLevel(occupant(), Main.game.getPlayer().getBondLevel(occupant()) + 10);
+								occupant().setBondLevel(Main.game.getPlayer(), occupant().getBondLevel(Main.game.getPlayer()) + 10);
+								
+								occupant().setBond(Main.game.getPlayer().getId(), occupant().getBond(Main.game.getPlayer()) + 20);
+								Main.game.getPlayer().setBond(occupant().getId(), Main.game.getPlayer().getBond(occupant()) + 20);
+							}
+						};
+					}
+					
+					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getBond(npc)] <br/>[#pc.getBondLevel(npc)]"), null) {	// Start dating content
 						@Override
 						public void effects() {
+							Main.game.getPlayer().initiateRelationship(occupant);
 							occupant().getMarriageMap().putIfAbsent(Main.game.getPlayer().getId(), 0f);
 							Main.game.getPlayer().getMarriageMap().putIfAbsent(occupant.getId(), 0f);
 						}

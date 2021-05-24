@@ -34,6 +34,7 @@ import com.lilithsthrone.game.character.attributes.AffectionLevel;
 import com.lilithsthrone.game.character.attributes.AffectionLevelBasic;
 import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
+import com.lilithsthrone.game.character.attributes.MarriageLevel.MaritalStatus;
 import com.lilithsthrone.game.character.attributes.ObedienceLevel;
 import com.lilithsthrone.game.character.attributes.ObedienceLevelBasic;
 import com.lilithsthrone.game.character.body.Body;
@@ -9597,6 +9598,9 @@ public class UtilText {
 		}
 		for(Relationship relationship : Relationship.values()) {
 			engine.put("RELATIONSHIP_"+relationship.toString(), relationship);
+		}
+		for(MaritalStatus status : MaritalStatus.values()) {
+			engine.put("MARITAL_STATUS_"+status.toString(), status);
 		}
 		for(FurryPreference furryPreference : FurryPreference.values()) {
 			engine.put("FURRY_PREF_"+furryPreference.toString(), furryPreference);
