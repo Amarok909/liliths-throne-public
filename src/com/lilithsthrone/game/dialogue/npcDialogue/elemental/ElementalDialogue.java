@@ -3,6 +3,7 @@ package com.lilithsthrone.game.dialogue.npcDialogue.elemental;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.effects.PerkManager;
 import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.character.npc.NPC;
@@ -12,6 +13,7 @@ import com.lilithsthrone.game.character.race.AbstractSubspecies;
 import com.lilithsthrone.game.character.race.Race;
 import com.lilithsthrone.game.character.race.Subspecies;
 import com.lilithsthrone.game.dialogue.DialogueNode;
+import com.lilithsthrone.game.dialogue.companions.CompanionManagement;
 import com.lilithsthrone.game.dialogue.responses.Response;
 import com.lilithsthrone.game.dialogue.responses.ResponseEffectsOnly;
 import com.lilithsthrone.game.dialogue.responses.ResponseSex;
@@ -476,11 +478,15 @@ public class ElementalDialogue {
 					+ "</div>");
 			
 			UtilText.nodeContentSB.append(UtilText.parse(getElemental(), 
-						"<p style='text-align:center; margin-top:4px;'>"
-							+ "<i>If [npc.name] is told to call you 'Mom' or 'Dad', 'Mommy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir',"
-							+ " then [npc.she] will automatically switch to the appropriate paired name depending on the femininity of your character.</i>"
-						+ "</p>"
-					+ "</div>"));
+				"<p style='text-align:center; margin-top:4px;'>"
+				+ (Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)
+					? "<i>If [npc.name] is told to call you 'Mum' or 'Dad', 'Mummy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir' and so on,"
+					: "<i>If [npc.name] is told to call you 'Mom' or 'Dad', 'Mommy' or 'Daddy', 'Mistress' or 'Master', or 'Ma'am' or 'Sir' and so on,")
+					+ " then [npc.she] will automatically switch to the appropriate paired name depending on the femininity of your character.</i>"
+				+ "</p>"
+			+ "</div>"));
+			
+			UtilText.nodeContentSB.append(CompanionManagement.genderFullList(getElemental()));
 			
 			UtilText.nodeContentSB.append("<p id='hiddenFieldName' style='display:none;'></p>");
 			

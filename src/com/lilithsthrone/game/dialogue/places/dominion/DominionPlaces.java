@@ -157,7 +157,7 @@ public class DominionPlaces {
 					occupantSB.append(" are your children, " + Util.stringsToStringList(relatives, false));
 				}
 				//friends
-				if(familiars.size()==1) {
+				if(familiars.size()>=1) {
 					occupantSB.append(
 						(relatives.size()>=1 
 							? ". Sharing the building with them" : "")

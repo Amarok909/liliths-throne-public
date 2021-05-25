@@ -195,7 +195,7 @@ import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 /**
  * @since 0.1.0
  * @version 0.4
- * @author Innoxia, Pimvgd, AlacoGit, Tad Unlikely
+ * @author Innoxia, Pimvgd, AlacoGit, Tad Unlikely, Amarok
  */
 public class UtilText {
 
@@ -1301,6 +1301,51 @@ public class UtilText {
 		return input;
 	}
 
+	//Special utility parsing commands to expand capibilities of XML based modding
+	//Allows xml files with long sequences to acsess custom xml files in res/mods/AUTHORNAME/txt
+
+	/**
+	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
+	 */
+	public String getTextFromXMLFile(String pathName, String tag) {
+		return parseFromXMLFile(new ArrayList<>(), "res/txt/", pathName, tag, new ArrayList<>());
+	}
+
+	/**
+	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
+	 */
+	public String getTextFromXMLFile(List<ParserTag> parserTags, String pathName, String tag) {
+		return parseFromXMLFile(parserTags, "res/txt/", pathName, tag, new ArrayList<>());
+	}
+	
+	/**
+	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
+	 */
+	public String getTextFromXMLFile(String pathName, String tag, GameCharacter... specialNPCs) {
+		return parseFromXMLFile(new ArrayList<>(), "res/txt/", pathName, tag, Util.newArrayListOfValues(specialNPCs));
+	}
+	
+	/**
+	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
+	 */
+	public String getTextFromXMLFile(List<ParserTag> parserTags, String pathName, String tag, GameCharacter... specialNPCs) {
+		return parseFromXMLFile(parserTags, "res/txt/", pathName, tag, Util.newArrayListOfValues(specialNPCs));
+	}
+	
+	/**
+	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
+	 */
+	public String getTextFromXMLFile(String pathName, String tag, List<GameCharacter> specialNPC) {
+		return parseFromXMLFile(new ArrayList<>(), "res/txt/", pathName, tag, specialNPC);
+	}
+	
+	/**
+	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
+	 */
+	public String getTextFromXMLFile(List<ParserTag> parserTags, String folderPath, String pathName, String tag, List<GameCharacter> specialNPC) {
+		return parseFromXMLFile(parserTags, folderPath, pathName, tag, specialNPC);
+	}
+
 	
 	public static List<ParserCommand> commandsList = new ArrayList<>();
 	public static Map<BodyPartType, List<ParserCommand>> commandsMap = new EnumMap<>(BodyPartType.class);
@@ -1704,6 +1749,277 @@ public class UtilText {
 		});
 		
 		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"kneel",
+						"kneels",
+						"lowerSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's individual movement action."
+				+ "returns either (lower yourself, lowers himself, lowers herself, kneel, or kneels) based on non-legged leg configuration (lamia and scyallia) and third/first person"
+				+ "next word is the word after 'kneel' or 'lower yourself', works around text complexity"){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;					
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+									
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("lower " + UtilText.parse(character, "[npc.herself]")) : ("sink "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("lowers " + UtilText.parse(character, "[npc.herself()]")) : ("sinks "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						if(arg1.equals("false") && character.isPlayer()) {
+							return arg2.equals("") ? "kneel" : ("kneel "+arg2);
+						} else {
+							return arg2.equals("") ? "kneels" : ("kneels "+arg2);
+						}
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"kneeling",
+						"loweringSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("lowering " + UtilText.parse(character, "[npc.herself]")) : ("sinking "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("lowering " + UtilText.parse(character, "[npc.herself()]")) : ("sinking "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "kneeling" : ("kneeling "+arg2);
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"kneeled",
+						"knelt",
+						"loweredSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("lowered " + UtilText.parse(character, "[npc.herself]")) : ("sunk "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("lowered " + UtilText.parse(character, "[npc.herself()]")) : ("sunk "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						if(command.equalsIgnoreCase("Knelt")) {
+							return arg2.equals("") ? "knelt" : ("knelt "+arg2);
+						} else {
+							return arg2.equals("") ? "kneeled" : ("kneeled "+arg2);
+						}
+				}
+			}
+		});
+
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"stand",
+						"stands",
+						"raiseSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's individual movement action."
+				+ "returns either (raise yourself, raises himself, raises herself, stand, or stands) based on non-legged leg configuration (lamia and scyallia) and third/first person"
+				+ "next word is the word after 'stand' or 'raise yourself', works around text complexity"){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;					
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+									
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raise " + UtilText.parse(character, "[npc.herself]")) : ("rise "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raises " + UtilText.parse(character, "[npc.herself()]")) : ("rises "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						if(arg1.equals("false") && character.isPlayer()) {
+							return arg2.equals("") ? "stand" : ("stand "+arg2);
+						} else {
+							return arg2.equals("") ? "stands" : ("stands "+arg2);
+						}
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"standing",
+						"raisingSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raising " + UtilText.parse(character, "[npc.herself]")) : ("rising "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raising " + UtilText.parse(character, "[npc.herself()]")) : ("rising "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "standing" : ("standing "+arg2);
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"stood",
+						"raisedSelf"),
+				true,
+				false,
+				"(real pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
+				String arg1 = arguments==null || arguments.equals("")						//pc third person
+								? "false"
+								: arguments.contains(",")
+									? arguments.split(",")[0].trim()
+									: arguments;
+				String arg2 = arguments==null || arguments.equals("")						//next word
+								? ""
+								: arguments.contains(",")
+									? arguments.split(",")[1].trim()
+									: "";
+				
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						if(arg1.equals("false") && character.isPlayer()) {
+							String text = arg2.equals("") ? ("raised " + UtilText.parse(character, "[npc.herself]")) : ("rose "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
+							}	return text;
+						} else {
+							String text = arg2.equals("") ? ("raised " + UtilText.parse(character, "[npc.herself()]")) : ("rose "+arg2);
+							if(Cap) {
+								return text.substring(0, 1).toUpperCase() + text.substring(1);
+							}	return text;
+						}
+					default:
+						return arg2.equals("") ? "stood" : ("stood "+arg2);
+				}
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
 				Util.newArrayListOfValues("surname"),
 				true,
 				false,
@@ -2097,14 +2413,17 @@ public class UtilText {
 		commandsList.add(new ParserCommand(
 				Util.newArrayListOfValues(
 						"mommy",
+						"mummy",
 						"daddy"),
 				true,
 				true,
 				"",
-				"Returns either 'daddy' or 'mommy' based on the character's femininity."){
+				"Returns either 'daddy' or 'mommy' based on the character's femininity. Will return 'mummy' instead of 'mommy' when the setting <i>Maternal Terms<i/> is active."){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
-				if(character.isFeminine()) {
+				if(character.isFeminine() && Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)) {
+					return "mummy";
+				} else if(character.isFeminine() && !Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)) {		//Added by Amarok
 					return "mommy";
 				} else {
 					return "daddy";
@@ -2120,10 +2439,12 @@ public class UtilText {
 				true,
 				true,
 				"",
-				"Returns either 'dad' or 'mom' based on the character's femininity."){
+				"Returns either 'dad' or 'mom' based on the character's femininity. Will return 'mum' instead of 'mom' when the setting <i>Maternal Terms<i/> is active."){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
-				if(character.isFeminine()) {
+				if(character.isFeminine() && Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)) {
+					return "mum";
+				} else if(character.isFeminine() && !Main.getProperties().hasValue(PropertyValue.useCommonwealthMum)) {		//Added by Amarok
 					return "mom";
 				} else {
 					return "dad";
@@ -2284,7 +2605,7 @@ public class UtilText {
 				if(character.isFeminine()) {
 					return UtilText.returnStringAtRandom("bitch", "slut", "cunt", "whore", "skank");
 				} else {
-					return UtilText.returnStringAtRandom("asshole", "bastard", "fuckface", "fucker");
+					return UtilText.returnStringAtRandom("asshole", "bastard", "fuckface", "fucker", "wanker");
 				}
 			}
 		});
@@ -2303,7 +2624,7 @@ public class UtilText {
 				if(character.isFeminine()) {
 					return UtilText.returnStringAtRandom("bitches", "sluts", "cunts", "whores", "skanks");
 				} else {
-					return UtilText.returnStringAtRandom("assholes", "bastards", "fuckfaces", "fuckers");
+					return UtilText.returnStringAtRandom("assholes", "bastards", "fuckfaces", "fuckers", "wankers");
 				}
 			}
 		});
@@ -3626,7 +3947,9 @@ public class UtilText {
 				true,
 				false,
 				"",
-				"Description of method"){//TODO
+				"Returns a suitable variant of a 'sexual noise' that the target might make. For example, if they're feminine, they will be moaning, while if they are masculine, they will be groaning."
+				+ " This method takes into account if the target is resisting, and if they are, the returned noise will be something like 'sobbing' or 'crying'."
+				+ " <b>Provides an appropriate <i>gerund verb</i> version of 'moan'.</b>"){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				if(Main.game.isInSex()) {
@@ -3660,7 +3983,10 @@ public class UtilText {
 				true,
 				false,
 				"",
-				"Description of method"){//TODO
+				"Returns a suitable variant of a 'sexual noise' that the target might make. For example, if they're feminine, they will be moaning, while if they are masculine, they will be groaning."
+				+ " This method takes into account if the target is resisting, and if they are, the returned noise will be something like 'sobbing' or 'crying'."
+				+ " <b>Expansion of 'moaning' command:</b> This command will append a suitable descriptor before the 'moaning' noise. e.g. 'lewd squealing', or 'eager grunting'."
+				+ " <b>Provides an appropriate <i>gerund verb</i> version of 'moan'.</b>"){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				if(Main.game.isInSex()) {
@@ -9156,7 +9482,11 @@ public class UtilText {
 				System.err.println("Scripting parsing error: "+command);
 				System.err.println(e.getMessage());
 //				e.printStackTrace();
-				return "<i style='color:"+PresetColour.GENERIC_BAD.toWebHexString()+";'>(Error in script parsing!)</i>";
+				if(Main.game.isDebugMode()) {
+					return "<i style='color:"+PresetColour.GENERIC_BAD.toWebHexString()+";'>(Error in script parsing!: " + command.toString() + ")</i>";
+				} else {
+					return "<i style='color:"+PresetColour.GENERIC_BAD.toWebHexString()+";'>(Error in script parsing!)</i>";
+				}
 			}
 			
 		} else if(Main.game.isStarted()) { //TODO test:
@@ -9321,6 +9651,7 @@ public class UtilText {
 		engine.put("properties", Main.getProperties());
 		engine.put("RND", Util.random);
 		engine.put("itemGen", Main.game.getItemGen());
+		engine.put("utility", Main.utility);						//Amarok utility addtion to parser
 		
 		// Java classes:
 		for(DayOfWeek dayOfWeek : DayOfWeek.values()) {
@@ -10130,8 +10461,9 @@ public class UtilText {
 				return character.getBody().getVagina().getGirlcum();
 			case WING:
 				return character.getBody().getWing();
+			case SPINNERET:
+				return character.getBody().getSpinneret();
 			case GENERIC:
-			case SPINNERET: //TODO?
 				return null;
 		}
 		return null;

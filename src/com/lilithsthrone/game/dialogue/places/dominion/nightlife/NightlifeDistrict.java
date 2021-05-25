@@ -3574,7 +3574,7 @@ public class NightlifeDistrict {
 							|| (Main.game.getPlayer().hasVagina() && Main.game.getPlayer().isAbleToAccessCoverableArea(CoverableArea.VAGINA, true))
 							|| (Main.game.getPlayer().isAbleToAccessCoverableArea(CoverableArea.ANUS, true))) {
 						return new Response("Glory hole (service)",
-								"A couple of the toilet's stalls have glory holes in them. Kneel down and get ready to service whatever comes through the holes.",
+								UtilText.parse(Main.game.getPlayer(), "A couple of the toilet's stalls have glory holes in them. [npc.Kneel] down and get ready to service whatever comes through the holes."),
 								WATERING_HOLE_TOILETS_GLORY_HOLE_SERVICING_GET_READY) {
 							@Override
 							public void effects() {
@@ -3625,7 +3625,7 @@ public class NightlifeDistrict {
 			} else if(index==1) {
 				List<GameCharacter> characters = getGloryHoleCharacters();
 				
-				return new ResponseSex("Use glory hole", UtilText.parse(characters.get(0), "Do as [npc.name] says and step up to the glory hole."),
+				return new ResponseSex("Use glory hole", UtilText.parse(characters.get(0), "Do as [npc.name] says and [pc.step] up to the glory hole."),
 						true, false,
 						new SMGloryHole(
 								SexPositionUnique.GLORY_HOLE,
