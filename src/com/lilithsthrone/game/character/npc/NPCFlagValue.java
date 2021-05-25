@@ -28,6 +28,7 @@ public enum NPCFlagValue {
 	flagSlaveInspect,
 	flagSlaveSpanking,
 	flagSlaveMolest,
+	flagSlaveResolved,
 	
 	occupantTalkLife,
 	occupantTalkJob,
@@ -58,6 +59,7 @@ public enum NPCFlagValue {
 		slaveFlags.add(flagSlaveInspect);
 		slaveFlags.add(flagSlaveSpanking);
 		slaveFlags.add(flagSlaveMolest);
+		slaveFlags.add(flagSlaveResolved);
 		
 		occupantFlags.add(occupantTalkLife);
 		occupantFlags.add(occupantTalkJob);

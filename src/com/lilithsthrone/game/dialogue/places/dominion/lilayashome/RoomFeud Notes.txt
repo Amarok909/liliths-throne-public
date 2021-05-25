@@ -1,0 +1,103 @@
+varoius activities
+    Improve Friendliness
+        play board-game
+        cook meal
+    Improve Obedience
+    	human furniture
+    	menial house labour
+    Switch Friendliness for Obedience
+    Switch Obedience for Friendliness
+
+Responces
+    overall commanding
+    chastise rude slaves
+    build up nice slaves
+
+Unsorted ideas
+    Convince them its better living with you than out there
+    Degrading sex activities    
+        make them jack off in the spa
+        make them parade naked about the house
+        make them parade naked about dominion
+        get rose to help you fuck them into submission
+        tie them up outside during an arcane thunderstorm, lily will ask you to take them to the square
+        tie them up in the house, and let your slaves have fun with them
+        make them mud wrestle
+    Unite their behaviour
+        Make them all 
+            pity you
+            fear you
+            like you
+    Randomized
+        not just response text but how they will respond as well
+        might behave, might not
+    good slaves might get snarky/uppity, cool them off as well
+
+
+
+TEXT DIALOGUE STRUCTURE
+> Preparsing
+    Annoyed with how mary rudely greeted you, your slave nancy start glaring exasperatedly at her, making their feelings quite visible.
+    looking back at them incredulously, mary responds with some rude gestures, showing what she thinks of her fealty to you.
+    Worried that mary's retaliation to Nancy's loyalty might escalate into a fight, you wonder if you might need to step in, but find yourself not needing to.
+
+    Although not fully resolved, your fears about any immediate domestic conflict are put to rest as Nancy makes a dramatic motion of ignoring the
+    they're not tearing each other to shreads, but you certainly have a feud on your hands
+    Hmm, I should probably do something about this before it does blow up, you think to yourself as you wonder what you could do to resolve it
+
+> Resolve Situation
+    Speak to your slaves, trying to get them to behave with each other
+    things blow up by themselves
+     OR, things are alright, and you brining it makes it worse
+    flare up your aura to horny them into submission
+        or possibly bob them all on the head with a newspaper
+        or threaten with a weapon
+
+
+> Show who's in charge
+    AFTER geting your slaves to submit and stop fighting
+    tell them off for misbehaving
+    instead of only one way, have options unlocked based on personality traits
+    KIND/NAIVE
+        you're all family now, you should be getting along with your new friends RUDEnpcs
+        urgh, are you stupid, we're not 'family' were your fucking property you bitch
+        OR, jeex, some 'family' you've got here
+    CYNICAL/SELFISH/Domineering
+        *slam fist* I will not have infighting among my slaves
+        fuccking tyrant
+        I guess that's how you see us
+    Rude npcs will talk back
+        
+
+> Shut down and Convince
+    respond to talk back from slaves
+        you now have the opportunity to be Paragon or Renegade in your Responses
+        this will have relationship effects on your nice npcs towards you as well
+        ie, renegading may scare your nice nps but will certainly bring the rude ones under your control
+
+    tell them that life is better under your creases
+        food, protection from enforcers
+        debts are wiped as recompense for slavery                             idea here for more content, slaves on the list hav an associated debt with them, so enslaving more slaves can burn through money. scales with level
+        arguments can be rebutted if you do mistreat them
+            overworking
+            horrible relationships with other slaves can be a detractor
+            non con sex? possibly too edgy
+
+    slaves will cool off by this point
+        ugh fine, i guess i have no choise
+        *sigh* fine, i guess you're right
+
+    nice slaves might get pompus/uppity, otherwise you just go bonding exersise
+
+> Shut down pompous slaves
+    If slaves get upiidty, based on their personalities and chance, yo have options to:
+        leave the issue be, improving nice relations and slightly undoing rude relations
+        deal with the issue, slightly undoing nice relations and improving rune relations
+            now need i remind you that you wern't the best behavied when you first arived here?
+            don't let your hubris poison your relation ships
+
+> Bonding exercise
+    Now that you've broken your saves, you feel confortable that you can get them to comply with you
+    Now that you've sorted that, do an activity with your servants
+    manage their inventories before the exerise
+
