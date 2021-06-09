@@ -56,6 +56,7 @@ import com.lilithsthrone.game.character.gender.Gender;
 import com.lilithsthrone.game.character.gender.PronounType;
 import com.lilithsthrone.game.character.persona.NameTriplet;
 import com.lilithsthrone.game.character.persona.Occupation;
+import com.lilithsthrone.game.character.persona.Relationship;
 import com.lilithsthrone.game.character.race.AbstractRacialBody;
 import com.lilithsthrone.game.character.race.AbstractSubspecies;
 import com.lilithsthrone.game.character.race.FurryPreference;
@@ -490,7 +491,7 @@ public abstract class NPC extends GameCharacter implements XMLSaving {
 	public String getPlayerRelationStatusDescription() {
 		StringBuilder sb = new StringBuilder();
 		
-		if(this.isRelatedTo(Main.game.getPlayer())) {
+		if(this.isRelatedTo(Main.game.getPlayer(), Relationship.Spouse, Relationship.Partner)) {
 			sb.append("<p style='text-align:center;'><i>");
 			AffectionLevel al = this.getAffectionLevel(Main.game.getPlayer());
 			switch(al) {

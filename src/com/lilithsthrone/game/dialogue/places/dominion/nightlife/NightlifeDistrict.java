@@ -738,6 +738,9 @@ public class NightlifeDistrict {
 						}
 					};
 					
+				} else if(index == 5 && getSavedClubbers(true).contains(getClubbersPresent().get(0)) ) {
+					return new Response("Date", "Ask NPC out on a date", null);
+					
 				} if(index==9) {
 					return new Response("Say goodbye",
 							UtilText.parse(getClubbersPresent(), "Tell [npc.name] that you've got to head off for a little while, but that you hope to see [npc.herHim] again."
@@ -846,7 +849,7 @@ public class NightlifeDistrict {
 							}
 						};
 					}
-				} else {
+				} else {	//maybe put ask out on date content here? ie Ask Date from Subs, ask date from Doms, instead of from above
 					return null;
 				}
 			}
@@ -4147,7 +4150,7 @@ public class NightlifeDistrict {
 
 		@Override
 		public Response getResponse(int responseTab, int index) {
-			return WATERING_HOLE_DOM_PARTNER_REACT.getResponse(responseTab, index);
+			return WATERING_HOLE_DOM_PARTNER_REACT.getResponse(responseTab, index); //marker
 		}
 	};
 
@@ -5139,7 +5142,7 @@ public class NightlifeDistrict {
 					}
 				};
 				
-			} else {
+			} else { //ask NPC out on a date tonight
 				return null;
 			}
 		}

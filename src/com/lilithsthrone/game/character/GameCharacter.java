@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
@@ -4077,10 +4078,8 @@ public abstract class GameCharacter implements XMLSaving {
 				case GrandPibling:
 				case Pibling:
 					return target.isFeminine()?"auntie":"uncle";
-				case Spouse:
-					return target.isFeminine()?"wife":"husband";
-				case Partner:
-					return target.isFeminine()?"girlfriend":"boyfriend";
+				default:
+					break;
 			}
 		}
 		
@@ -4723,14 +4722,15 @@ public abstract class GameCharacter implements XMLSaving {
 	// Romance
 
 	public Map<String, Map<MaritalStatus, Float>> getRomanceMap() {
-	//	return romanceMap;
 		return this.romanceMap;
 	}
 	
-	public void clearRomanceMap() {
+	public void clearRomanceMap() {	//Only clears this relationship map, does not remove relationship from partner
 		this.romanceMap.clear();
 	}
 
+	
+	
 	public ArrayList<String> getRomanticState(GameCharacter character) {
 		ArrayList<String> Profile = new ArrayList<>();
 		Profile.add(String.valueOf(character.getId()));
@@ -4777,47 +4777,67 @@ public abstract class GameCharacter implements XMLSaving {
 	
 	public void setMaritalStatus(GameCharacter character, MaritalStatus status) {
 		try {
-			this.setRomanticState(character, status, getPassion(character));
+			this.setRomanticState(character, status, this.getPassion(character));
+			character.setRomanticState(this, status, character.getPassion(this));
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	//[#pc.getRomanceMap()] [#pc.getDatingMap()] [#pc.removeRelationship(npc, false)] [#pc.getMaritalStatus(npc)]
+	
 	
 	public void createRelationship(GameCharacter character) {	// Creates for both parties
 		if( !(this.hasRelationshipWith(character) && character.hasRelationshipWith(this)) ) {
 			
 			Float bond = (this.getAffection(character) + character.getAffection(this))/4f;
+			
 			this.setRomanticState(character, MaritalStatus.DATING, bond);
 			character.setRomanticState(this, MaritalStatus.DATING, bond);
 		}
 	}
 	
-	public boolean hasRelationshipWith(GameCharacter character) {
+	public boolean hasRelationshipWith(GameCharacter character, Boolean excludeEx) {
+		if(excludeEx) {
+			switch (getMaritalStatus(character)) {
+			case MARRIED: case DATING:
+				return true;
+			default:
+				return false;
+			}
+		}
 		return this.getRomanceMap().keySet().contains(character.getId());
 	}
+	
+	public boolean hasRelationshipWith(GameCharacter character) {
+		return this.hasRelationshipWith(character, false);
+	}
 
-	public void removeRelationship(GameCharacter character, boolean removeAll) {	// Removes the relationship for both parties
+	public void removeRelationship(GameCharacter character, boolean removeAll) {	// Removes the relationship for both parties, not the same as clearRelationsMap
 		if(removeAll) {
-			for(Entry<String, Map<MaritalStatus, Float>> rel : this.getRomanceMap().entrySet()) {
+			while(this.getRomanceMap().size()>0) {
+				Entry<String, Map<MaritalStatus, Float>> rel = this.getRomanceMap().entrySet().iterator().next();
 				GameCharacter partner;
 				try {
 					partner = Main.game.getNPCById(rel.getKey());
+					
 					this.getRomanceMap().remove(partner.getId());
-					this.getDatingMap().remove(partner.getId());
 					partner.getRomanceMap().remove(this.getId());
+
+					this.getDatingMap().remove(partner.getId());
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		} else {
 			this.getRomanceMap().remove(character.getId());
-			this.getDatingMap().remove(character.getId());
 			character.getRomanceMap().remove(this.getId());
+			this.getDatingMap().remove(character.getId());
 		}
+	}
+
+	public void removeRelationship(GameCharacter character) {
+		this.removeRelationship(character, false);
 	}
 	
 
@@ -4861,14 +4881,60 @@ public abstract class GameCharacter implements XMLSaving {
 	public void setNextDateTime(GameCharacter character, Long epoch) {
 		setNextDateTime(character.getId(), epoch);
 	}
+	
+	public long setNextDateTimeFromJob(GameCharacter character) {	//generates date avalibility based on NPC occupation status, at most, 10 day days between dates. at least 2
+		int dayWait = Math.max(7, Math.min(9, Util.random.nextInt(9))); //Overworked, struggles to find time for you
+		int minutes = 0;
+		LocalDateTime today = Main.game.getDateNow();
+		
+		switch(character.getOccupation()) {
+			case NPC_STRIPPER:	//Wan't to keep up their appearance, but has some time to spare
+				dayWait = Math.max(5, Math.min(7, Util.random.nextInt(9)));
+				switch (today.plusDays(dayWait).getDayOfWeek()) {
+					case MONDAY:
+					case SUNDAY:
+						minutes = 6*60;	//dinner dates on non-working days
+					default:
+						minutes = -30;	//lunch dates otherwise
+				}
+				break;
+		//	case NPC_MAID:
+		//	case NPC_BUTLER:
+		//		break;
+		//	case NPC_NURSE:
+		//		break;
+			case NPC_UNEMPLOYED:	//Has more time to go out with you
+				dayWait = Math.max(3, Math.min(6, Util.random.nextInt(8)));
+				minutes = 7*60;	//dinner dates preferred
+				break;
+			default:
+				minutes = 5*60;	//after work dates preferred
+				break;
+		}
+		
+	//	DayOfWeek currentDay = Main.game.getDateNow().getDayOfWeek();
+		
+		
+	//	int nextDate = nextWeek.getDayOfYear();
+		LocalDateTime nextDate = Main.game.getDateNow().plusDays(dayWait);
+	//	minutes += 15*(2 + Util.random.nextInt(5));
+		
+		nextDate = LocalDateTime.of(nextDate.getYear(), nextDate.getMonth(), nextDate.getDayOfMonth(), 12, 0).plusMinutes(minutes);
+		long secondsToNextDate = ChronoUnit.SECONDS.between(Main.game.getDateNow(), nextDate);
+		setNextDateTime(character.getId(), secondsToNextDate);
+		return secondsToNextDate;
+		// general idea for a mechanic, NPCs will have a comfortale pay range, if you exceed it (even if you're paying), it might upset them and decrease passion returns
+			
+	
+	}
 
 	public long getNextDateTime(GameCharacter character) {
 		return this.getDatingMap().get(character.getId());
 	}
 
 	public boolean canHaveDate(GameCharacter character) {
-		long currentTime = Main.game.getSecondsPassed();
-		long dateTime = this.getNextDateTime(character);
+		long currentTime = Main.game.getSecondsPassed() / 60;
+		long dateTime = this.getNextDateTime(character) / 60;
 		if(currentTime>dateTime) {
 			return true;
 		}
@@ -4879,9 +4945,9 @@ public abstract class GameCharacter implements XMLSaving {
 		return new ArrayList<String>(romanceMap.keySet());
 	}
 	
-	public boolean hasBondWith(GameCharacter character) {
-		return this.getRomanceMap().keySet().contains(character.getId());
-	}
+//	public boolean hasBondWith(GameCharacter character) {
+//		return this.getRomanceMap().keySet().contains(character.getId());
+//	}
 	
 //	public float getBond(GameCharacter character) {
 //		if(this.hasBondWith(character)) {
@@ -5668,7 +5734,13 @@ public abstract class GameCharacter implements XMLSaving {
 	public Set<Relationship> getRelationshipsTo(GameCharacter character, Relationship... excludedRelationships) {
 		Set<Relationship> result = new LinkedHashSet<>();//EnumSet.noneOf(Relationship.class);
 
-        if(character.getIncubator()!=null && character.getIncubator().equals(this)) {
+		if(this.getMaritalStatus(character) == MaritalStatus.MARRIED) {
+			result.add(Relationship.Spouse);
+		} else if(this.getMaritalStatus(character) == MaritalStatus.DATING) {
+			result.add(Relationship.Partner);
+		}
+		
+		if(character.getIncubator()!=null && character.getIncubator().equals(this)) {
             result.add(Relationship.IncubatorParent);
         }
         if(this.getIncubator()!=null && this.getIncubator().equals(character)) {
@@ -5723,9 +5795,6 @@ public abstract class GameCharacter implements XMLSaving {
 			result.add(Relationship.Cousin);
 		if(character.getNonCommonNodes(0,1).contains(this))
 			result.add(Relationship.Nibling);
-		if(this.getParents(0, null).contains(character) && character.getParents(0, null).contains(this)) {	//Impossible
-			result.add(Relationship.Spouse);
-		}
 
 		result.removeAll(Arrays.asList(excludedRelationships));
 		

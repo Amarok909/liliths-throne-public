@@ -23,6 +23,14 @@ public class MarriageLevel {
 		/** -30 to 100*/
 		SOULMATES("soul mates", 30, 100, PresetColour.AFFECTION_POSITIVE_FIVE);
 		
+		/**
+		 * Disgust
+		 * Apathy
+		 * Frigid
+		 * Warm
+		 * Attachment
+		 * Soulmates
+		 */
 		
 		private String name;
 		private int minimumValue, maximumValue;

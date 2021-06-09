@@ -68,8 +68,14 @@ public class DominionClubNPC extends NPC {
 			
 			setName(Name.getRandomTriplet(this.getRace()));
 			this.setPlayerKnowsName(true);
-			setDescription(UtilText.parse(this,
+			if(this.hasRelationshipWith(Main.game.getPlayer())) {
+				setDescription(UtilText.parse(this,
+					"[npc.Name] is a resident of Dominion, who you met in one of Nightlife's clubs. Having hit it off with each other, you are now happily dating/married"));
+			} else {
+				setDescription(UtilText.parse(this,
 					"[npc.Name] is a resident of Dominion, who you met in one of Nightlife's clubs."));
+			
+			}
 			
 			// PERSONALITY & BACKGROUND:
 			

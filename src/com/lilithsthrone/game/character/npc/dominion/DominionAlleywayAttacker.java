@@ -246,7 +246,10 @@ public class DominionAlleywayAttacker extends NPC {
 	@Override
 	public String getDescription() {
 		if(this.getHistory()==Occupation.NPC_PROSTITUTE) {
-			if(this.isSlave()) {
+			if(this.hasRelationshipWith(Main.game.getPlayer())) {
+				return (UtilText.parse(this,
+						"[npc.NamePos] days of whoring [npc.herself] out in the back alleys of Dominion are now over. Having run into you one day, you hit it off with each other and are now happily dating/married"));
+			} else if(this.isSlave()) {
 				return (UtilText.parse(this,
 						"[npc.NamePos] days of whoring [npc.herself] out in the back alleys of Dominion are now over. Having run afoul of the law, [npc.sheIs] now a slave, and is no more than [npc.her] owner's property."));
 			} else {
@@ -255,7 +258,10 @@ public class DominionAlleywayAttacker extends NPC {
 			}
 			
 		} else {
-			if(this.isSlave()) {
+			if(this.hasRelationshipWith(Main.game.getPlayer())) {
+				return (UtilText.parse(this,
+						"[npc.NamePos] days of prowling the back alleys of Dominion and mugging innocent travellers are now over. Having run into you one day, you hit it off with each other and are now happily dating/married"));
+			} else if(this.isSlave()) {
 				return (UtilText.parse(this,
 						"[npc.NamePos] days of prowling the back alleys of Dominion and mugging innocent travellers are now over. Having run afoul of the law, [npc.sheIs] now a slave, and is no more than [npc.her] owner's property."));
 			} else {
