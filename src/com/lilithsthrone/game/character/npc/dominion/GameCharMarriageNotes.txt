@@ -1,0 +1,41 @@
+DONE
+    settle on using map or lists
+    settle on data structure
+        CHARACTER   BOND    STATUS
+    make sure it adds itself to XML files
+    make sure the game can read it from XML
+
+    add addmarriage command
+
+    add removemarriage command
+    add getmarriages command
+
+TODO
+
+    Add proposition option to well loved npc
+        won't be able to marry slaves without freeing
+    Possibly need to go on dates with npc before marriage
+    Add to discription text, detailing relationship
+
+DATING
+    go on roughly weekly dates to improve passion
+    general idea for a mechanic, NPCs will have a comfortale pay range, if you exceed it (even if you're paying), it might upset them and decrease passion returns
+    if you turn up as something they're not attracted to, they'll cancel the date there and then, and passion will be lost
+    mutual, you have to perform actions to increase their passion towards you, and you have a choise of how to react to certain advancements which will alter your passion to them
+
+MARRIAGE
+    at mutual passion 80+, you can get married
+
+DATA
+    CHARACTER   
+        the npc that this character is married to
+    BOND
+        the strenght of the relationship between the npc and this character
+        seperate to affection, but will be linked
+        need a minium amount to get married, increased by dates
+        if it falls below a certain point, the other will initiate divorce proceedings, which will get expensive
+        might be able to get remarried
+    STATUS
+        Dating
+        Married
+        Divorced

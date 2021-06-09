@@ -4888,7 +4888,7 @@ public abstract class GameCharacter implements XMLSaving {
 		LocalDateTime today = Main.game.getDateNow();
 		
 		switch(character.getOccupation()) {
-			case NPC_STRIPPER:	//Wan't to keep up their appearance, but has some time to spare
+			case NPC_STRIPPER:	//Wan't to keep up their appearance, but has some time to spare, will prefer you pay, but open to personality
 				dayWait = Math.max(5, Math.min(7, Util.random.nextInt(9)));
 				switch (today.plusDays(dayWait).getDayOfWeek()) {
 					case MONDAY:
@@ -4903,12 +4903,28 @@ public abstract class GameCharacter implements XMLSaving {
 		//		break;
 		//	case NPC_NURSE:
 		//		break;
-			case NPC_UNEMPLOYED:	//Has more time to go out with you
+		//	case GENERIC:
+			//	dayWait = Math.max(5, Math.min(7, Util.random.nextInt(9)));
+			//	switch (today.plusDays(dayWait).getDayOfWeek()) {
+			//		case MONDAY:
+			//		case SUNDAY:
+			//			minutes = 6*60;	//dinner dates on non-working days
+			//		case TUESDAY:
+			//			minutes = 6*60 + 24*60*(5+rnd(2)); will auto move it to sunday or monday
+			//		default:
+			//			minutes = -30;	//lunch dates otherwise
+			//		while (rand != sunday \\ monday) {	pick random day	}
+			//	}
+			//	break;
+				
+				
+				
+			case NPC_UNEMPLOYED:	//Has more time to go out with you, will strongly prefer you pay, will make up for it though <3
 				dayWait = Math.max(3, Math.min(6, Util.random.nextInt(8)));
 				minutes = 7*60;	//dinner dates preferred
 				break;
 			default:
-				minutes = 5*60;	//after work dates preferred
+				minutes = 5*60;	//after work dates preferred, neurtal on payment, also varies based on personality
 				break;
 		}
 		
@@ -4923,7 +4939,6 @@ public abstract class GameCharacter implements XMLSaving {
 		long secondsToNextDate = ChronoUnit.SECONDS.between(Main.game.getDateNow(), nextDate);
 		setNextDateTime(character.getId(), secondsToNextDate);
 		return secondsToNextDate;
-		// general idea for a mechanic, NPCs will have a comfortale pay range, if you exceed it (even if you're paying), it might upset them and decrease passion returns
 			
 	
 	}
