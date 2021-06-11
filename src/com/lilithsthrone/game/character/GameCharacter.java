@@ -4360,7 +4360,7 @@ public abstract class GameCharacter implements XMLSaving {
 			return false;
 		}
 		
-		if(this.isRelatedTo(character)) {
+		if(this.isRelatedTo(character, Relationship.Spouse, Relationship.Partner)) {
 			if(!hasFetish(Fetish.FETISH_INCEST) || !Main.game.isIncestEnabled()) {
 				return false;
 			}

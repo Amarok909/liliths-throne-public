@@ -175,6 +175,45 @@ public class PlaceUpgrade {
 		}
 	};
 	
+	public static final AbstractPlaceUpgrade LILAYA_PLAYER_ROOM_SPOUSE = new AbstractPlaceUpgrade(false,
+			PresetColour.AFFECTION_POSITIVE_FOUR,
+			"Spousal Accomidation",
+			"have some new furniture put in so your spouse can move in",
+			"you have had new furniture put in",
+			"you have had new",
+			5000,
+			-5000,
+			0,
+			4,
+			0f,
+			0f,
+			null) {
+		public Value<Boolean, String> getAvailability(Cell cell) {
+			return new Value<>(true, "");
+		}
+	};
+	
+	public static final AbstractPlaceUpgrade LILAYA_PLAYER_ROOM_FRIEND = new AbstractPlaceUpgrade(false,
+			PresetColour.AFFECTION_POSITIVE_ONE,
+			"Friend Accomidation",
+			"have some new furniture put in so your friend can bunk with you",
+			"you have had new furniture put in",
+			"you have had new",
+			500,
+			-500,
+			0,
+			1,
+			0f,
+			0f,
+			null) {
+		public Value<Boolean, String> getAvailability(Cell cell) {
+			if(cell.getPlace().getPlaceUpgrades().contains(LILAYA_PLAYER_ROOM_SPOUSE)) {
+				return new Value<>(false, "");
+			}
+			return new Value<>(true, "");
+		}
+	};
+	
 	
 	//**** GUEST ROOM ****//
 	

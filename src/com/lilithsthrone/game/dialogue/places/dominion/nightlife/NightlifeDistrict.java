@@ -69,6 +69,7 @@ import com.lilithsthrone.world.population.Population;
 public class NightlifeDistrict {
 	
 	private static boolean isSearchingForASub = true;
+	private static boolean hasMetBefore = false;
 	private static Gender clubberGender;
 	private static AbstractSubspecies clubberSubspecies;
 	private static RaceStage clubberRaceStage;
@@ -129,7 +130,7 @@ public class NightlifeDistrict {
 			}
 		}
 		
-		if(submissiveClubbers) {
+		if(submissiveClubbers) {	//this should refer to their street behavior, they might have different sheet behaviour
 			clubber.removePersonalityTrait(PersonalityTrait.SELFISH);
 			clubber.removePersonalityTrait(PersonalityTrait.BRAVE);
 			clubber.removePersonalityTrait(PersonalityTrait.CONFIDENT);
@@ -141,7 +142,7 @@ public class NightlifeDistrict {
 			}
 			clubber.removeFetish(Fetish.FETISH_DOMINANT);
 			if(clubber.getFetishDesire(Fetish.FETISH_DOMINANT).isPositive()) {
-				clubber.setFetishDesire(Fetish.FETISH_DOMINANT, FetishDesire.TWO_NEUTRAL);
+				clubber.setFetishDesire(Fetish.FETISH_DOMINANT, FetishDesire.THREE_LIKE);
 			}
 			
 		} else {
@@ -158,7 +159,7 @@ public class NightlifeDistrict {
 			}
 			clubber.removeFetish(Fetish.FETISH_SUBMISSIVE);
 			if(clubber.getFetishDesire(Fetish.FETISH_SUBMISSIVE).isPositive()) {
-				clubber.setFetishDesire(Fetish.FETISH_SUBMISSIVE, FetishDesire.TWO_NEUTRAL);
+				clubber.setFetishDesire(Fetish.FETISH_SUBMISSIVE, FetishDesire.THREE_LIKE);
 			}
 		}
 		
@@ -738,8 +739,19 @@ public class NightlifeDistrict {
 						}
 					};
 					
-				} else if(index == 5 && getSavedClubbers(true).contains(getClubbersPresent().get(0)) ) {
-					return new Response("Date", "Ask NPC out on a date", null);
+				} else if(index==5 && hasMetBefore) {
+					return new Response("Date", "Ask NPC out on a date", null) {
+						@Override
+						public void effects() {
+							if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
+								Main.game.getPlayer().setPassion(getPartner(), Main.game.getPlayer().getPassion(getPartner()) + 10);
+								getPartner().setPassion(Main.game.getPlayer(), getPartner().getPassion(Main.game.getPlayer()) + 10);
+								
+							} else {
+								Main.game.getPlayer().createRelationship(getPartner());
+							}
+						}
+					};
 					
 				} if(index==9) {
 					return new Response("Say goodbye",
@@ -776,6 +788,7 @@ public class NightlifeDistrict {
 						@Override
 						public void effects() {
 							isSearchingForASub = true;
+							hasMetBefore = false;
 						}
 					};
 					
@@ -789,6 +802,7 @@ public class NightlifeDistrict {
 							@Override
 							public void effects() {
 								isSearchingForASub = true;
+								hasMetBefore = false;
 								spawnClubbers(true);
 							}
 						};
@@ -805,6 +819,7 @@ public class NightlifeDistrict {
 							@Override
 							public void effects() {
 								isSearchingForASub = true;
+								hasMetBefore = true;
 							}
 						};
 					}
@@ -816,6 +831,7 @@ public class NightlifeDistrict {
 						@Override
 						public void effects() {
 							isSearchingForASub = false;
+							hasMetBefore = false;
 						}
 					};
 					
@@ -829,6 +845,7 @@ public class NightlifeDistrict {
 							@Override
 							public void effects() {
 								isSearchingForASub = false;
+								hasMetBefore = false;
 								spawnClubbers(false);
 								resetPreviousBehaviour(); 
 							}
@@ -846,6 +863,7 @@ public class NightlifeDistrict {
 							@Override
 							public void effects() {
 								isSearchingForASub = false;
+								hasMetBefore = true;
 							}
 						};
 					}
@@ -4144,6 +4162,9 @@ public class NightlifeDistrict {
 
 		@Override
 		public String getContent() {
+			if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
+				
+			}
 			return UtilText.parseFromXMLFile("places/dominion/nightlife/theWateringHole", "WATERING_HOLE_FIND_CONTACT_DOM", getClubbersPresent())
 					+getClubberStatus(this.getSecondsPassed());
 		}
@@ -4395,6 +4416,14 @@ public class NightlifeDistrict {
 	}
 	
 	private static void applyBehaviourEffects() {
+		if(currentBehaviour==ClubberBehaviour.INTRODUCTION && Main.game.getPlayer().hasRelationshipWith(getPartner())) {
+			Main.game.getTextStartStringBuilder().append("<p>"
+					+ "[pc.speech(Hey partner, thanks for the offer, but i'd prefer if we stayed here tonight ok?)]"
+					+ "<br/>[npc.speech(Oh sure PC, that's fine)]"
+					+ "<br/>[pc.speech(thanks)], you say before giving [npc.her] a kiss on the cheek. [pc.speech(I knew you'd understand. Now, lets have some fun)]"
+					+ "</p>");
+		}
+		
 		ClubberBehaviour newBehaviour = getClubberBehaviour();
 
 		turnsAtPlace++;
@@ -5142,7 +5171,23 @@ public class NightlifeDistrict {
 					}
 				};
 				
-			} else { //ask NPC out on a date tonight
+			} else if(index==5 && hasMetBefore) {
+				return new Response("Date", "Ask NPC to take you out on a date", null) {
+					@Override
+					public void effects() {
+						if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
+							Main.game.getPlayer().setPassion(getPartner(), Main.game.getPlayer().getPassion(getPartner()) + 10);
+							getPartner().setPassion(Main.game.getPlayer(), getPartner().getPassion(Main.game.getPlayer()) + 10);
+							Main.game.getTextEndStringBuilder().append(getPartner().incrementAffection(Main.game.getPlayer(), 5));
+							
+						} else {
+							Main.game.getPlayer().createRelationship(getPartner());
+							Main.game.getTextEndStringBuilder().append(getPartner().incrementAffection(Main.game.getPlayer(), 25));
+						}
+					}
+				};
+				
+			} else {
 				return null;
 			}
 		}
