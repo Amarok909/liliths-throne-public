@@ -2918,7 +2918,7 @@
 				#ENDIF
 			#ELSE
 				<p>
-					Due to the fact that you have a rather unusual lower body, your rear end is quite outside of [npc.namePos] reach. This proves to be an issue for your partner, as, after making a feeble excuse about the cushion you're sitting on about to fall off the sofa, [npc.she] stands up and quickly moves over to [npc.kneel] down beside your hind-quarters.
+					Due to the fact that you have a rather unusual lower body, your rear end is quite outside of [npc.namePos] reach. This proves to be an issue for your partner, as, after making a feeble excuse about the cushion you're sitting on about to fall off the sofa, [npc.she] stands up and quickly moves over towards you and [npc.kneel] down beside your hind-quarters.
 				<p>
 				#IF(npc.isKind())
 					After giving the sofa's cushion a quick pat, [npc.name] makes playful, flirtatious remark, before placing [npc.her] [npc.hand] on your [pc.hips+]. As [npc.she] starts to slide [npc.her] touch down between your [pc.legs], you wonder if you should play along, and let [npc.herHim] get a good feel of your lower half, or quickly put a stop to this unsolicited contact.
