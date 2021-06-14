@@ -2201,7 +2201,18 @@
 		#ENDIF
 	</p>
 	<p>
-		[pc.speech(Yeah, that sounds good,)] you reply, before spending the next few minutes talking with [npc.name], allowing [npc.herHim] to take the lead in conversation. It very quickly becomes apparent that [npc.she] wants to show you a good time this evening, and, leading [npc.herHim] on, you wonder where [npc.she]'ll take you first...
+		#IF !npc.hasRelationshipWith(pc)
+		#THEN[pc.speech(Yeah, that sounds good,)] you reply, before spending the next few minutes talking with [npc.name], allowing [npc.herHim] to take the lead in conversation. It very quickly becomes apparent that [npc.she] wants to show you a good time this evening, and, leading [npc.herHim] on, you wonder where [npc.she]'ll take you first...
+		#ELSE[pc.speech(Yeah, that sounds good,)] you reply, before spending the next few minutes talking with [npc.name], allowing [npc.herHim] to take the lead in conversation. It very quickly becomes apparent that your [npc.boyfriend] wants to show you a good time this evening. <br/>Planing on taking you somewhere, [npc.he] speaks up,
+			#IF npc.isKind()
+			#THEN [npc.speech([pc.name], Would you like to do something here tonight, or would you prefer to go somewhere else?)]
+			#ELSE
+				#IF npc.isSelfish()
+				#THEN [npc.speech(Hey, [pc.babe]! How 'bout we ditch this joint and find some place else?)]
+				#ELSE [npc.speech(Hey, [pc.name]. You want to hang out here together again, or do you want to go somehere else?)]
+				#ENDIF
+			#ENDIF
+		#ENDIF
 	</p>
 	]]>
 	</htmlContent>

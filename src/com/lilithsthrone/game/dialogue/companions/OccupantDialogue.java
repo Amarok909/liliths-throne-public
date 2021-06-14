@@ -9,6 +9,7 @@ import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.AffectionLevel;
 import com.lilithsthrone.game.character.attributes.Attribute;
+import com.lilithsthrone.game.character.attributes.MarriageLevel.*;
 import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.character.npc.NPC;
 import com.lilithsthrone.game.character.npc.NPCFlagValue;
@@ -352,6 +353,40 @@ public class OccupantDialogue {
 					} else {
 						return new Response("Pettings", UtilText.parse(occupant(), "You've already given [npc.name] some pettings today."), null);
 					}
+					
+				} else if (index == 8) {
+					if(occupant().isRelatedTo(Main.game.getPlayer()) && (!Main.game.isIncestEnabled() || !occupant().hasFetish(Fetish.FETISH_INCEST))) {
+						return new Response("Date", UtilText.parse(occupant(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
+					}
+					
+					if(Main.game.getPlayer().getPassion(occupant())>=80 && Main.game.getPlayer().getMaritalStatus(occupant())!=MaritalStatus.MARRIED) {	// Ready to Marry
+						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
+							@Override
+							public void effects() {
+								Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
+								occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
+								Main.game.getPlayer().setMaritalStatus(occupant(), MaritalStatus.MARRIED);
+								occupant().setMaritalStatus(Main.game.getPlayer(), MaritalStatus.MARRIED);
+							}
+						};
+					}
+					
+					if(Main.game.getPlayer().hasRelationshipWith(occupant())) {	// Dating Content Started
+						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
+							@Override
+							public void effects() {
+								Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
+								occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
+							}
+						};
+					}
+					
+					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getPassion(npc)]"), null) {	// Start dating content
+						@Override
+						public void effects() {
+							Main.game.getPlayer().createRelationship(occupant);
+						}
+					};
 					
 				} else if (index == 10) {
 					if(hasJob()) {
@@ -1567,6 +1602,9 @@ public class OccupantDialogue {
 							applyReactionReset();
 						}
 					};
+					
+				} else if(index == 8) {
+					return OCCUPANT_START.getResponse(0, 8);
 					
 				} else if (index == 10) {
 					if(confirmKickOut) {

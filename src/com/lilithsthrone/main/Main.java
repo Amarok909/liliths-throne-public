@@ -1018,6 +1018,7 @@ public class Main extends Application {
 						CharacterImportSetting.NO_PREGNANCY,
 						CharacterImportSetting.NO_COMPANIONS,
 						CharacterImportSetting.NO_ELEMENTAL,
+						CharacterImportSetting.NO_MARRIAGE,
 						CharacterImportSetting.CLEAR_SLAVERY,
 						CharacterImportSetting.CLEAR_KEY_ITEMS,
 						CharacterImportSetting.CLEAR_COMBAT_HISTORY,
