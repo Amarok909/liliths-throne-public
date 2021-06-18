@@ -1,0 +1,29 @@
+DEV STAGES
+X	create basic image mathmatically
+X	create complex image
+	create tiled images
+	create collage images
+	create primitive limbs, body, head
+		rip these from jam's work, temp measure until skills develop or other artists gained
+	create collage with primitiv body parts manally
+
+	create assembly system	
+		most likely a class of its own, will initiate new DollPart class instances
+		ability to read xml files
+	create primitive paperdoll
+	create more primitive body parts
+	test generation of images
+	refine code to remove inefficencies
+
+	add articulation to image primitives
+	rework assembly system to suport new articulation
+
+	artwork detail for fat, muscle, hair
+
+	embed into text
+
+	minor animations
+
+	sex animations
+
+
