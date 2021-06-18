@@ -358,7 +358,7 @@
 		#THEN [npc.Name] lets out a quiet little [npc.moan] in response to your touch, before gently leaning in against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Y-Yes... D-Don't stop...)]
 		#ELSE
 			#IF npc.isConfident()
-			#THEN [npc.Name] lets out [npc.a_moan+] in response to your touch, before eagerly pressing [npc.herself] against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Oh yeah babe, keep going! ~Mmm!~ Yeah, just like that!)]
+			#THEN [npc.Name] lets out [npc.a_moan+] in response to your touch, before eagerly pressing [npc.herself] against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Oh yeah [pc.babe(npc)], keep going! ~Mmm!~ Yeah, just like that!)]
 			#ELSE [npc.Name] lets out [npc.a_moan+] in response to your touch, before leaning in against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Yes... Keep going!)]
 			#ENDIF
 		#ENDIF
@@ -502,7 +502,7 @@
 					[npc.Name] lets out a quiet little [npc.moan] in response to your touch, before gently leaning in against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Y-Yes... D-Don't stop...)]
 				#ELSE
 					#IF(npc.isConfident())
-						[npc.Name] lets out [npc.a_moan+] in response to your touch, before eagerly pressing [npc.herself] against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Oh yeah babe, keep going! ~Mmm!~ Yeah, just like that!)]
+						[npc.Name] lets out [npc.a_moan+] in response to your touch, before eagerly pressing [npc.herself] against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Oh yeah [pc.babe(npc)], keep going! ~Mmm!~ Yeah, just like that!)]
 					#ELSE
 						[npc.Name] lets out [npc.a_moan+] in response to your touch, before leaning in against you and panting heavily into your [pc.ear], [npc.speech(~Aah!~ Yes... Keep going!)]
 					#ENDIF
@@ -529,7 +529,7 @@
 					[npc.Name] lets out a quiet little [npc.moan] in response to your touch, before gently bucking [npc.her] animalistic body back against you and panting heavily, [npc.speech(~Aah!~ Y-Yes... D-Don't stop...)]
 				#ELSE
 					#IF(npc.isConfident())
-						[npc.Name] lets out [npc.a_moan+] in response to your touch, before gently bucking [npc.her] animalistic body back against you and panting heavily, [npc.speech(~Aah!~ Oh yeah babe, keep going! ~Mmm!~ Yeah, just like that!)]
+						[npc.Name] lets out [npc.a_moan+] in response to your touch, before gently bucking [npc.her] animalistic body back against you and panting heavily, [npc.speech(~Aah!~ Oh yeah [pc.babe(npc)], keep going! ~Mmm!~ Yeah, just like that!)]
 					#ELSE
 						[npc.Name] lets out [npc.a_moan+] in response to your touch, before gently bucking [npc.her] animalistic body back against you and panting heavily, [npc.speech(~Aah!~ Yes... Keep going!)]
 					#ENDIF
@@ -674,7 +674,7 @@
 					 [npc.speech(P-Please... Fuck me...)]
 				#ELSE
 					#IF(npc.isConfident())
-						 [npc.speech(~Mmm~ Come on babe! Fuck me already!)]
+						 [npc.speech(~Mmm~ Come on [pc.babe(npc)]! Fuck me already!)]
 					#ELSE
 						 [npc.speech(Oh yes! Fuck me!)]
 					#ENDIF
@@ -693,7 +693,7 @@
 					 [npc.speech(P-Please... Fuck me...)]
 				#ELSE
 					#IF(npc.isConfident())
-						 [npc.speech(~Mmm~ Come on babe! Fuck me already!)]
+						 [npc.speech(~Mmm~ Come on [pc.babe(npc)]! Fuck me already!)]
 					#ELSE
 						 [npc.speech(Oh yes! Fuck me!)]
 					#ENDIF
@@ -710,7 +710,7 @@
 				 [npc.name] blushes profusely and eagerly stammers, [npc.speech(O-Oh yes... P-Please... Fuck me...)]
 			#ELSE
 				#IF(npc.isConfident())
-					 [npc.name] bites [npc.her] lip and [npc.moans], [npc.speech(~Mmm~ Come on then, babe! Fuck me already!)]
+					 [npc.name] bites [npc.her] lip and [npc.moans], [npc.speech(~Mmm~ Come on then, [pc.babe(npc)]! Fuck me already!)]
 				#ELSE
 					 [npc.name] bites [npc.her] lip and [npc.moans], [npc.speech(Oh yes! Fuck me!)]
 				#ENDIF
@@ -2080,7 +2080,7 @@
 		#THEN [npc.speech(It's pretty hot in here. Come on, let's go and get something to drink,)] [npc.name] says, before taking your [pc.hand] in [npc.hers] and setting off in the direction of the bar. [npc.speech(I'll get you something nice!)]
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(Fuck, it's boiling in here! Come on [pc.babe], I'm thirsty,)] [npc.name] says, before taking your [pc.hand] in [npc.hers] and pulling you along behind [npc.herHim] as [npc.she] sets off in the direction of the bar.
+			#THEN [npc.speech(Fuck, it's boiling in here! Come on [pc.babe(npc)], I'm thirsty,)] [npc.name] says, before taking your [pc.hand] in [npc.hers] and pulling you along behind [npc.herHim] as [npc.she] sets off in the direction of the bar.
 			#ELSE [npc.speech(It's really hot in here. Come on, let's go and get something to drink,)] [npc.name] says, before taking your [pc.hand] in [npc.hers] and setting off in the direction of the bar.
 			#ENDIF
 		#ENDIF
@@ -2097,7 +2097,7 @@
 		#THEN [npc.speech(Let's head over to the dance floor,)] [npc.name] suggests, before taking your [pc.hand] in [npc.hers] and setting off towards the middle of club's main floor. [npc.speech(I love dancing!)]
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(Come on [pc.babe], I want to see you shaking that hot body of yours for me,)] [npc.name] says, before grabbing your [pc.hand] and pulling you along behind [npc.herHim] as [npc.she] sets off in the direction of the dance floor. [npc.speech(And don't you try dancing off with someone else! You're mine for tonight!)]
+			#THEN [npc.speech(Come on [pc.babe(npc)], I want to see you shaking that hot body of yours for me,)] [npc.name] says, before grabbing your [pc.hand] and pulling you along behind [npc.herHim] as [npc.she] sets off in the direction of the dance floor. [npc.speech(And don't you try dancing off with someone else! You're mine for tonight!)]
 			#ELSE [npc.speech(Hey, [pc.name], let's go and check out the dance floor,)] [npc.name] says, before taking your [pc.hand] in [npc.hers] and setting off towards the middle of club's main floor. [npc.speech(After all, dancing is what's going to the club's all about!)]
 			#ENDIF
 		#ENDIF
@@ -2144,7 +2144,7 @@
 		#THEN [npc.speech(Sorry, [pc.name], I need to use the toilet,)] [npc.name] apologises. [npc.speech(I'll only be a moment, so you're ok waiting for me over there, right?)]
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(Come on, [pc.babe]! Watching your hot body all night's got me all fired up. The bouncers don't give a shit about people fucking in the toilets, so let's go do it in there,)] [npc.name] crudely states, before grabbing your [pc.hand] and pulling you along behind [npc.herHim] as [npc.she] sets off towards the toilets. [npc.speech(I hope you're better than the last fuck I had here!)]
+			#THEN [npc.speech(Come on, [pc.babe(npc)]! Watching your hot body all night's got me all fired up. The bouncers don't give a shit about people fucking in the toilets, so let's go do it in there,)] [npc.name] crudely states, before grabbing your [pc.hand] and pulling you along behind [npc.herHim] as [npc.she] sets off towards the toilets. [npc.speech(I hope you're better than the last fuck I had here!)]
 			#ELSE [npc.speech(Come on, [pc.name], let's go have some fun!)] [npc.name] says, before taking your [pc.hand] in [npc.hers] and setting off towards the toilets. [npc.speech(The bouncers don't care about people fucking in there!)]
 			#ENDIF
 		#ENDIF
@@ -2164,7 +2164,7 @@
 		#THEN As [npc.she] steps up before you, the [npc.race] throws you a charming smile and introduces [npc.herself], [npc.speech(I couldn't help but notice that you're all alone over here. I'm [npc.name], are you looking for some company for this evening?)]
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(Hey [pc.babe]! You're lookin' awful lonely over here, and I can tell that you're wantin' a real good time. I'm [npc.name], and you can stick with me tonight, alright?)]
+			#THEN [npc.speech(Hey [pc.babe(npc)]! You're lookin' awful lonely over here, and I can tell that you're wantin' a real good time. I'm [npc.name], and you can stick with me tonight, alright?)]
 			#ELSE [npc.speech(Hello! I saw you standing all alone over here, and thought you could use some company. I'm [npc.name], by the way, do you want to hang out together?)]
 			#ENDIF
 		#ENDIF
@@ -2191,7 +2191,7 @@
 		#THEN As [npc.she] steps up before you, [npc.name] throws you a warm smile and greets you, [npc.speech(Hello again, [pc.name], how are you? Are you looking for some company this evening?)]
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(Hey, [pc.babe]! You're lookin' for a good time again, aren't you? Well, you just stick with me again tonight, alright?)]
+			#THEN [npc.speech(Hey, [pc.babe(npc)]! You're lookin' for a good time again, aren't you? Well, you just stick with me again tonight, alright?)]
 			#ELSE [npc.speech(Hi, [pc.name]! I saw you standing all alone, and thought you might want some company. You want to hang out together again?)]
 			#ENDIF
 		#ENDIF
@@ -2212,7 +2212,7 @@
 			#ENDIF
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(I'm gonna get you a drink, [pc.babe]! And none of that weak shit, alright? They sell Black Rat's Rum here, so I'm getting you a glass of that,)] [npc.name] states, before turning and trying to get the attention of one of the zebra-girl barmaids. [npc.speech(Hey, come on! Over here, I'm lookin' to get served!)]
+			#THEN [npc.speech(I'm gonna get you a drink, [pc.babe(npc)]! And none of that weak shit, alright? They sell Black Rat's Rum here, so I'm getting you a glass of that,)] [npc.name] states, before turning and trying to get the attention of one of the zebra-girl barmaids. [npc.speech(Hey, come on! Over here, I'm lookin' to get served!)]
 			#ELSE [npc.speech(Would you like a drink, [pc.name]? They sell Wolf Whiskey here, which is far better than all their other stuff. Here, let me order you a glass,)] [npc.name] says, before turning and trying to get the attention of one of the zebra-girl barmaids.
 			#ENDIF
 		#ENDIF
@@ -2335,7 +2335,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_DOM_PARTNER_ACCEPT_RUM"><![CDATA[
 	<p>
-		You wait by [npc.namePos] side as [npc.she] orders two glasses of Rum, and after just a moment, the barmaid places the beverages down on the counter in front of you. Paying for your drinks, [npc.name] turns towards you and grins. [npc.speech(Drink it down, [pc.babe]! And you'd better be grateful. This stuff ain't cheap!)]
+		You wait by [npc.namePos] side as [npc.she] orders two glasses of Rum, and after just a moment, the barmaid places the beverages down on the counter in front of you. Paying for your drinks, [npc.name] turns towards you and grins. [npc.speech(Drink it down, [pc.babe(npc)]! And you'd better be grateful. This stuff ain't cheap!)]
 	</p>
 	<p>
 		Doing as you're told, you quickly empty the glass of Rum, before smiling at [npc.name] as [npc.she] compliments you on the speed at which you gulped it down. Almost immediately, you start to feel the potent effects of the strong alcohol, and, leaning in against your partner, you let out a flirtatious laugh as you feel [npc.herHim] reach around to squeeze your [pc.ass+].
@@ -2354,7 +2354,7 @@
 		[npc.speech(Eugh, you ungrateful [pc.bitch]!)] [npc.name] snaps, before turning towards the barmaid who stepped forwards to take [npc.her] order. [npc.speech(Forget it, I'm not ordering anything. Go serve someone else.)]
 	</p>
 	<p>
-		You step back from [npc.name], frowning at [npc.herHim] in response to [npc.her] uncalled-for insult. Before you can say anything regarding the matter, [npc.she] moves back up beside you and apologises, [npc.speech(Sorry, [pc.babe]. I shouldn't have said that. Anyway, no harm done, right?)]
+		You step back from [npc.name], frowning at [npc.herHim] in response to [npc.her] uncalled-for insult. Before you can say anything regarding the matter, [npc.she] moves back up beside you and apologises, [npc.speech(Sorry, [pc.babe(npc)]. I shouldn't have said that. Anyway, no harm done, right?)]
 	</p>
 	<p>
 		[pc.speech(I suppose,)] you reply, wondering if you should ditch this rude [npc.race]...
@@ -2544,7 +2544,7 @@
 		#THEN [npc.speech(Sorry! I got a little carried away,)] [npc.name] sheepishly apologises, releasing [npc.her] grip on your [pc.hips] and stepping back to give you some space.
 		#ELSE
 			#IF npc.isSelfish()
-			#THEN [npc.speech(Aww, don't be like that, [pc.babe],)] [npc.name] says, keeping [npc.her] tight grip on your [pc.ass+]. Completely shocked by [npc.her] refusal to listen, you end up pushing [npc.herHim] back once again, this time with a considerable amount of force. Thankfully, [npc.name] has to let go of you in order to steady [npc.herself], and you furiously shout at [npc.herHim] not to try anything like that again.
+			#THEN [npc.speech(Aww, don't be like that, [pc.babe(npc)],)] [npc.name] says, keeping [npc.her] tight grip on your [pc.ass+]. Completely shocked by [npc.her] refusal to listen, you end up pushing [npc.herHim] back once again, this time with a considerable amount of force. Thankfully, [npc.name] has to let go of you in order to steady [npc.herself], and you furiously shout at [npc.herHim] not to try anything like that again.
 			#ELSE [npc.speech(Sorry! I thought that's what you wanted,)] [npc.name] tries to explain, releasing [npc.her] grip on your [pc.hips] and stepping back to give you some space.
 			#ENDIF
 		#ENDIF
@@ -2782,7 +2782,7 @@
 	</p>
 	<p>
 		#IF npc.isSelfish()
-		#THEN [npc.speech(Aww, don't be like that, [pc.babe],)] [npc.name] replies, keeping [npc.her] tight grip on your [pc.ass+]. Completely shocked by [npc.her] refusal to listen, you end up pushing [npc.herHim] back once again, this time with a considerable amount of force. Thankfully, [npc.name] has to let go of you in order to steady [npc.herself], and you furiously shout at [npc.herHim] not to try anything like that again.
+		#THEN [npc.speech(Aww, don't be like that, [pc.babe(npc)],)] [npc.name] replies, keeping [npc.her] tight grip on your [pc.ass+]. Completely shocked by [npc.her] refusal to listen, you end up pushing [npc.herHim] back once again, this time with a considerable amount of force. Thankfully, [npc.name] has to let go of you in order to steady [npc.herself], and you furiously shout at [npc.herHim] not to try anything like that again.
 		#ELSE [npc.speech(Sorry! I thought that's what you wanted,)] [npc.name] tries to explain, releasing [npc.her] grip on your [pc.hips] and stepping back to give you some space.
 		#ENDIF
 	</p>
@@ -3290,7 +3290,7 @@
 	
 	<htmlContent tag="WATERING_HOLE_DOM_PARTNER_TOILETS"><![CDATA[
 	<p>
-		Firmly holding your [pc.hand] in [npc.hers], [npc.name] tries to pull you into the nearest empty stall, looking back over [npc.her] shoulder and grinning as [npc.she] says, [npc.speech(Come on, [pc.babe]! You've been teasing me all evening, now it's time for a good fuck!)]
+		Firmly holding your [pc.hand] in [npc.hers], [npc.name] tries to pull you into the nearest empty stall, looking back over [npc.her] shoulder and grinning as [npc.she] says, [npc.speech(Come on, [pc.babe(npc)]! You've been teasing me all evening, now it's time for a good fuck!)]
 	</p>
 	<p>
 		Several of the people standing at the sinks turn their heads and laugh at [npc.namePos] loud statement, and you find yourself ready to tell your partner what you've been wanting to say all night...

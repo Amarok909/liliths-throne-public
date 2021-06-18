@@ -278,7 +278,7 @@ public class Bunny extends NPC {
 					UtilText.parse(user, target,
 						"<p>"
 							+ "[npc.Name] [npc.verb(take)] out "+UtilText.generateSingularDeterminer(itemName)+" "+itemName+" from [npc.her] inventory and [npc.verb(try)] to give it to [npc2.name],"
-								+ " but [npc2.she] dismisses it with a wave of [npc2.her] hand and says, [npc2.speech(Sorry, [npc.babe], but that's not part of the deal!)]"
+								+ " but [npc2.she] dismisses it with a wave of [npc2.her] hand and says, [npc2.speech(Sorry, [npc.babe(npc2)], but that's not part of the deal!)]"
 						+ "</p>"));
 		}
 		return super.getItemUseEffects(item, itemOwner, user, target);
