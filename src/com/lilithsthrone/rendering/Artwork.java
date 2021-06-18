@@ -20,7 +20,7 @@ import com.lilithsthrone.utils.colours.PresetColour;
  * @version 0.3.7.3
  * @author Innoxia
  */
-public class Artwork {
+public class Artwork {	//Marker
 	
 	private GameCharacter character;
 	private Artist artist;

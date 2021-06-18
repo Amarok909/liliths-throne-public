@@ -3160,7 +3160,7 @@ public abstract class GameCharacter implements XMLSaving {
 	/**
 	 * Equivalent to {@link GameCharacter#loadImages(boolean)} without forcing a reload if the folder didn't change.
 	 */
-	public void loadImages() {
+	public void loadImages() {	// Marker
 		loadImages(false);
 	}
 
@@ -3303,7 +3303,7 @@ public abstract class GameCharacter implements XMLSaving {
 		return isPlayer() || getCurrentArtwork().isCurrentImageClothed() || getTotalTimesHadSex(Main.game.getPlayer()) > 0;
 	}
 	
-	public String getCharacterInformationScreen(boolean includePerkTree) {
+	public String getCharacterInformationScreen(boolean includePerkTree) {	//Marker
 		infoScreenSB.setLength(0);
 
 		if(Main.getProperties().hasValue(PropertyValue.artwork)) {
@@ -3510,7 +3510,7 @@ public abstract class GameCharacter implements XMLSaving {
 		return infoScreenSB.toString();
 	}
 
-	public String getArtworkFolderName() {
+	public String getArtworkFolderName() {	//Marker
 		// Get folder by class name if unique, character name otherwise
 		return this.isUnique() ? this.getClass().getSimpleName() : "generic/" + this.getNameIgnoresPlayerKnowledge();
 	}

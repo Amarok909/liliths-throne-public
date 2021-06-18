@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+    basic info, such as game species, file name all images will use, artist, ect
+-->
+<metadata>
+    <species = "amarok_test_species">
+    <filename = "species_body">
+
+    <artist name="ChattyNeko" colour="BASE_PURPLE" folderName="chattyNeko">
+        <website title="ChattyNeko's Blog" url="https://chattyneko.tumblr.com/"/>
+    </artist>
+</metadata>
+<!--
+    info for each body part image
+    contains
+        image width and height
+        location of piviot point for parent image
+        location of piviot point for child image
+    can be overriden to refer to another species's parts
+-->
+</body>
+    <head>
+        <width = 50>
+        <height = 50>
+        <parent>
+            <X=40>
+            <Y=20>
+        </parent>
+        <child1>
+            <X=40>
+            <Y=20>
+        </child1>
+        <child2>
+            <X=40>
+            <Y=20>
+        </child2>
+    </head>
+
+    <arm>
+        <override = "panther_arm">
+    </arm>
+</body>
+<!--
+    info for detail bits, like muscle, fat, and hair
+-->>
+<detail>
+</detail>
+
+

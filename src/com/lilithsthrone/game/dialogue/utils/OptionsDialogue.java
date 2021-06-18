@@ -46,6 +46,7 @@ import com.lilithsthrone.main.Main;
 import com.lilithsthrone.rendering.Artist;
 import com.lilithsthrone.rendering.ArtistWebsite;
 import com.lilithsthrone.rendering.Artwork;
+import com.lilithsthrone.rendering.Paperdoll;
 import com.lilithsthrone.rendering.SVGImages;
 import com.lilithsthrone.utils.CreditsSlot;
 import com.lilithsthrone.utils.Units;
@@ -249,6 +250,18 @@ public class OptionsDialogue {
 					public void effects() {
 						Util.openLinkInDefaultBrowser("https://www.lilithsthrone.com/wiki/doku.php");
 						confirmNewGame=false;
+					}
+				};
+				
+			} else if (index == 14) {
+				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
+						+ "<br/> File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")){
+					@Override
+					public void effects() {
+						Paperdoll.TestExport();
+					//	Main.primaryStage.close();
+					//	confirmNewGame=false;
+					//	System.exit(0);
 					}
 				};
 			
