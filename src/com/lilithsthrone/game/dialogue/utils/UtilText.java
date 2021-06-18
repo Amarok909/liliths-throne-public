@@ -2642,13 +2642,31 @@ public class UtilText {
 				true,
 				true,
 				"",
-				"Returns a random mean word to describe this person, based on their femininity.") {
+				"Returns a random mean word to describe this person, based on the femininity of them and the speaker.") {
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
-				if(character.isFeminine()) {
-					return "babe";
+				if(arguments==null){
+					if(character.isFeminine()) {
+						return "babe";
+					} else {
+						return "hun";
+					}
 				} else {
-					return "hun";
+					ParserTarget parserTarget = findParserTargetWithTag(arguments.replaceAll("\u200b", ""));
+					GameCharacter speaker = parserTarget.getCharacter(arguments.toLowerCase(), specialNPCs);
+					if(speaker.isFeminine()) {
+						if(character.isFeminine()) {
+							return "babe";
+						} else {
+							return "hun";
+						}
+					} else {
+						if(character.isFeminine()) {
+							return "babe";
+						} else {
+							return "bro";
+						}
+					}
 				}
 			}
 		});
