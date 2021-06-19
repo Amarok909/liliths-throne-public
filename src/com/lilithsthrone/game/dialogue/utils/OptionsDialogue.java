@@ -1,6 +1,7 @@
 package com.lilithsthrone.game.dialogue.utils;
 
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -262,6 +263,10 @@ public class OptionsDialogue {
 					@Override
 					public void effects() {
 						Paperdoll.TestExport();
+						
+						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species")));
+						BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
+						Paperdoll.exportImage("res/images/primitives/test_species", "Autogen", "png", neonimg);
 					//	Main.primaryStage.close();
 					//	confirmNewGame=false;
 					//	System.exit(0);
