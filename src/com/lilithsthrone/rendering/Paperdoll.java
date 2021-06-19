@@ -119,19 +119,13 @@ public class Paperdoll {
 			String saveLocation = location + "/" + name + "." + format;
 			while(new File(saveLocation).exists()) {
 				saveNumber++;
-				saveLocation = "res/images/primitives/test_species/Autogen"+saveNumber+".png";
+				saveLocation = location + "/" + name + saveNumber + "." + format;
 			}	ImageIO.write(img, format, new File(saveLocation));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error: " + e + ", image " + location + "/" + name + "." + format + "failed to save to disk");
 		}
-	}
-	
-	public static void Expo() {		//This is confirmed to work
-		System.err.println("Err");
-	//  System.out.println("Err");
-		System.err.println(System.getProperty("user.dir"));
 	}
 	
 	public static boolean Extwo() {
@@ -145,13 +139,6 @@ public class Paperdoll {
 	}
 	
 	public static void TestExport () {
-		System.err.println("Exop: ");
-	// System.out.println("Exop: ");
-		System.err.println(System.getProperty("user.dir"));
-		
-	//   File dir = new File("res/images/primitives/test_species/Autogen.png");
-	//   dir.mkdir();
-		
 		int xLength = 2000;
 		int yLength = 3500;
 		BufferedImage img = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_ARGB); 
@@ -160,8 +147,10 @@ public class Paperdoll {
 				for (int y = 0; y < yLength; y++) { 
 				//	int a = (int)(Math.random()*256); //generating 
 					int a, r, b, g;
+					double i = Math.floor(x/20)*20;
+					double j = Math.floor(y/20)*20;
 					int boundary = (int)(xLength*0.45);
-					double radius = Math.sqrt(Math.pow((x - xLength/2),2) + Math.pow((y - yLength/2),2));
+					double radius = Math.sqrt(Math.pow((i - xLength/2),2) + Math.pow((j - yLength/2),2));
 					double gradient = (Math.cos((Math.PI/2)*(radius/boundary)));
 					if(radius <= boundary) {	//0,0 is upper left
 						a = 255;
@@ -169,48 +158,27 @@ public class Paperdoll {
 						g = (int)((3*gradient/4+0.25)*140);
 						b = (int)((gradient/2+0.5)*240);
 					} else if((y<=yLength/2+xLength/2)
-					&& (3*Math.sin((Math.PI/2)*(x/60))
-						+ 2*Math.cos((Math.PI/2)*(x/30)) + 1 >= 0)
-					&& (2*Math.cos((Math.PI/2)*(y/45))
-						+ 3*Math.sin((Math.PI/2)*(y/30)) + 2 >= 0)) {
+					&& (3*Math.sin((Math.PI/2)*(i/60))
+						+ 2*Math.cos((Math.PI/2)*(i/30)) + 1 >= 0)
+					&& (2*Math.cos((Math.PI/2)*(j/45))
+						+ 3*Math.sin((Math.PI/2)*(j/30)) + 2 >= 0)) {
 						a = 0;
 						r = 255;
 						g = 255;
 						b = 255;
 					} else {
-						if(x<=128 || x>=xLength-128 || (y>=x+yLength*7/16 && y<=x+yLength*3/4)) {a = 0;	}
+						if(x<=128 || x>=xLength-128 || (j>=i+yLength*7/16 && j<=i+yLength*3/4)) {a = 0;	}
 						else {a = (int)(y*255/yLength);	}
 						r = (int)(Math.random()*256); //values
 						g = (int)(Math.random()*256); //less than
 						b = (int)(Math.random()*256); //256
 					}
-
 					int p = (a<<24) | (r<<16) | (g<<8) | b; //pixel
-
 					img.setRGB(x, y, p); 
 				} 
 			} 
 		
-		try {
-			int saveNumber = 0;
-			String saveLocation = "res/images/primitives/test_species/Autogen.png";
-			while(new File(saveLocation).exists()) {
-				saveNumber++;
-				saveLocation = "res/images/primitives/test_species/Autogen"+saveNumber+".png";
-			}
-			File dir = new File(saveLocation);
-			ImageIO.write(img, "png", dir);
-			System.err.print(dir.getAbsolutePath());
-			
-		//    ImageIO.write(img, "png", new File(System.getProperty("user.dir")+"/"+dir));
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Error: " + e);
-			System.out.println("Error: " + e);
-		}
-		
-	//	FileOutputStream out = new FileOutputStream();
-		
+		exportImage("res/images/simulcrum", "Autogen", "png", img);
 	}
 
 	public static BufferedImage TestTessellate (BufferedImage base, Integer X, Integer Y) {
@@ -283,6 +251,7 @@ public class Paperdoll {
  
         // create a string with yellow
         g2d.setColor(java.awt.Color.YELLOW);
+      //  g2d.setFont(java.awt.font.);
         g2d.drawString("Java Code Geeks", 50, 120);
         g2d.fill3DRect((int)(0.7*X), (int)(0.95*Y), 700, 250, false);
  
@@ -300,6 +269,26 @@ public class Paperdoll {
       //  ImageIO.write(bufferedImage, "jpg", file);
         
         return base;
+	}
+	
+	public static BufferedImage addSquare(BufferedImage base) {
+		int baseXLength = base.getWidth();
+		int baseYLength = base.getHeight();
+	//	int baseType = base.getType();
+		
+		int X = (int) (Math.random()*baseXLength*0.5);
+		int Y = (int) (Math.random()*baseYLength*0.5);
+		int height = Math.min(2000, baseYLength/3);
+		height = Math.min(height, baseXLength/3);
+		
+		for (int x = Math.max(X-height, 0); x < Math.min(X+height, baseXLength); x++) { 
+			for (int y = Math.max(Y-height, 0); y < Math.min(Y+height, baseYLength); y++) {
+				int p = (100<<24) | (30<<16) | (50<<8) | 150; //pixel
+				base.setRGB(x, y, p);
+			}
+		}
+		return base;
+			
 	}
 	
 	public void save(BufferedImage dPanel)

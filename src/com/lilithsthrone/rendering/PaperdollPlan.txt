@@ -7,7 +7,15 @@ X	create basic functions
 X	create tiled images
 X	create overwrite system
 		puts a nice ribbon on images
+X		adds 2dGraphics images
+X		adds math defined square
+		adds scaled image
 	create collage images
+X		random shapes
+		vaguely anthropomorphic
+	rework custom image filing systems
+		make more unique so no overlapping npcs
+		make so Paperdoll is designated artists
 	create primitive limbs, body, head
 		rip these from jam's work, temp measure until skills develop or other artists gained
 	create collage with primitiv body parts manally
@@ -19,6 +27,8 @@ X	create overwrite system
 	create more primitive body parts
 	test generation of images
 	refine code to remove inefficencies
+	rework Paperdoll credit system
+		allow Paperdoll cretis to be updated with artists who supply their own skins
 
 	add articulation to image primitives
 	rework assembly system to suport new articulation
@@ -32,7 +42,11 @@ X	create overwrite system
 	sex animations
 
 GENERAL NOTES
-	All images should be refrenced from their top left corners
+	All images should be refrenced from their top left corners, this is what java uses
+	need to figure out how to deal with nested positioning systems for body parts
+		find math for rotating rectangcle about positioning
+	need to figure out trimming image math
+		note: the corners are a rectangle's most distaant points
 
 RESOURCES
 	https://www.oreilly.com/library/view/learning-java-4th/9781449372477/ch06s01.html

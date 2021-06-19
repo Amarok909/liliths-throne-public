@@ -257,18 +257,20 @@ public class OptionsDialogue {
 				int narm = 7 + Util.random.nextInt(15);
 				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
 						+ "<br/>File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
-						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/primitives/test_species/Autogen"+narm+".png"))
-						+ "<br/>Random File: " + (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species"))))
+						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/simulcrum/Autogen"+narm+".png"))
+						+ "<br/>Random File: " + (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/simulcrum"))))
 						+ ""){
 					@Override
 					public void effects() {
 						Paperdoll.TestExport();
 						
-						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species")));
-					//	BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
+						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomImageFromFolder(new File("res/images/simulcrum")));
+						BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
 					//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
-						BufferedImage neoning = Paperdoll.addOval(baseimg);
-						Paperdoll.exportImage("res/images/primitives/test_species", "Autogen", "png", neoning);
+						neonimg = Paperdoll.addOval(baseimg);
+						neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
+						neonimg = Paperdoll.addSquare(neonimg);
+						Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", neonimg);
 					//	Main.primaryStage.close();
 					//	confirmNewGame=false;
 					//	System.exit(0);
