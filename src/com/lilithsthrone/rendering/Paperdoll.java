@@ -29,6 +29,7 @@ import java.awt.Graphics2D;
 //	https://codereview.stackexchange.com/questions/244123/fastest-way-to-create-random-pixel-image
 //	https://stackoverflow.com/questions/16433915/how-to-copy-file-from-one-location-to-another-location
 //	https://codereview.stackexchange.com/questions/146603/image-processing-rotation?rq=1
+//	https://www.dreamincode.net/forums/topic/166263-converting-graphics2d-to-bufferedimage-how/
 
 //	https://stackoverflow.com/questions/5905868/how-to-rotate-jpeg-images-based-on-the-orientation-metadata
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<artist name="Amarok" colour="BASE_PURPLE" folderName="autoPaperdoll">
+	<website title="Amarok's Github" url="https://github.com/Amarok909"/>
+</artist>
+<artist name="person" colour="BASE_PURPLE" folderName="personPaperdoll">
+	<website title="person's Myspace" url="https://person.myspace"/>
+</artist>

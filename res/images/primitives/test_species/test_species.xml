@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     basic info, such as game species, file name all images will use, artist, ect
+    the artist tag here will be the source of into for the artistPaperdoll xml
+    it will start off with just me, and collect the art of those who have contributed
 -->
 <metadata>
     <species = "amarok_test_species">
     <filename = "species_body">
-
-    <artist name="ChattyNeko" colour="BASE_PURPLE" folderName="chattyNeko">
-        <website title="ChattyNeko's Blog" url="https://chattyneko.tumblr.com/"/>
-    </artist>
+    <artist name="person" colour="BASE_PURPLE" folderName="personPaperdoll">
+		<website title="person's Myspace" url="https://person.myspace"/>
+	</artist>
 </metadata>
 <!--
     info for each body part image
@@ -17,6 +18,33 @@
         location of piviot point for parent image
         location of piviot point for child image
     can be overriden to refer to another species's parts
+    
+    final order of parts, pretty similar to inventory Z layer system
+    waist/stomach
+    	torso
+    		upper arms
+    			lower arms
+    				hands
+    		neck
+    			head
+    				ears
+    				horns
+    		wings
+    		breasts
+    		pregbelly
+    	penis
+    	vagina
+    	upper legs
+    		lower legs
+    			feet
+    	tail
+    	
+    simple order
+    body
+    	head
+    	arms
+    	legs
+    	tail
 -->
 </body>
     <head>
