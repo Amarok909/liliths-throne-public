@@ -255,7 +255,9 @@ public class OptionsDialogue {
 				
 			} else if (index == 14) {
 				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
-						+ "<br/> File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")){
+						+ "<br/>File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
+						+ "<br/>Random File: "+ (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species"))))
+						+ ""){
 					@Override
 					public void effects() {
 						Paperdoll.TestExport();

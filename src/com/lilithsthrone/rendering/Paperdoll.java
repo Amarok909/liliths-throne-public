@@ -49,7 +49,7 @@ public class Paperdoll {
 	//**** Paper-doll ****//
 	
 	//**** Development ****//
-	public BufferedImage getImage(File input) {
+	public static BufferedImage getImage(File input) {
 		try {
 			return ImageIO.read(input);
 		} catch (IOException e) {
@@ -60,22 +60,28 @@ public class Paperdoll {
 		return null;
 	}
 	
-	public BufferedImage getRandomImageFromFolder(File input) {
+	public static File getRandomImageFromFolder(File input) {
 		try {
 			if(input.exists() && input.isDirectory()) {
-				FilenameFilter textFilter = new FilenameFilter() {
-					public boolean accept(File dir, String name) {
-						return name.toLowerCase().endsWith(".jpg");
-					}
-				};
-				File[] imageList = input.listFiles(textFilter);
+				File[] imageList = input.listFiles((path, filename) -> filename.endsWith(".jpg"));
 				int rnd = new Random().nextInt(imageList.length);
-			    return getImage(imageList[rnd]);
+			//	return getImage(imageList[rnd]);
+				File selected = imageList[rnd];
+				return selected;
 			}
+				return null;
 		} catch(Exception e) {
 			
 		}
 		return null;
+	}
+	
+	public static String FiletoString(File image) {
+		if(image.exists()) {
+			return "Happy";
+		}	return "Sad";
+		//return image.getAbsolutePath();
+		
 	}
 	
 	public static void Expo() {		//This is confirmed to work
@@ -102,8 +108,8 @@ public class Paperdoll {
 	//   File dir = new File("res/images/primitives/test_species/Autogen.png");
 	//   dir.mkdir();
 		
-		int xLenght = 1600;
-		int yLenght = 4000;
+		int xLenght = 4000;
+		int yLenght = 7000;
 		BufferedImage img = new BufferedImage(xLenght, yLenght, BufferedImage.TYPE_INT_ARGB); 
 		
 		for (int y = 0; y < yLenght; y++) 
