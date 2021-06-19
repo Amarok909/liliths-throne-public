@@ -1,7 +1,12 @@
 DEV STAGES
 X	create basic image mathmatically
-X	create complex image
-	create tiled images
+X	create complex 
+X	create basic functions
+		get image
+		find random image
+X	create tiled images
+X	create overwrite system
+		puts a nice ribbon on images
 	create collage images
 	create primitive limbs, body, head
 		rip these from jam's work, temp measure until skills develop or other artists gained
@@ -26,4 +31,10 @@ X	create complex image
 
 	sex animations
 
+GENERAL NOTES
+	All images should be refrenced from their top left corners
 
+RESOURCES
+	https://www.oreilly.com/library/view/learning-java-4th/9781449372477/ch06s01.html
+	https://www.oreilly.com/library/view/learning-java-4th/9781449372477/ch06s02.html
+	https://teamtreehouse.com/community/difference-between-implementing-and-importing

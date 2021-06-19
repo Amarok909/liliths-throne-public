@@ -254,7 +254,7 @@ public class OptionsDialogue {
 				};
 				
 			} else if (index == 14) {
-				int narm = 7 + Util.random.nextInt(8);
+				int narm = 7 + Util.random.nextInt(15);
 				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
 						+ "<br/>File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
 						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/primitives/test_species/Autogen"+narm+".png"))
@@ -265,8 +265,10 @@ public class OptionsDialogue {
 						Paperdoll.TestExport();
 						
 						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species")));
-						BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
-						Paperdoll.exportImage("res/images/primitives/test_species", "Autogen", "png", neonimg);
+					//	BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
+					//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
+						BufferedImage neoning = Paperdoll.addOval(baseimg);
+						Paperdoll.exportImage("res/images/primitives/test_species", "Autogen", "png", neoning);
 					//	Main.primaryStage.close();
 					//	confirmNewGame=false;
 					//	System.exit(0);

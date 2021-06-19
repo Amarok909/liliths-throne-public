@@ -1,6 +1,9 @@
 package com.lilithsthrone.rendering;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javafx.application.Application; 
@@ -17,6 +20,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color; 
 import javafx.stage.Stage;
 
+import java.awt.Graphics2D;
+
 //	https://www.tutorialspoint.com/javafx/javafx_images.htm
 //	https://community.oracle.com/tech/developers/discussion/2450090/save-the-image-painted-by-javafx-to-the-disk
 //	https://community.oracle.com/tech/developers/discussion/2456310/using-vector-graphics-with-fxml-and-javafx
@@ -24,6 +29,8 @@ import javafx.stage.Stage;
 //	https://codereview.stackexchange.com/questions/244123/fastest-way-to-create-random-pixel-image
 //	https://stackoverflow.com/questions/16433915/how-to-copy-file-from-one-location-to-another-location
 //	https://codereview.stackexchange.com/questions/146603/image-processing-rotation?rq=1
+
+//	https://stackoverflow.com/questions/5905868/how-to-rotate-jpeg-images-based-on-the-orientation-metadata
 
 //	https://www.tutorialspoint.com/javafx/javafx_overview.htm
 
@@ -40,6 +47,9 @@ import javax.imageio.ImageIO;
 @SuppressWarnings("unused")
 
 public class Paperdoll {
+	
+//	List<Integer> coords = Arrays.asList(1, 2, 3);
+//	String name;
 
 //	public Paperdoll() {
 //		// TODO Auto-generated constructor stub
@@ -163,7 +173,7 @@ public class Paperdoll {
 						+ 2*Math.cos((Math.PI/2)*(x/30)) + 1 >= 0)
 					&& (2*Math.cos((Math.PI/2)*(y/45))
 						+ 3*Math.sin((Math.PI/2)*(y/30)) + 2 >= 0)) {
-						a = 255;
+						a = 0;
 						r = 255;
 						g = 255;
 						b = 255;
@@ -220,6 +230,97 @@ public class Paperdoll {
 				img.setRGB(x, y, p);
 			}
 		}
+		System.err.println(baseXLength+" "+baseYLength);
+		System.err.println(xLength+" "+yLength);
 		return img;
 	}
+	
+	public static BufferedImage addRibbon(BufferedImage base, int height2) {
+		int baseXLength = base.getWidth();
+		int baseYLength = base.getHeight();
+		int baseType = base.getType();
+		int height = Math.min(height2, baseYLength/2);
+		
+	//	BufferedImage img = new BufferedImage(baseXLength, baseYLength, baseType); 
+		int max = baseYLength/2+height;
+		int min = baseYLength/2-height;
+		
+		for (int x = 0; x < baseXLength; x++) { 
+			double cos = (Math.floorMod(Math.abs(x), 750))/750;//Math.cos(x/300);
+			cos = cos*height;
+			for (int y = 0; y < baseYLength; y++) {
+				if(x - y <= 700) {
+			//	if((y<=cos+max) && (y>=-cos+min)) {
+					int p = (200<<24) | (250<<16) | (5<<8) | 5; //pixel
+					base.setRGB(x, y, p);
+				
+				}	continue;
+			}
+		}
+		return base;
+	}
+	
+//	https://examples.javacodegeeks.com/desktop-java/imageio/create-image-file-from-graphics-object/
+	public static BufferedImage addOval(BufferedImage base) {
+		// Constructs a BufferedImage of one of the predefined image types.
+    //    BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+ 
+        // Create a graphics which can be used to draw into the buffered image
+     //   Graphics2D g2d = bufferedImage.createGraphics();
+		Graphics2D g2d = base.createGraphics();
+	//	base.gra
+		
+		int X = base.getWidth();
+		int Y = base.getHeight();
+ 
+        // fill all the image with white
+        g2d.setColor(java.awt.Color.RED);
+        g2d.fillRect(0, 0, 300, 300);
+ 
+        // create a circle with black
+        g2d.setColor(java.awt.Color.BLACK);
+        g2d.fillOval(0, 0, 600, 200);
+ 
+        // create a string with yellow
+        g2d.setColor(java.awt.Color.YELLOW);
+        g2d.drawString("Java Code Geeks", 50, 120);
+        g2d.fill3DRect((int)(0.7*X), (int)(0.95*Y), 700, 250, false);
+ 
+        // Disposes of this graphics context and releases any system resources that it is using. 
+        g2d.dispose();
+ 
+     //   g2d.drawImage(base, null, 0, 0);
+        
+        // Save as PNG
+     //   File file = new File("myimage.png");
+       // ImageIO.write(bufferedImage, "png", file);
+ 
+        // Save as JPEG
+      //  file = new File("myimage.jpg");
+      //  ImageIO.write(bufferedImage, "jpg", file);
+        
+        return base;
+	}
+	
+	public void save(BufferedImage dPanel)
+	{
+	    BufferedImage bImg = new BufferedImage(dPanel.getWidth(), dPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+	    Graphics2D cg = bImg.createGraphics();
+	//    ((BufferedImage) dPanel).paintAll(cg);
+	    try {
+	            if (ImageIO.write(bImg, "png", new File("./output_image.png")))
+	            {
+	                System.out.println("-- saved");
+	            }
+	    } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	    }
+	}
+	
+//	protected Paperdoll(List<Integer> coords, String name) {
+//		this.coords = coords;
+//		this.name = name;
+//	};
+	
 }
