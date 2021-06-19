@@ -92,7 +92,7 @@ public class Paperdoll {
 	
 	public static String FiletoString(File image) {
 		if(image.exists() && image.isFile()) {
-			return "Happy";
+			return "Happy "+ image.getPath();
 		} else {
 			return "Sad";
 		}
@@ -129,8 +129,8 @@ public class Paperdoll {
 	//   File dir = new File("res/images/primitives/test_species/Autogen.png");
 	//   dir.mkdir();
 		
-		int xLenght = 4000;
-		int yLenght = 7000;
+		int xLenght = 2000;
+		int yLenght = 3500;
 		BufferedImage img = new BufferedImage(xLenght, yLenght, BufferedImage.TYPE_INT_ARGB); 
 		
 		for (int y = 0; y < yLenght; y++) 
@@ -147,11 +147,11 @@ public class Paperdoll {
 						r = (int)(gradient*(Math.random()*256));
 						g = (int)((3*gradient/4+0.25)*140);
 						b = (int)((gradient/2+0.5)*240);
-					} else if((y<=yLenght/2-xLenght/2)
-					&& (3*Math.cos((Math.PI/2)*(x/800))
-						+ 2*Math.cos((Math.PI/2)*(x/300)) + 1 >= 0)
-					&& (3*Math.sin((Math.PI/2)*(y/800))
-						+ 2*Math.sin((Math.PI/2)*(y/300)) + 1 >= 0)) {
+					} else if((y<=yLenght/2+xLenght/2)
+					&& (3*Math.sin((Math.PI/2)*(x/300))
+						+ 2*Math.cos((Math.PI/2)*(x/150)) + 1 >= 0)
+					&& (2*Math.cos((Math.PI/2)*(y/225))
+						+ 3*Math.sin((Math.PI/2)*(y/150)) + 2 >= 0)) {
 						a = 0;
 						r = 0;
 						g = 0;

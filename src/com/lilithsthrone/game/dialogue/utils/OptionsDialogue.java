@@ -256,7 +256,8 @@ public class OptionsDialogue {
 				int narm = 7 + Util.random.nextInt(8);
 				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
 						+ "<br/>File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
-						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/primitives/test_species/Autogen"+narm+".png"))//+ (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species"))))
+						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/primitives/test_species/Autogen"+narm+".png"))
+						+ "<br/>Random File: " + (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species"))))
 						+ ""){
 					@Override
 					public void effects() {
