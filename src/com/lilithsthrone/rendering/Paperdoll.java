@@ -60,29 +60,50 @@ public class Paperdoll {
 		return null;
 	}
 	
+	public static BufferedImage getImage (String path) {
+		return getImage(new File(path));
+	}
+	
+	
 	public static File getRandomImageFromFolder(File input) {
-		try {
-			if(input.exists() && input.isDirectory()) {
-				File[] imageList = input.listFiles((path, filename) -> filename.endsWith(".jpg"));
-				int rnd = new Random().nextInt(imageList.length);
-			//	return getImage(imageList[rnd]);
-				File selected = imageList[rnd];
-				return selected;
-			}
-				return null;
-		} catch(Exception e) {
+		File dir = new File("res/images/characters");
+		
+		if(input.exists()) {
+			FilenameFilter textFilter = new FilenameFilter() {
+				public boolean accept(File input, String name) {
+					return name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg");
+				}
+			};
 			
-		}
-		return null;
+		//	List<File> direct = new List<>();
+			File[] imageList = input.listFiles(textFilter);
+			if(imageList!=null) {
+				int rnd = new Random().nextInt(imageList.length);
+			//  return getImage(imageList[rnd]);
+				return imageList[rnd];
+			}
+		//	for(File subFile : dir.listFiles(textFilter)) {
+				
+		//	};
+			
+			return null;
+		}	return null;
 	}
 	
 	public static String FiletoString(File image) {
-		if(image.exists()) {
+		if(image.exists() && image.isFile()) {
 			return "Happy";
-		}	return "Sad";
+		} else {
+			return "Sad";
+		}
 		//return image.getAbsolutePath();
 		
 	}
+	
+	public static String FtS(String path) {
+		return FiletoString(new File(path));
+	}
+	
 	
 	public static void Expo() {		//This is confirmed to work
 		System.err.println("Err");
@@ -118,7 +139,7 @@ public class Paperdoll {
 				{ 
 				//	int a = (int)(Math.random()*256); //generating 
 					int a, r, b, g;
-					int boundary = 200;
+					int boundary = (int)(xLenght*0.45);
 					double radius = Math.sqrt(Math.pow((x - xLenght/2),2) + Math.pow((y - yLenght/2),2));
 					double gradient = (Math.cos((Math.PI/2)*(radius/boundary)));
 					if(radius <= boundary) {	//0,0 is upper left
@@ -126,6 +147,15 @@ public class Paperdoll {
 						r = (int)(gradient*(Math.random()*256));
 						g = (int)((3*gradient/4+0.25)*140);
 						b = (int)((gradient/2+0.5)*240);
+					} else if((y<=yLenght/2-xLenght/2)
+					&& (3*Math.cos((Math.PI/2)*(x/800))
+						+ 2*Math.cos((Math.PI/2)*(x/300)) + 1 >= 0)
+					&& (3*Math.sin((Math.PI/2)*(y/800))
+						+ 2*Math.sin((Math.PI/2)*(y/300)) + 1 >= 0)) {
+						a = 0;
+						r = 0;
+						g = 0;
+						b = 0;
 					} else {
 						if(x<=128 || x>=xLenght-128 || (y>=x+yLenght*7/16 && y<=x+yLenght*3/4)) {a = 0;	}
 						else {a = (int)(y*255/yLenght);	}
@@ -147,7 +177,9 @@ public class Paperdoll {
 				saveNumber++;
 				saveLocation = "res/images/primitives/test_species/Autogen"+saveNumber+".png";
 			}
-			ImageIO.write(img, "png", new File(saveLocation));
+			File dir = new File(saveLocation);
+			ImageIO.write(img, "png", dir);
+			System.err.print(dir.getAbsolutePath());
 			
 		//    ImageIO.write(img, "png", new File(System.getProperty("user.dir")+"/"+dir));
 		} catch (IOException e) {

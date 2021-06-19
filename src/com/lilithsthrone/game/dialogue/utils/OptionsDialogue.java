@@ -11,7 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import com.lilithsthrone.game.Game;
 import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.attributes.Attribute;
@@ -254,9 +253,10 @@ public class OptionsDialogue {
 				};
 				
 			} else if (index == 14) {
+				int narm = 7 + Util.random.nextInt(8);
 				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
 						+ "<br/>File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
-						+ "<br/>Random File: "+ (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species"))))
+						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/primitives/test_species/Autogen"+narm+".png"))//+ (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/primitives/test_species"))))
 						+ ""){
 					@Override
 					public void effects() {
