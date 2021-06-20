@@ -1,6 +1,5 @@
 package com.lilithsthrone.rendering;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,11 +79,20 @@ public class Pmage /*extends Paperdoll*/ {
 		return this;
 	}
 	
+	public void logData() {
+		System.err.println("width: " + width + "px");
+		System.err.println("height: " + height + "px");
+		System.err.println("name: " + name);
+		System.err.println("format: " + format);
+		System.err.println("origin: " + origin.get(0) + ", " + origin.get(1));
+	}
 	
 // Math methods
 	private ArrayList<ArrayList<Integer>> findCorners(int width, int height, ArrayList<Integer> origin, double rotation) {
 		// corner coords are relative to origin. eg, if O(4,2), then TL(-4,-2), TR(6,-2), BR(6,8), BL(-4,8) on a 10x10 image
 		// REMEMBER, images are positive right and down
+		origin = origin==null? new ArrayList<Integer>(Arrays.asList(0, 0)) : origin;
+		
 		int X = origin.get(0);
 		int Y = origin.get(1);
 		ArrayList<Integer> TL = new ArrayList<Integer>(Arrays.asList(-X,-Y));

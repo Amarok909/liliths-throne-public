@@ -163,8 +163,8 @@ public class Paperdoll {
 	}
 	
 	public static BufferedImage TestExport () {
-		int xLength = 2000*0+300*8;
-		int yLength = 3500*0+445*8;
+		int xLength = 2000*0+300*4;
+		int yLength = 3500*0+445*4;
 		BufferedImage img = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_ARGB); 
 		
 		for (int x = 0; x < xLength; x++) { 
@@ -349,6 +349,13 @@ public class Paperdoll {
 		g.drawImage(ex, 0, 400, null);
 		g.drawImage(ex, 0, 400+1*ex.getHeight(), null);
 		g.drawImage(ex, 0, 400+2*ex.getHeight(), null);
+		
+		g.translate(-ex.getWidth()/2, 0);
+		g.drawImage(ex, 0, 400+3*ex.getHeight(), null);	//clips portrain halfway into wall PASS
+		g.translate(ex.getWidth(), 0);
+		g.drawImage(ex, 0, 400+4*ex.getHeight(), null); // places portrait halfway out, PASS
+		g.translate(-ex.getWidth()/2, 0);
+		
 		g.dispose();
 
 		return base;
@@ -390,14 +397,15 @@ public class Paperdoll {
 	}
 	
 	public static void ExperimentMethod() {
+		System.err.println("INPUT");
 //		Paperdoll.TestExport();
 		
 		BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomFileFromFolder(new File("res/images/simulcrum")));
 		BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
 	//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
 		neonimg = Paperdoll.addOval(baseimg);
-		neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
-		neonimg = Paperdoll.addSquare(neonimg);
+	//	neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
+	//	neonimg = Paperdoll.addSquare(neonimg);
 	//	Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", neonimg);
 	//	baseimg = Paperdoll.rotateImage(Paperdoll.TestExport(), (Util.random.nextInt(13)-6)*15);
 	//	Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", baseimg);
@@ -409,6 +417,11 @@ public class Paperdoll {
 	//	BufferedImage smol = Paperdoll.scaleDown(neonimg);
 		BufferedImage smol = layerImagesbyGraphics(neonimg, baseimg);
 		Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", smol);
+		Pmage dan = new Pmage(smol, null, lastExported, "png");
+		dan.setFormat("dildos");
+		dan.origin = new ArrayList<Integer>(Arrays.asList(55, 88));
+		dan.logData();
+		System.err.println("TESTING");
 	//	Pmage expo = new Pmage(smol).setFullName("Autogenous", "png");		//not quite working
 	//	expo.bulkExport();
 		
