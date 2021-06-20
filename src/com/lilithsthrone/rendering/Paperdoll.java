@@ -56,12 +56,13 @@ import javax.imageio.ImageIO;
  * @author Amarok
  */
 public class Paperdoll {
-	/* Paperdoll is the universal managager for all classes and methods related to the paperdoll system
-	 * It contains the code for retriving, modifying, and exporting images
+	/* Paperdoll is the universal manager for all classes and methods related to the paperdoll system
+	 * It contains the code for retrieving, modifying, and exporting images
+	 * all the fun functions, like layering images and such will be defined here, and Pmage will have a referential method
 	 */
 	
 	static String lastExported;
-	static String unviersalExport = "res/images/simulcrum";
+	static String universalExport = "res/images/simulcrum";
 	
 	
 //**** Image Input ****//
@@ -79,9 +80,9 @@ public class Paperdoll {
 
 //**** Image Output ****//
 	public static void exportImage(String location, String name, String format, BufferedImage img) {
+		String saveLocation = location + "/" + name + "." + format;
 		try {
 			int saveNumber = 0;
-			String saveLocation = location + "/" + name + "." + format;
 			while(new File(saveLocation).exists()) {
 				saveNumber++;
 				saveLocation = location + "/" + name + saveNumber + "." + format;
@@ -91,7 +92,7 @@ public class Paperdoll {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("Error: " + e + ", image " + location + "/" + name + "." + format + "failed to save to disk");
+			System.err.println("Error: " + e + ", image " + saveLocation + "failed to save to disk");
 		}
 	}
 	
@@ -99,14 +100,9 @@ public class Paperdoll {
 		if(lastExported!=null) {
 			return lastExported;
 		} else {
-			File input = new File("res/images/simulcrum");
+			File input = new File(universalExport);
 			if(input.exists()) {
-				FilenameFilter textFilter = new FilenameFilter() {
-					public boolean accept(File input, String name) {
-						return name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg");
-					}
-				};
-				File[] imageList = input.listFiles(textFilter);
+				File[] imageList = imageList(input);
 				if(imageList!=null) {
 					File oldestFile = imageList[0];
 					for(int i=0; i<imageList.length; i++) {
@@ -118,7 +114,7 @@ public class Paperdoll {
 	}
 
 //**** Image File Management ****//
-	public static File getRandomFileFromFolder(File input) {
+	public static File[] imageList(File input) {
 		if(input.exists()) {
 			FilenameFilter textFilter = new FilenameFilter() {
 				public boolean accept(File input, String name) {
@@ -126,6 +122,13 @@ public class Paperdoll {
 				}
 			};
 			File[] imageList = input.listFiles(textFilter);
+			return imageList;
+		}	return null;
+	}
+	
+	public static File getRandomFileFromFolder(File input) {
+		if(input.exists()) {
+			File[] imageList = imageList(input);
 			if(imageList!=null) {
 				int rnd = new Random().nextInt(imageList.length);
 				//  return getImage(imageList[rnd]);
@@ -156,9 +159,7 @@ public class Paperdoll {
 //**** Development ****//
 	public static boolean Extwo() {
 		File dir = new File("res/images/primitives/test_species/test_species.xml");
-		if(dir.exists()) {
-			return true;
-		}	return false;
+		return dir.exists();
 	}
 	
 	public static BufferedImage TestExport () {
@@ -227,8 +228,6 @@ public class Paperdoll {
 				img.setRGB(x, y, p);
 			}
 		}
-		System.err.println(baseXLength+" "+baseYLength);
-		System.err.println(xLength+" "+yLength);
 		return img;
 	}
 	
@@ -257,31 +256,29 @@ public class Paperdoll {
 		return base;
 	}
 	
-//	https://examples.javacodegeeks.com/desktop-java/imageio/create-image-file-from-graphics-object/
-//	https://www.baeldung.com/java-add-text-to-image
+	//	https://examples.javacodegeeks.com/desktop-java/imageio/create-image-file-from-graphics-object/
+	//	https://www.baeldung.com/java-add-text-to-image
 	public static BufferedImage addOval(BufferedImage base) {
-		Graphics2D g2d = base.createGraphics();
+		Graphics2D g = base.createGraphics();
 
 		int X = base.getWidth();
 		int Y = base.getHeight();
- 
-        // fill all the image with white
-        g2d.setColor(java.awt.Color.RED);
-        g2d.fillRect(0, 0, 300, 300);
- 
-        // create a circle with black
-        g2d.setColor(java.awt.Color.BLACK);
-        g2d.fillOval(0, 0, 600, 200);
- 
-        // create a string with yellow
-        g2d.setColor(java.awt.Color.YELLOW);
+
+		// fill all the image with white
+		g.setColor(java.awt.Color.RED);
+		g.fillRect(0, 0, 300, 300);
+
+		// create a circle with black
+		g.setColor(java.awt.Color.BLACK);
+		g.fillOval(0, 0, 600, 200);
+
+		// create a string with yellow
+		g.setColor(java.awt.Color.YELLOW);
 		Font font = new Font("Monospaced", Font.BOLD, 75);
-		g2d.setFont(font);
-        g2d.drawString("Java Code Geeks", 50, 120);
-        g2d.fill3DRect((int)(0.7*X), (int)(0.95*Y), 900, 450, false);
- 
-        // Disposes of this graphics context and releases any system resources that it is using. 
-        g2d.dispose();
+		g.setFont(font);
+		g.drawString("Java Code Geeks", 50, 120);
+		g.fill3DRect((int)(0.7*X), (int)(0.95*Y), 900, 450, false);
+		g.dispose();
 		return base;
 	}
 	
@@ -304,6 +301,7 @@ public class Paperdoll {
 	}
 	
 	//	http://jens-na.github.io/2013/11/06/java-how-to-concat-buffered-images/
+	// super complex, probs dont need...
 	public static BufferedImage layerImagesbyMath(BufferedImage base, BufferedImage implant, boolean cropToBase) {
 		int baseXLength = base.getWidth();
 		int baseYLength = base.getHeight();
@@ -342,15 +340,6 @@ public class Paperdoll {
 	}
 	
 	public static BufferedImage layerImagesbyGraphics(BufferedImage base, BufferedImage implant) {
-		
-	/*	https://stackoverflow.com/questions/7028780/how-to-add-20-pixels-of-white-at-the-top-of-an-existing-image-file
-		https://stackoverflow.com/questions/7894275/cropping-an-image-in-java
-	 	Use GraphicsConfiguration.createCompatibleImage(int width, int height) to create a BufferedImage of the same width, but with a height that's +20.
-		Use BufferedImage.createGraphics() to obtain the Graphics2D object of this image.
-		Use Graphics.setColor(Color c) and Graphics.fillRect(int x, int y, int width, int height) to draw the white top
-		Use Graphics.drawImage(Image img, int x, int y, ImageObserver observer) to draw the original image to the specified coordinates of the new image.
-	*/
-
 		Graphics2D g = base.createGraphics();
 		g.setColor(new java.awt.Color(220, 180, 240, 145));
 		g.fillRect(0, 0, 450, 200);
@@ -366,6 +355,12 @@ public class Paperdoll {
 	}
 
 	public static BufferedImage rotateImage(BufferedImage input, double rotation) {
+		/* Some note before we start
+		 * Any rotation will create a 'shadow' like this: https://stackoverflow.com/a/44087430
+		 * the complexity of this can be subverted by rotating at the image's center, and then moving the origen respectivly
+		 * this should achive the same effect as rotating around the origin
+		 */
+		
 		int w = input.getWidth();
 		int h = input.getHeight();
 		rotation = Math.toRadians(rotation);
@@ -375,18 +370,16 @@ public class Paperdoll {
 		BufferedImage rotatedImage = new BufferedImage(wPrime, hPrime, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = rotatedImage.createGraphics();
 		g.setColor(new java.awt.Color(20, 180, 240, 145));
-		//	g.fillRect(0, 0, wPrime, hPrime);  // fill entire area
 		
 		g.fillRect(0, 0, 450, hPrime);
 		g.fillRect(wPrime-450, 0, 450, hPrime);
 		g.fillRect(0, 0, wPrime, 450);
-		//	g.fillRect(0, hPrime-450, wPrime, 450);
 		
 		g.translate(wPrime/2, hPrime/2);
 		g.rotate(rotation);
 		g.translate(-w/2, -h/2);
 		g.drawImage(input, 0, 0, null);
-		g.dispose();  // release used resources before g is garbage-collected
+		g.dispose();
 		
 		Graphics2D g2 = rotatedImage.createGraphics();		// declaring a new Graphics2d reseets any translate and rotate effects on the canvas
 		g2.setColor(new java.awt.Color(20, 180, 240, 145));
@@ -422,10 +415,4 @@ public class Paperdoll {
 		// TODO Auto-generated method stub
 		
 	}
-	
-//	protected Paperdoll(List<Integer> coords, String name) {
-//		this.coords = coords;
-//		this.name = name;
-//	};
-	
 }

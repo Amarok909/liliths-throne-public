@@ -15,10 +15,10 @@ public class Pmage /*extends Paperdoll*/ {
 	 * is stores the following
 	 * image
 	 * width, height
-	 * origin cordinates (relative to top left corner)
+	 * name, format
+	 * origin coordinates (relative to top left corner)
 	 * corner coordinates
-	 * ??rotation
-	 * ??scale
+	 * rotation
 	 */
 
 	BufferedImage image;
@@ -31,20 +31,18 @@ public class Pmage /*extends Paperdoll*/ {
 	ArrayList<ArrayList<Integer>> corners = new ArrayList<ArrayList<Integer>>();		//TL, TR, BL, BR
 	
 	double rotation;
-	double scale;
-	double xscale;
-	double yscale;
 	
 // Constructors
 	public Pmage(BufferedImage image, ArrayList<Integer> origin, String name, String format) {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
-		this.origin = origin;
-		this.corners = findCorners(width, height, origin);
 		
 		this.name = name;
 		this.format = format;
+		
+		this.origin = origin;
+		this.corners = findCorners(width, height, origin);
 	}
 	
 	public Pmage(BufferedImage image, ArrayList<Integer> origin) {
@@ -58,6 +56,11 @@ public class Pmage /*extends Paperdoll*/ {
 	
 // Image methods
 	public BufferedImage getImage() {return image;}
+	
+	public Pmage setImage(BufferedImage input) {
+		setImage(input);
+		return this;
+	}
 	
 	
 // Name methods
@@ -84,10 +87,10 @@ public class Pmage /*extends Paperdoll*/ {
 		// REMEMBER, images are positive right and down
 		int X = origin.get(0);
 		int Y = origin.get(1);
-		ArrayList<Integer> TL = new ArrayList<Integer>(Arrays.asList(-width, -height));
-		ArrayList<Integer> TR = new ArrayList<Integer>(Arrays.asList(X-width,-height));
+		ArrayList<Integer> TL = new ArrayList<Integer>(Arrays.asList(-X,-Y));
+		ArrayList<Integer> TR = new ArrayList<Integer>(Arrays.asList(X-width,-Y));
 		ArrayList<Integer> BR = new ArrayList<Integer>(Arrays.asList(X-width,Y-height));
-		ArrayList<Integer> BL = new ArrayList<Integer>(Arrays.asList(-width, Y-height));
+		ArrayList<Integer> BL = new ArrayList<Integer>(Arrays.asList(-X, Y-height));
 		
 		ArrayList<ArrayList<Integer>> corners = new ArrayList<ArrayList<Integer>>(Arrays.asList(TL, TR, BR, BL));
 		
@@ -116,33 +119,13 @@ public class Pmage /*extends Paperdoll*/ {
 	
 	@SuppressWarnings("unused")
 	private Pmage rotate(Pmage input, double rotation) {
-		/* Some note before we start
-		 * Any rotation will create a 'shadow' like this: https://stackoverflow.com/a/44087430
-		 * the complexity of this can be subverted by rotating at the image's center, and then moving the origen respectivly
-		 * this should achive the same effect as rotating around the origin
-		 */
-		int w = input.width;
-	    int h = input.height;
-	    rotation = Math.toRadians(rotation);
-	    
-	    int hPrime = (int) (w * Math.abs(Math.sin(rotation)) + h * Math.abs(Math.cos(rotation)));
-	    int wPrime = (int) (h * Math.abs(Math.sin(rotation)) + w * Math.abs(Math.cos(rotation)));
-
-	    BufferedImage rotatedImage = new BufferedImage(wPrime, hPrime, BufferedImage.TYPE_INT_RGB);
-	    Graphics2D g = rotatedImage.createGraphics();
-	    g.setColor(java.awt.Color.LIGHT_GRAY);
-	    g.fillRect(0, 0, wPrime, hPrime);  // fill entire area
-	    g.translate(wPrime/2, hPrime/2);
-	    g.rotate(rotation);
-	    g.translate(-w/2, -h/2);
-	    g.drawImage(input.image, 0, 0, null);
-	    g.dispose();  // release used resources before g is garbage-collected
-	    //return rotatedImage;
-	    
-	    Pmage img =  new Pmage(rotatedImage, new ArrayList<Integer>(Arrays.asList(0,0)));
-	    img.setRotation(rotation);
-	    return img;
-	
+		BufferedImage img = input.getImage();
+		img = Paperdoll.rotateImage(img, rotation);
+		this.image = img;
+		this.width = img.getWidth();
+		this.height = img.getHeight();
+		this.corners = findCorners(width, height, origin);
+		return this;
 	}
 	
 	private ArrayList<ArrayList<Integer>> findCorners(int width, int height, ArrayList<Integer> origin) {
@@ -183,7 +166,7 @@ public class Pmage /*extends Paperdoll*/ {
 	public void bulkExport(Pmage... inputs) {
 		for(int i = 0; i < inputs.length; i++) {
 			Pmage p = inputs[i];
-			Paperdoll.exportImage(Paperdoll.unviersalExport, p.name, p.format, p.image);
+			Paperdoll.exportImage(Paperdoll.universalExport, p.name, p.format, p.image);
 		}
 	}
 	
