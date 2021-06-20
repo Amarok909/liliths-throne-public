@@ -35,13 +35,20 @@ public class Pmage /*extends Paperdoll*/ {
 	double xscale;
 	double yscale;
 	
-	// Constructors
-	public Pmage(BufferedImage image, ArrayList<Integer> origin) {
+// Constructors
+	public Pmage(BufferedImage image, ArrayList<Integer> origin, String name, String format) {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
 		this.origin = origin;
 		this.corners = findCorners(width, height, origin);
+		
+		this.name = name;
+		this.format = format;
+	}
+	
+	public Pmage(BufferedImage image, ArrayList<Integer> origin) {
+		this(image, new ArrayList<Integer>(Arrays.asList(0,0)), "Autogen", "png");
 	}
 	
 	public Pmage(BufferedImage image) {
@@ -49,21 +56,29 @@ public class Pmage /*extends Paperdoll*/ {
 	}
 	
 	
-	// Image methods
-	public BufferedImage getPmageSource() {
-		return image;
-	}
+// Image methods
+	public BufferedImage getImage() {return image;}
 	
 	
-	// Name methods
+// Name methods
 	public String getFullName() {return name + "." + format;}
 	
 	public String getName() {return name;}
 	
 	public String getFormat() {return format;}
 	
+	public void setName(String name) {this.name = name;}
 	
-	// Math methods
+	public void setFormat(String format) {this.format = format;}
+	
+	public Pmage setFullName(String name, String format) {
+		this.name = name;
+		this.format = format;
+		return this;
+	}
+	
+	
+// Math methods
 	private ArrayList<ArrayList<Integer>> findCorners(int width, int height, ArrayList<Integer> origin, double rotation) {
 		// corner coords are relative to origin. eg, if O(4,2), then TL(-4,-2), TR(6,-2), BR(6,8), BL(-4,8) on a 10x10 image
 		// REMEMBER, images are positive right and down
@@ -99,6 +114,7 @@ public class Pmage /*extends Paperdoll*/ {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private Pmage rotate(Pmage input, double rotation) {
 		/* Some note before we start
 		 * Any rotation will create a 'shadow' like this: https://stackoverflow.com/a/44087430
@@ -140,6 +156,7 @@ public class Pmage /*extends Paperdoll*/ {
 		return 	dist;
 	}
 	
+	@SuppressWarnings("unused")
 	private ArrayList<Double> cornerDistance(ArrayList<Integer> Origin, ArrayList<ArrayList<Integer>> Corner) {
 		ArrayList<Double> Distances = new ArrayList<Double>();
 		for(ArrayList<Integer> C : Corner) {
@@ -148,13 +165,13 @@ public class Pmage /*extends Paperdoll*/ {
 	}
 	
 	
-	// Rotation methods
+// Rotation methods
 	public double getRotation() {return this.rotation;}
 	
 	public void setRotation(double r) {this.rotation = r;}
 	
 	
-	// Test methods
+// Test methods
 	public Pmage function1(Pmage input) {
 		return input;
 	}
@@ -164,9 +181,14 @@ public class Pmage /*extends Paperdoll*/ {
 	}
 	
 	public void bulkExport(Pmage... inputs) {
-		for(Pmage p : inputs) {
+		for(int i = 0; i < inputs.length; i++) {
+			Pmage p = inputs[i];
 			Paperdoll.exportImage(Paperdoll.unviersalExport, p.name, p.format, p.image);
 		}
+	}
+	
+	public void bulkExport() {
+		bulkExport(this, this, this);
 	}
 
 }

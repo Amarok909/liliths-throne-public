@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import com.lilithsthrone.rendering.Pmage;
+import com.lilithsthrone.utils.Util;
 
 import javafx.application.Application; 
 
@@ -62,12 +63,6 @@ public class Paperdoll {
 	static String lastExported;
 	static String unviersalExport = "res/images/simulcrum";
 	
-//	List<Integer> coords = Arrays.asList(1, 2, 3);
-//	String name;
-
-//	public Paperdoll() {
-//		// TODO Auto-generated constructor stub
-//	}
 	
 //**** Image Input ****//
 	public static BufferedImage getImage(File input) {
@@ -166,9 +161,9 @@ public class Paperdoll {
 		}	return false;
 	}
 	
-	public static void TestExport () {
-		int xLength = 2000*0+300*3;
-		int yLength = 3500*0+445*3;
+	public static BufferedImage TestExport () {
+		int xLength = 2000*0+300*8;
+		int yLength = 3500*0+445*8;
 		BufferedImage img = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_ARGB); 
 		
 		for (int x = 0; x < xLength; x++) { 
@@ -210,8 +205,9 @@ public class Paperdoll {
 			}
 		Pmage dan = new Pmage(img, new ArrayList<>(Arrays.asList(0, 0)));
 		Pmage bob = new Pmage(img);
-		BufferedImage pete = dan.function2().function1(bob).function2().getPmageSource();
+		BufferedImage pete = dan.function2().function1(bob).function2().getImage();
 		exportImage("res/images/simulcrum", "Autogen", "png", pete);
+		return pete;
 	}
 
 	public static BufferedImage TestTessellate (BufferedImage base, Integer X, Integer Y) {
@@ -345,25 +341,6 @@ public class Paperdoll {
 		return img;
 	}
 	
-	public BufferedImage rotateImage(BufferedImage originalImage, double degree) {
-	    int w = originalImage.getWidth();
-	    int h = originalImage.getHeight();
-	    double toRad = Math.toRadians(degree);
-	    int hPrime = (int) (w * Math.abs(Math.sin(toRad)) + h * Math.abs(Math.cos(toRad)));
-	    int wPrime = (int) (h * Math.abs(Math.sin(toRad)) + w * Math.abs(Math.cos(toRad)));
-
-	    BufferedImage rotatedImage = new BufferedImage(wPrime, hPrime, BufferedImage.TYPE_INT_RGB);
-	    Graphics2D g = rotatedImage.createGraphics();
-	    g.setColor(java.awt.Color.LIGHT_GRAY);
-	    g.fillRect(0, 0, wPrime, hPrime);  // fill entire area
-	    g.translate(wPrime/2, hPrime/2);
-	    g.rotate(toRad);
-	    g.translate(-w/2, -h/2);
-	    g.drawImage(originalImage, 0, 0, null);
-	    g.dispose();  // release used resources before g is garbage-collected
-	    return rotatedImage;
-	}
-
 	public static BufferedImage layerImagesbyGraphics(BufferedImage base, BufferedImage implant) {
 		
 	/*	https://stackoverflow.com/questions/7028780/how-to-add-20-pixels-of-white-at-the-top-of-an-existing-image-file
@@ -373,7 +350,77 @@ public class Paperdoll {
 		Use Graphics.setColor(Color c) and Graphics.fillRect(int x, int y, int width, int height) to draw the white top
 		Use Graphics.drawImage(Image img, int x, int y, ImageObserver observer) to draw the original image to the specified coordinates of the new image.
 	*/
-		return implant;
+
+		Graphics2D g = base.createGraphics();
+		g.setColor(new java.awt.Color(220, 180, 240, 145));
+		g.fillRect(0, 0, 450, 200);
+		g.drawImage(implant, 450, 200, null);
+		g.drawImage(base, base.getWidth()/2, base.getHeight()/2, null);
+		BufferedImage ex = Paperdoll.getImage("res/images/characters/Amber/jam/clothed1.png");
+		g.drawImage(ex, 0, 400, null);
+		g.drawImage(ex, 0, 400+1*ex.getHeight(), null);
+		g.drawImage(ex, 0, 400+2*ex.getHeight(), null);
+		g.dispose();
+
+		return base;
+	}
+
+	public static BufferedImage rotateImage(BufferedImage input, double rotation) {
+		int w = input.getWidth();
+		int h = input.getHeight();
+		rotation = Math.toRadians(rotation);
+		int hPrime = (int) (w * Math.abs(Math.sin(rotation)) + h * Math.abs(Math.cos(rotation)));
+		int wPrime = (int) (h * Math.abs(Math.sin(rotation)) + w * Math.abs(Math.cos(rotation)));
+		
+		BufferedImage rotatedImage = new BufferedImage(wPrime, hPrime, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = rotatedImage.createGraphics();
+		g.setColor(new java.awt.Color(20, 180, 240, 145));
+		//	g.fillRect(0, 0, wPrime, hPrime);  // fill entire area
+		
+		g.fillRect(0, 0, 450, hPrime);
+		g.fillRect(wPrime-450, 0, 450, hPrime);
+		g.fillRect(0, 0, wPrime, 450);
+		//	g.fillRect(0, hPrime-450, wPrime, 450);
+		
+		g.translate(wPrime/2, hPrime/2);
+		g.rotate(rotation);
+		g.translate(-w/2, -h/2);
+		g.drawImage(input, 0, 0, null);
+		g.dispose();  // release used resources before g is garbage-collected
+		
+		Graphics2D g2 = rotatedImage.createGraphics();		// declaring a new Graphics2d reseets any translate and rotate effects on the canvas
+		g2.setColor(new java.awt.Color(20, 180, 240, 145));
+		g2.fillRect(450, hPrime-450, wPrime-900, 450);	//bottom bar, anti tranform hopeful
+		g2.dispose();
+		
+		return rotatedImage;
+	}
+	
+	public static void ExperimentMethod() {
+//		Paperdoll.TestExport();
+		
+		BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomFileFromFolder(new File("res/images/simulcrum")));
+		BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
+	//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
+		neonimg = Paperdoll.addOval(baseimg);
+		neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
+		neonimg = Paperdoll.addSquare(neonimg);
+	//	Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", neonimg);
+	//	baseimg = Paperdoll.rotateImage(Paperdoll.TestExport(), (Util.random.nextInt(13)-6)*15);
+	//	Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", baseimg);
+		
+		neonimg = Paperdoll.rotateImage(neonimg, (Util.random.nextInt(13)-6)*15);
+	//	Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", neonimg);
+	//	Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", Paperdoll.scaleDown(neonimg));
+		
+	//	BufferedImage smol = Paperdoll.scaleDown(neonimg);
+		BufferedImage smol = layerImagesbyGraphics(neonimg, baseimg);
+		Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", smol);
+	//	Pmage expo = new Pmage(smol).setFullName("Autogenous", "png");		//not quite working
+	//	expo.bulkExport();
+		
+		// TODO Auto-generated method stub
+		
 	}
 	
 //	protected Paperdoll(List<Integer> coords, String name) {

@@ -19,7 +19,9 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 	}
 	
 	public String readData() {
+		return null;
 		//finds xml sheet and reads its data
+		//look at savefile read and write for tips
 	}
 
 }

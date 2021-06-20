@@ -1,7 +1,6 @@
 package com.lilithsthrone.game.dialogue.utils;
 
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -262,17 +261,8 @@ public class OptionsDialogue {
 						+ "<br/>Last saved: " + Paperdoll.lastExported()){
 					@Override
 					public void effects() {
-						Paperdoll.TestExport();
+						Paperdoll.ExperimentMethod();
 						
-						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomFileFromFolder(new File("res/images/simulcrum")));
-						BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
-					//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
-						neonimg = Paperdoll.addOval(baseimg);
-						neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
-						neonimg = Paperdoll.addSquare(neonimg);
-						Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", neonimg);
-						baseimg = Paperdoll.rotateImage(baseimg, 45);
-						Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", baseimg);
 						
 					//	Main.primaryStage.close();
 					//	confirmNewGame=false;
