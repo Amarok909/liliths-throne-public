@@ -271,6 +271,9 @@ public class OptionsDialogue {
 						neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
 						neonimg = Paperdoll.addSquare(neonimg);
 						Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", neonimg);
+						baseimg = Paperdoll.rotateImage(baseimg, 45);
+						Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", baseimg);
+						
 					//	Main.primaryStage.close();
 					//	confirmNewGame=false;
 					//	System.exit(0);

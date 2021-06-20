@@ -151,6 +151,9 @@ public class Paperdoll {
 	
 	
 //**** Image Data Manipulation ****//
+	public static BufferedImage scaleDown(BufferedImage input) {
+		return CachedImage.scaleDown(input, 300, 445);
+	}
 	
 	
 //**** Paper-doll ****//
@@ -342,7 +345,24 @@ public class Paperdoll {
 		return img;
 	}
 	
-	
+	public BufferedImage rotateImage(BufferedImage originalImage, double degree) {
+	    int w = originalImage.getWidth();
+	    int h = originalImage.getHeight();
+	    double toRad = Math.toRadians(degree);
+	    int hPrime = (int) (w * Math.abs(Math.sin(toRad)) + h * Math.abs(Math.cos(toRad)));
+	    int wPrime = (int) (h * Math.abs(Math.sin(toRad)) + w * Math.abs(Math.cos(toRad)));
+
+	    BufferedImage rotatedImage = new BufferedImage(wPrime, hPrime, BufferedImage.TYPE_INT_RGB);
+	    Graphics2D g = rotatedImage.createGraphics();
+	    g.setColor(java.awt.Color.LIGHT_GRAY);
+	    g.fillRect(0, 0, wPrime, hPrime);  // fill entire area
+	    g.translate(wPrime/2, hPrime/2);
+	    g.rotate(toRad);
+	    g.translate(-w/2, -h/2);
+	    g.drawImage(originalImage, 0, 0, null);
+	    g.dispose();  // release used resources before g is garbage-collected
+	    return rotatedImage;
+	}
 
 	public static BufferedImage layerImagesbyGraphics(BufferedImage base, BufferedImage implant) {
 		

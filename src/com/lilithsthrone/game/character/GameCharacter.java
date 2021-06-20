@@ -747,7 +747,7 @@ public abstract class GameCharacter implements XMLSaving {
 
 
 	@Override
-	public Element saveAsXML(Element parentElement, Document doc) {
+	public Element saveAsXML(Element parentElement, Document doc) {		//marker
 		Element properties = doc.createElement("character");
 		parentElement.appendChild(properties);
 
@@ -1405,7 +1405,7 @@ public abstract class GameCharacter implements XMLSaving {
 		return x != null ? x.getAttribute("value") : defaultValue;
 	}
 	
-	public static void loadGameCharacterVariablesFromXML(GameCharacter character, StringBuilder log, Element parentElement, Document doc, CharacterImportSetting... settings) {
+	public static void loadGameCharacterVariablesFromXML(GameCharacter character, StringBuilder log, Element parentElement, Document doc, CharacterImportSetting... settings) {		//marker
 
 		boolean noPregnancy = Arrays.asList(settings).contains(CharacterImportSetting.NO_PREGNANCY);
 		boolean noCompanions = Arrays.asList(settings).contains(CharacterImportSetting.NO_COMPANIONS);

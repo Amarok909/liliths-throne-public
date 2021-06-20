@@ -17,5 +17,9 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 		BodyPartType part) {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String readData() {
+		//finds xml sheet and reads its data
+	}
 
 }

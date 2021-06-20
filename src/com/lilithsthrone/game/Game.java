@@ -532,7 +532,7 @@ public class Game implements XMLSaving {
 		}
 		// Starting stuff:
 
-		Document doc = Main.getDocBuilder().newDocument();
+		Document doc = Main.getDocBuilder().newDocument();	//marker
 
 		// Writing game stuff to export:
 
@@ -712,7 +712,7 @@ public class Game implements XMLSaving {
 	public static void importGame(File file) {
 		Main.game = new Game();
 		
-		if (file.exists()) {
+		if (file.exists()) {		// marker
 			try {
 				Document doc = Main.getDocBuilder().parse(file);
 

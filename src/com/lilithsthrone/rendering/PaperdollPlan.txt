@@ -51,6 +51,7 @@ GENERAL NOTES
 	need to figure out trimming image math
 		note: the corners are a rectangle's most distaant points
 	need to check if the methods perform destructive actions or not. idealy, data should be preserved and not perminantly modified by methods
+		java appers to be non destructive: see https://stackoverflow.com/a/40523 for refrence
 
 RESOURCES
 	https://www.oreilly.com/library/view/learning-java-4th/9781449372477/ch06s01.html
