@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import com.lilithsthrone.rendering.Pmage;
 
 import javafx.application.Application; 
 
@@ -54,8 +55,12 @@ import javax.imageio.ImageIO;
  * @author Amarok
  */
 public class Paperdoll {
+	/* Paperdoll is the universal managager for all classes and methods related to the paperdoll system
+	 * It contains the code for retriving, modifying, and exporting images
+	 */
 	
 	static String lastExported;
+	static String unviersalExport = "res/images/simulcrum";
 	
 //	List<Integer> coords = Arrays.asList(1, 2, 3);
 //	String name;
@@ -69,11 +74,8 @@ public class Paperdoll {
 		try {
 			return ImageIO.read(input);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			System.err.println("Error: "+e+", file"+input+"does not exist");
-		}
-		return null;
+		}	return null;
 	}
 
 	public static BufferedImage getImage (String path) {
@@ -84,7 +86,6 @@ public class Paperdoll {
 	public static void exportImage(String location, String name, String format, BufferedImage img) {
 		try {
 			int saveNumber = 0;
-		//	String saveLocation = "res/images/primitives/test_species/Autogen.png";
 			String saveLocation = location + "/" + name + "." + format;
 			while(new File(saveLocation).exists()) {
 				saveNumber++;
@@ -113,12 +114,10 @@ public class Paperdoll {
 				File[] imageList = input.listFiles(textFilter);
 				if(imageList!=null) {
 					File oldestFile = imageList[0];
-					int i;
-					for(i=0; i<imageList.length; i++) {
+					for(int i=0; i<imageList.length; i++) {
 						if(imageList[i].lastModified()>oldestFile.lastModified()) oldestFile=imageList[i];
 					}	return oldestFile.getPath();
 				}
-				return null;
 			}	return null;
 		}
 	}
@@ -131,24 +130,19 @@ public class Paperdoll {
 					return name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg");
 				}
 			};
-			
 			File[] imageList = input.listFiles(textFilter);
 			if(imageList!=null) {
 				int rnd = new Random().nextInt(imageList.length);
 				//  return getImage(imageList[rnd]);
 				return imageList[rnd];
 			}
-			return null;
 		}	return null;
 	}
 	
 	public static String FiletoString(File image) {
 		if(image.exists() && image.isFile()) {
 			return image.getPath();
-		} else {
-			return null;
-		}
-		//return image.getAbsolutePath();	
+		}	return null;
 	}
 	
 	public static String FtS(String path) {
@@ -162,17 +156,11 @@ public class Paperdoll {
 //**** Paper-doll ****//
 
 //**** Development ****//
-	
-	
-	
 	public static boolean Extwo() {
 		File dir = new File("res/images/primitives/test_species/test_species.xml");
-		
 		if(dir.exists()) {
 			return true;
-		}
-			return false;
-		
+		}	return false;
 	}
 	
 	public static void TestExport () {
@@ -189,6 +177,9 @@ public class Paperdoll {
 					int boundary = (int)(xLength*0.45);
 					double radius = Math.sqrt(Math.pow((i - xLength/2),2) + Math.pow((j - yLength/2),2));
 					double gradient = (Math.cos((Math.PI/2)*(radius/boundary)));
+					
+					img.setRGB(x, y, ((100<<24) | (30<<16) | (50<<8) | 150));
+
 					if(radius <= boundary) {	//0,0 is upper left
 						a = 255;
 						r = (int)(gradient*(Math.random()*256));
@@ -213,9 +204,11 @@ public class Paperdoll {
 					int p = (a<<24) | (r<<16) | (g<<8) | b; //pixel
 					img.setRGB(x, y, p); 
 				} 
-			} 
-		
-		exportImage("res/images/simulcrum", "Autogen", "png", img);
+			}
+		Pmage dan = new Pmage(img, new ArrayList<>(Arrays.asList(0, 0)));
+		Pmage bob = new Pmage(img);
+		BufferedImage pete = dan.function2().function1(bob).function2().getPmageSource();
+		exportImage("res/images/simulcrum", "Autogen", "png", pete);
 	}
 
 	public static BufferedImage TestTessellate (BufferedImage base, Integer X, Integer Y) {
@@ -268,14 +261,8 @@ public class Paperdoll {
 //	https://examples.javacodegeeks.com/desktop-java/imageio/create-image-file-from-graphics-object/
 //	https://www.baeldung.com/java-add-text-to-image
 	public static BufferedImage addOval(BufferedImage base) {
-		// Constructs a BufferedImage of one of the predefined image types.
-    //    BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
- 
-        // Create a graphics which can be used to draw into the buffered image
-     //   Graphics2D g2d = bufferedImage.createGraphics();
 		Graphics2D g2d = base.createGraphics();
-	//	base.gra
-		
+
 		int X = base.getWidth();
 		int Y = base.getHeight();
  
@@ -289,7 +276,6 @@ public class Paperdoll {
  
         // create a string with yellow
         g2d.setColor(java.awt.Color.YELLOW);
-      //  g2d.setFont(java.awt.font.);
 		Font font = new Font("Monospaced", Font.BOLD, 75);
 		g2d.setFont(font);
         g2d.drawString("Java Code Geeks", 50, 120);
@@ -297,24 +283,12 @@ public class Paperdoll {
  
         // Disposes of this graphics context and releases any system resources that it is using. 
         g2d.dispose();
- 
-     //   g2d.drawImage(base, null, 0, 0);
-        
-        // Save as PNG
-     //   File file = new File("myimage.png");
-       // ImageIO.write(bufferedImage, "png", file);
- 
-        // Save as JPEG
-      //  file = new File("myimage.jpg");
-      //  ImageIO.write(bufferedImage, "jpg", file);
-        
-        return base;
+		return base;
 	}
 	
 	public static BufferedImage addSquare(BufferedImage base) {
 		int baseXLength = base.getWidth();
 		int baseYLength = base.getHeight();
-	//	int baseType = base.getType();
 		
 		int X = (int) (Math.random()*baseXLength*0.5);
 		int Y = (int) (Math.random()*baseYLength*0.5);
@@ -327,30 +301,59 @@ public class Paperdoll {
 				base.setRGB(x, y, p);
 			}
 		}
-		return base;
-			
+		return base;	
 	}
 	
 	//	http://jens-na.github.io/2013/11/06/java-how-to-concat-buffered-images/
-	public static BufferedImage layerImages(BufferedImage base, BufferedImage implant) {
-		return implant;
+	public static BufferedImage layerImagesbyMath(BufferedImage base, BufferedImage implant, boolean cropToBase) {
+		int baseXLength = base.getWidth();
+		int baseYLength = base.getHeight();
+		int implantXLength = implant.getWidth();
+		int implantYLength = implant.getHeight();
 		
+		int[] TLOrigin = {300, 500};	//TopLeft origin corner for implant, [X,Y]. currently, both must be positive
+		int x1, x2, y1, y2, W, H;
+		x1 = TLOrigin[0];
+		y1 = TLOrigin[1];
+		x2 = cropToBase?Math.min(x1 + implantXLength, baseXLength):x1 + implantXLength;	//if cropping, x2 is limited to base's width, otherwise it will go as far as the implant needs it to
+		y2 = cropToBase?Math.min(y1 + implantYLength, baseYLength):y1 + implantYLength;
+		W = Math.max(x2, baseXLength);	// ensures that whether being cropped or not, the output image will include all the image it needs
+		H = Math.max(x2, baseYLength);
+		
+		BufferedImage img = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB); 
+		
+		//copies the base image
+		for(int x = 0; x < baseXLength; x++) {
+			for(int y = 0; y < baseYLength; y++) {
+				int p = base.getRGB(x, y);
+				img.setRGB(x, y, p);
+			}
+		}
+		
+		//applies the implant image
+		for (int x = x1; x < TLOrigin[0]+implantXLength; x++) { 
+			for (int y = y1; y < TLOrigin[1]+implantYLength; y++) {
+				int i = x - TLOrigin[0];
+				int j = y - TLOrigin[0];
+				int p = implant.getRGB(i, j);
+				img.setRGB(x, y, p);
+			}
+		}
+		return img;
 	}
 	
-	public void save(BufferedImage dPanel)
-	{
-	    BufferedImage bImg = new BufferedImage(dPanel.getWidth(), dPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
-	    Graphics2D cg = bImg.createGraphics();
-	//    ((BufferedImage) dPanel).paintAll(cg);
-	    try {
-	            if (ImageIO.write(bImg, "png", new File("./output_image.png")))
-	            {
-	                System.out.println("-- saved");
-	            }
-	    } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	    }
+	
+
+	public static BufferedImage layerImagesbyGraphics(BufferedImage base, BufferedImage implant) {
+		
+	/*	https://stackoverflow.com/questions/7028780/how-to-add-20-pixels-of-white-at-the-top-of-an-existing-image-file
+		https://stackoverflow.com/questions/7894275/cropping-an-image-in-java
+	 	Use GraphicsConfiguration.createCompatibleImage(int width, int height) to create a BufferedImage of the same width, but with a height that's +20.
+		Use BufferedImage.createGraphics() to obtain the Graphics2D object of this image.
+		Use Graphics.setColor(Color c) and Graphics.fillRect(int x, int y, int width, int height) to draw the white top
+		Use Graphics.drawImage(Image img, int x, int y, ImageObserver observer) to draw the original image to the specified coordinates of the new image.
+	*/
+		return implant;
 	}
 	
 //	protected Paperdoll(List<Integer> coords, String name) {

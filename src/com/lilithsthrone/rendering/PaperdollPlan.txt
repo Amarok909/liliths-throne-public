@@ -12,7 +12,7 @@ X		adds math defined square
 		adds rotated image
 		adds offcentre rotated image
 		adds scaled image
-		
+
 	create collage images
 X		random shapes
 		vaguely anthropomorphic
@@ -50,6 +50,7 @@ GENERAL NOTES
 		find math for rotating rectangcle about positioning
 	need to figure out trimming image math
 		note: the corners are a rectangle's most distaant points
+	need to check if the methods perform destructive actions or not. idealy, data should be preserved and not perminantly modified by methods
 
 RESOURCES
 	https://www.oreilly.com/library/view/learning-java-4th/9781449372477/ch06s01.html
