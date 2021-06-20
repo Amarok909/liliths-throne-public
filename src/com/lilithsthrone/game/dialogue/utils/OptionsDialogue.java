@@ -254,17 +254,17 @@ public class OptionsDialogue {
 				};
 				
 			} else if (index == 14) {
-				int narm = 7 + Util.random.nextInt(15);
+				int narm = 7 + Util.random.nextInt(29);
 				return new ResponseEffectsOnly("Image Generation", "Generates a random image"
-						+ "<br/>File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
+						+ ", File Exist?: " + (Paperdoll.Extwo()?"Yes":"No")
 						+ "<br/>Random File: " + narm + " " + (Paperdoll.FtS("res/images/simulcrum/Autogen"+narm+".png"))
-						+ "<br/>Random File: " + (Paperdoll.FiletoString(Paperdoll.getRandomImageFromFolder(new File("res/images/simulcrum"))))
-						+ ""){
+						+ "<br/>Random File: " + (Paperdoll.FiletoString(Paperdoll.getRandomFileFromFolder(new File("res/images/simulcrum"))))
+						+ "<br/>Last saved: " + Paperdoll.lastExported()){
 					@Override
 					public void effects() {
 						Paperdoll.TestExport();
 						
-						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomImageFromFolder(new File("res/images/simulcrum")));
+						BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomFileFromFolder(new File("res/images/simulcrum")));
 						BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
 					//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
 						neonimg = Paperdoll.addOval(baseimg);

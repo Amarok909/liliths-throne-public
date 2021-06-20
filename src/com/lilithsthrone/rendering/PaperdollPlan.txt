@@ -7,12 +7,12 @@ X	create basic functions
 X	create tiled images
 X	create overwrite system
 X		puts a nice ribbon on images
-			i'm calling that one a victory/draw, it didn't fail!
 X		adds 2dGraphics images
 X		adds math defined square
 		adds rotated image
 		adds offcentre rotated image
 		adds scaled image
+		
 	create collage images
 X		random shapes
 		vaguely anthropomorphic

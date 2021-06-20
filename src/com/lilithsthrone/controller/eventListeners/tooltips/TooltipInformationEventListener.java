@@ -858,7 +858,7 @@ public class TooltipInformationEventListener implements EventListener {
 					int imageWidth = 0;
 					if (displayImage) {
 						// Add the scaled width to the tooltip dimensions
-						int[] scaledSize = image.getAdjustedSize(300, 445);
+						int[] scaledSize = image.getAdjustedSize(300, 445);		//Marker, tooltip image dimentions
 						imageWidth = scaledSize[0];
 						dimensions[0] += scaledSize[0];
 						// ... and place it in the bottom right corner of the tooltip

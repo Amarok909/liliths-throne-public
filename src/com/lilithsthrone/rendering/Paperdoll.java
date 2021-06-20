@@ -20,6 +20,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color; 
 import javafx.stage.Stage;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 //	https://www.tutorialspoint.com/javafx/javafx_images.htm
@@ -47,7 +48,14 @@ import javax.imageio.ImageIO;
 
 @SuppressWarnings("unused")
 
+/**
+ * @since 0.4
+ * @version 0.4
+ * @author Amarok
+ */
 public class Paperdoll {
+	
+	static String lastExported;
 	
 //	List<Integer> coords = Arrays.asList(1, 2, 3);
 //	String name;
@@ -56,10 +64,7 @@ public class Paperdoll {
 //		// TODO Auto-generated constructor stub
 //	}
 	
-	//**** Image Management ****//
-	//**** Paper-doll ****//
-	
-	//**** Development ****//
+//**** Image Input ****//
 	public static BufferedImage getImage(File input) {
 		try {
 			return ImageIO.read(input);
@@ -70,49 +75,12 @@ public class Paperdoll {
 		}
 		return null;
 	}
-	
+
 	public static BufferedImage getImage (String path) {
 		return getImage(new File(path));
 	}
-	
-	
-	public static File getRandomImageFromFolder(File input) {
-		if(input.exists()) {
-			FilenameFilter textFilter = new FilenameFilter() {
-				public boolean accept(File input, String name) {
-					return name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg");
-				}
-			};
-			
-		//	List<File> direct = new List<>();
-			File[] imageList = input.listFiles(textFilter);
-			if(imageList!=null) {
-				int rnd = new Random().nextInt(imageList.length);
-			//  return getImage(imageList[rnd]);
-				return imageList[rnd];
-			}
-		//	for(File subFile : dir.listFiles(textFilter)) {
-				
-		//	};
-			
-			return null;
-		}	return null;
-	}
-	
-	public static String FiletoString(File image) {
-		if(image.exists() && image.isFile()) {
-			return "Happy "+ image.getPath();
-		} else {
-			return "Sad";
-		}
-		//return image.getAbsolutePath();
-		
-	}
-	
-	public static String FtS(String path) {
-		return FiletoString(new File(path));
-	}
-	
+
+//**** Image Output ****//
 	public static void exportImage(String location, String name, String format, BufferedImage img) {
 		try {
 			int saveNumber = 0;
@@ -121,13 +89,81 @@ public class Paperdoll {
 			while(new File(saveLocation).exists()) {
 				saveNumber++;
 				saveLocation = location + "/" + name + saveNumber + "." + format;
-			}	ImageIO.write(img, format, new File(saveLocation));
+			}
+			ImageIO.write(img, format, new File(saveLocation));
+			Paperdoll.lastExported = saveLocation;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error: " + e + ", image " + location + "/" + name + "." + format + "failed to save to disk");
 		}
 	}
+	
+	public static String lastExported() {
+		if(lastExported!=null) {
+			return lastExported;
+		} else {
+			File input = new File("res/images/simulcrum");
+			if(input.exists()) {
+				FilenameFilter textFilter = new FilenameFilter() {
+					public boolean accept(File input, String name) {
+						return name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg");
+					}
+				};
+				File[] imageList = input.listFiles(textFilter);
+				if(imageList!=null) {
+					File oldestFile = imageList[0];
+					int i;
+					for(i=0; i<imageList.length; i++) {
+						if(imageList[i].lastModified()>oldestFile.lastModified()) oldestFile=imageList[i];
+					}	return oldestFile.getPath();
+				}
+				return null;
+			}	return null;
+		}
+	}
+
+//**** Image File Management ****//
+	public static File getRandomFileFromFolder(File input) {
+		if(input.exists()) {
+			FilenameFilter textFilter = new FilenameFilter() {
+				public boolean accept(File input, String name) {
+					return name.toLowerCase().endsWith(".png") || name.toLowerCase().endsWith(".jpg");
+				}
+			};
+			
+			File[] imageList = input.listFiles(textFilter);
+			if(imageList!=null) {
+				int rnd = new Random().nextInt(imageList.length);
+				//  return getImage(imageList[rnd]);
+				return imageList[rnd];
+			}
+			return null;
+		}	return null;
+	}
+	
+	public static String FiletoString(File image) {
+		if(image.exists() && image.isFile()) {
+			return image.getPath();
+		} else {
+			return null;
+		}
+		//return image.getAbsolutePath();	
+	}
+	
+	public static String FtS(String path) {
+		return FiletoString(new File(path));
+	}
+	
+	
+//**** Image Data Manipulation ****//
+	
+	
+//**** Paper-doll ****//
+
+//**** Development ****//
+	
+	
 	
 	public static boolean Extwo() {
 		File dir = new File("res/images/primitives/test_species/test_species.xml");
@@ -140,16 +176,16 @@ public class Paperdoll {
 	}
 	
 	public static void TestExport () {
-		int xLength = 2000;
-		int yLength = 3500;
+		int xLength = 2000*0+300*3;
+		int yLength = 3500*0+445*3;
 		BufferedImage img = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_ARGB); 
 		
 		for (int x = 0; x < xLength; x++) { 
 				for (int y = 0; y < yLength; y++) { 
 				//	int a = (int)(Math.random()*256); //generating 
 					int a, r, b, g;
-					double i = Math.floor(x/20)*20;
-					double j = Math.floor(y/20)*20;
+					double i = Math.floor(x/1)*1;
+					double j = Math.floor(y/1)*1;
 					int boundary = (int)(xLength*0.45);
 					double radius = Math.sqrt(Math.pow((i - xLength/2),2) + Math.pow((j - yLength/2),2));
 					double gradient = (Math.cos((Math.PI/2)*(radius/boundary)));
@@ -230,6 +266,7 @@ public class Paperdoll {
 	}
 	
 //	https://examples.javacodegeeks.com/desktop-java/imageio/create-image-file-from-graphics-object/
+//	https://www.baeldung.com/java-add-text-to-image
 	public static BufferedImage addOval(BufferedImage base) {
 		// Constructs a BufferedImage of one of the predefined image types.
     //    BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -253,8 +290,10 @@ public class Paperdoll {
         // create a string with yellow
         g2d.setColor(java.awt.Color.YELLOW);
       //  g2d.setFont(java.awt.font.);
+		Font font = new Font("Monospaced", Font.BOLD, 75);
+		g2d.setFont(font);
         g2d.drawString("Java Code Geeks", 50, 120);
-        g2d.fill3DRect((int)(0.7*X), (int)(0.95*Y), 700, 250, false);
+        g2d.fill3DRect((int)(0.7*X), (int)(0.95*Y), 900, 450, false);
  
         // Disposes of this graphics context and releases any system resources that it is using. 
         g2d.dispose();
@@ -290,6 +329,12 @@ public class Paperdoll {
 		}
 		return base;
 			
+	}
+	
+	//	http://jens-na.github.io/2013/11/06/java-how-to-concat-buffered-images/
+	public static BufferedImage layerImages(BufferedImage base, BufferedImage implant) {
+		return implant;
+		
 	}
 	
 	public void save(BufferedImage dPanel)

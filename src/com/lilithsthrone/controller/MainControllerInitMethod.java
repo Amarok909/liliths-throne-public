@@ -314,7 +314,7 @@ public class MainControllerInitMethod {
 								?Main.game.getDialogueFlags().getManagementCompanion()
 								:CharactersPresentDialogue.characterViewed);
 			
-			id = "ARTWORK_ADD";
+			id = "ARTWORK_ADD";		//marker
 			if (MainController.document.getElementById(id) != null) {
 				((EventTarget) MainController.document.getElementById(id)).addEventListener("click", e -> {
 					// Create file chooser for .jpg and .png images in the most recently used directory
@@ -344,7 +344,7 @@ public class MainControllerInitMethod {
 						false);
 			}
 
-			if (character.hasArtwork()) {
+			if (character.hasArtwork()) {		//marker. seems to be for artwork in the scen, not the hover menu
 				try {
 					Artwork artwork = character.getCurrentArtwork();
 
@@ -384,7 +384,7 @@ public class MainControllerInitMethod {
 						}, false);
 					}
 
-					id = "ARTWORK_NEXT";
+					id = "ARTWORK_NEXT";			//marker
 					if (MainController.document.getElementById(id) != null) {
 						((EventTarget) MainController.document.getElementById(id)).addEventListener("click", e -> {
 							if(artwork.getTotalArtworkCount()>1) {

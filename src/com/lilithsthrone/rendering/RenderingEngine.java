@@ -1525,7 +1525,7 @@ public enum RenderingEngine {
 			} else {
 				int count = 0;
 				for(NPC character : charactersPresent) {
-//					if(!character.isRaceConcealed()) {
+//					if(!character.isRaceConcealed()) {			marker: nave on display screen
 						uiAttributeSB.append(
 								"<div class='event-log-entry' style='background:"+getEntryBackgroundColour(count%2==0)+";'>"
 									+ "<div class='icon' style='width:11%; left:0; top:0; margin:0 8px 0 0; padding:0;'>"
@@ -1534,13 +1534,13 @@ public enum RenderingEngine {
 										+ "</div>"
 									+ "</div>"
 									+" <div style='color:"+character.getFemininity().getColour().toWebHexString()+";'>"
-										+(!character.getArtworkList().isEmpty() && Main.getProperties().hasValue(PropertyValue.artwork)?"&#128247; ":"")
+										+(!character.getArtworkList().isEmpty() && Main.getProperties().hasValue(PropertyValue.artwork)?"&#128247; ":"")	//camera. Hex Code: 	&#x1f4f7;	Decimal Code: 	&#128247;
 											+UtilText.parse(character, "[npc.Name(A)]")
 										+ "<div class='overlay-inventory' id='NPC_" + character.getId() + "_" + Attribute.EXPERIENCE.getName() + "' style='width:calc(11% + 8px);'></div>"
 										+ "<div class='overlay-inventory' id='NPC_"+character.getId()+"_ATTRIBUTES' style='width:calc(89% - 8px); left:calc(11% + 8px);'></div>"
 									+"</div>"
 								+ "</div>");
-//					} else {
+//					} else {						Marker
 //						uiAttributeSB.append(
 //								"<div class='event-log-entry' style='background:"+getEntryBackgroundColour(count%2==0)+";'>"
 //									+ "<div class='icon' style='width:11%; left:0; top:0; margin:0 8px 0 0; padding:0;'>"

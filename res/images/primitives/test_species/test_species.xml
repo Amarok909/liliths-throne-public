@@ -19,19 +19,19 @@
         location of piviot point for child image
     can be overriden to refer to another species's parts
     
-    final order of parts, pretty similar to inventory Z layer system
+    final order of parts, pretty similar to inventory Z layer system, sorted so lowest layer at top, highest layer at bottom, albeit some children may be behind their parent
     waist/stomach
     	torso
-    		upper arms
-    			lower arms
-    				hands
+            wings
+    		pregbelly
+    		breasts
     		neck
     			head
     				ears
     				horns
-    		wings
-    		breasts
-    		pregbelly
+    		upper arms
+    			lower arms
+    				hands
     	penis
     	vagina
     	upper legs
