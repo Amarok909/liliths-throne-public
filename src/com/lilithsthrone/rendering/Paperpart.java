@@ -17,6 +17,7 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 	BodyPartType part;
 	ArrayList<Integer> Parent = new ArrayList<Integer>();
 	ArrayList<ArrayList<Integer>> Children = new ArrayList<ArrayList<Integer>>();
+	int renderZ;
 
 	public Paperpart(
 		String name,

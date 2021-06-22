@@ -28,7 +28,8 @@
     		neck
     			head
     				ears
-    				horns
+    				horn base
+                        horn tip        //for horns that go around ears, Z order is horn base, ears, horn tip
     		upper arms
     			lower arms
     				hands
@@ -45,8 +46,17 @@
     	arms
     	legs
     	tail
+    
+    draw order
 -->
 <body>
+    <waist>
+        <pivots>
+            <node parent = "null" X = "40" Y = "20">    <!-- null parent = root, parent is image origin, in the case of waist, it will tell the program where to put it relative to the canvas-->
+            <node child1 = "head" X = "20" Y = "30">    <!-- null child = stem, nothing after it-->
+            <node child2 = "leftaarm" X = "20" Y = "40">
+        </pivots>
+    </waist>
     <head>
         <image = "head1.png">
         <width = 50>

@@ -27,7 +27,7 @@ import com.lilithsthrone.utils.colours.PresetColour;
  * @version 0.3.4
  * @author Innoxia
  */
-public enum PerkManager {
+public enum PerkManager {		//marker
 
 	MANAGER;
 

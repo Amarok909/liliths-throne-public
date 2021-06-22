@@ -66,6 +66,48 @@ public class Paperdoll {
 	static String universalExport = "res/images/simulcrum";
 	
 	
+	public enum BodyParts {			// Important note: right and left here are defined as the character's right and left. this is encase sex scene Autogen is achieved, and the character is in front facing backwards. Also, all characters are assumed to be looking to our left, like the brax protraits
+		WAIST("waist", 4000),
+			TAIL("tail", 1000)^
+			LEFTLEG("leftleg", 3000)^,
+			TORSO("chest", 5000),
+				WINGS("wings", 0)^,				// Single caret means that this part has a lower Z number than its parent part
+				RIGHTARM("rightarm", 2000)^...,
+				PREGBELLY,
+				BREASTS,
+				NECK,
+					HEAD,
+						HAIRBACK^,
+						HAIRMID,
+						EARS,
+						HORNBASE,
+							HORNTIP,
+						HAIRFRONT^^	// Double caret just means that it has a lower Z layer than one of it's nibling parts before it
+				LEFTARM,
+					LEFTFOREARM^,
+						LEFTHAND,
+			VAGINA,
+			TESTICLES,
+			PENIS,
+			BOOTY("chest", 400);
+		
+		private String name;
+		private int defaultRenderZ;		// may be overriden by the xml file if artist wishes
+		
+		BodyParts(String name, int defaultRenderZ) {
+			this.name = name;
+			this.defaultRenderZ = defaultRenderZ;
+		}
+		BodyParts() {
+			// Delete me later, k
+		}
+		
+		public boolean isRenderZOverwritten(Paperpart part) {		//rewrite so a species can go in and it automatically knows which body part it is, so it can compare
+			return this.defaultRenderZ == part.renderZ;				// ie, if DOG_MORPH_paper.xml sets the renderZ for waists as 55, and the default is 100, WAIST.isOverwrite(DOG_MORPH) will return true
+		}
+	}
+	
+	
 //**** Image Input ****//
 	public static BufferedImage getImage(File input) {
 		try {
@@ -370,7 +412,7 @@ public class Paperdoll {
 	 * @param fitExcess should the image be resized if implant goes over the borders of base
 	 * @return
 	 */
-	public BufferedImage layer(BufferedImage base, BufferedImage implant, int implantX, int implantY, boolean fitExcess) {
+	public static BufferedImage layer(BufferedImage base, BufferedImage implant, int implantX, int implantY, boolean fitExcess) {
 		if(!fitExcess) {
 			Graphics2D g = base.createGraphics();
 			
@@ -474,5 +516,24 @@ public class Paperdoll {
 		
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static void collapse() {
+		/* First create a tree map, which has all of the body parts in correct root-parent order
+		 * Then create an arraylist with all body parts first sorted by draw order, then position in tree heirarchy
+		 * the tree is neededd to assertain parent and children locations, which lets the draw locations be determined
+		 * the array is needed to make sure the body parts are drawn in correct order
+		 * List<MyClass> list = ...
+			list.sort(Comparator.comparing(MyClass::getString).thenComparing(MyClass::getDate));
+			https://stackoverflow.com/a/35970107
+			tree
+			https://stackoverflow.com/a/17490124
+
+		 */
+		Paperpart alsp = new Paperpart(null, 0);
+		Paperpart beth = new Paperpart(null, 0);
+		
+		BufferedImage output = layer(alsp.compimage.image, beth.compimage.image, 0, 0, false);
+		Paperdoll.exportImage(Paperdoll.universalExport, "Test", "jpg", output);
 	}
 }

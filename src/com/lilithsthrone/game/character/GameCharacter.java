@@ -271,6 +271,7 @@ import com.lilithsthrone.rendering.Artist;
 import com.lilithsthrone.rendering.Artwork;
 import com.lilithsthrone.rendering.CachedImage;
 import com.lilithsthrone.rendering.ImageCache;
+import com.lilithsthrone.rendering.Paperdoll;
 import com.lilithsthrone.rendering.SVGImages;
 import com.lilithsthrone.utils.SizedStack;
 import com.lilithsthrone.utils.Units;
@@ -3227,6 +3228,10 @@ public abstract class GameCharacter implements XMLSaving {
 			Main.game.addEvent(new EventLogEntry(Main.game.getMinutesPassed(), "[style.colourBad(Image import failed)]",
 					"See error.log for details"), false);
 		}
+	}
+	
+	public void generateImage() {
+		Paperdoll.collapse();
 	}
 	
 	public abstract boolean isUnique();

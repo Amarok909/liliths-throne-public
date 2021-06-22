@@ -9,9 +9,10 @@ X	create overwrite system
 X		puts a nice ribbon on images
 X		adds 2dGraphics images
 X		adds math defined square
-		adds rotated image
+X		adds rotated image
 		adds offcentre rotated image
-		adds scaled image
+			can achive by creating a rotated image, the layering at a point
+X		adds scaled image
 
 	create collage images
 X		random shapes
@@ -58,6 +59,7 @@ GENERAL NOTES
 		eg Paperpart leftarm.getParent() returns Paperpart torso
 		   Paperpart waist.getChild(0) returns Paperpart torso
 		   Paperpart waist.getChild(0).getChild(0) returns Paperpart leftarm
+		this might be achived by a tree method of new Paperparts, skipping the need for Paperbody all together
 
 DATA FLOW
 	the end goal is a avatar of a given character
