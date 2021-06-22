@@ -1100,7 +1100,7 @@ public class TooltipInformationEventListener implements EventListener {
 						}
 					}
 					
-					if(displayImage) {
+					if(displayImage) {		// marker. Super useful image in div code
 						boolean revealed = owner.isImageRevealed();
 						tooltipSB.append("</div>"
 								+ "<div style='float: left;'>"

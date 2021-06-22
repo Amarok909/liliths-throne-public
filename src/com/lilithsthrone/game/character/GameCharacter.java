@@ -3317,7 +3317,7 @@ public abstract class GameCharacter implements XMLSaving {
 				String imageString = "";
 				int width = 200;
 				int percentageWidth = 33;
-				CachedImage image = ImageCache.INSTANCE.getImage(artwork.getCurrentImage());
+				CachedImage image = ImageCache.INSTANCE.getImage(artwork.getCurrentImage());	// Marker, more image to div stuff here
 				if (image != null) {
 					imageString = image.getImageString();
 					width = image.getWidth();
@@ -3331,7 +3331,7 @@ public abstract class GameCharacter implements XMLSaving {
 							+ "<div style='width:100%; margin:0;'>"
 								+(imageString.isEmpty()
 									?"<div style='width:100%; margin:0; text-align:center;'>No image!</div>"
-									:"<img id='CHARACTER_IMAGE' style='"+(revealed ? "" : "-webkit-filter: brightness(0%);")+" width:100%;' src='"+imageString+"'/>")
+									:"<img id='CHARACTER_IMAGE' style='"+(revealed ? "" : "-webkit-filter: brightness(0%);")+" width:100%;' src='"+imageString+"'/>")		// MARKER. BINGO BABY, IMage in Div attagirl
 								+ "<div class='overlay no-pointer no-highlight' style='text-align:center;'>" // Add overlay div to stop javaFX's insane image drag+drop
 									+ (revealed || imageString.isEmpty()
 										? ""

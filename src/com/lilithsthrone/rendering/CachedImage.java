@@ -18,6 +18,8 @@ import javax.imageio.ImageIO;
 public class CachedImage {
 	protected String imageString = "";
 	protected int width = 200, height = 200, percentageWidth = 35;
+	
+	// https://stackoverflow.com/a/22879635
 
 	/**
 	 * Load an image from the given file path into a reusable string.
@@ -39,7 +41,7 @@ public class CachedImage {
 			// Convert to string
 			ImageIO.setUseCache(false);
 			ImageIO.write(image, "PNG", byteStream);
-			imageString = "data:image/png;base64," + Base64.getEncoder().encodeToString(byteStream.toByteArray());
+			imageString = "data:image/png;base64," + Base64.getEncoder().encodeToString(byteStream.toByteArray());	// marker, useful
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
