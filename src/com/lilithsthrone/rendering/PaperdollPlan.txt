@@ -52,6 +52,27 @@ GENERAL NOTES
 		note: the corners are a rectangle's most distaant points
 	need to check if the methods perform destructive actions or not. idealy, data should be preserved and not perminantly modified by methods
 		java appers to be non destructive: see https://stackoverflow.com/a/40523 for refrence
+	there are two conflicting needs, to have all body part images positioned correctly relative to their parent, and to have the images printed in corect order so it looks proper
+	determin wether the structure should be stems looking for parent nodes, or roots looking for child nodes
+	create a system for Paperparts which let them get their parent/child nodes
+		eg Paperpart leftarm.getParent() returns Paperpart torso
+		   Paperpart waist.getChild(0) returns Paperpart torso
+		   Paperpart waist.getChild(0).getChild(0) returns Paperpart leftarm
+
+DATA FLOW
+	the end goal is a avatar of a given character
+	this is created by assembling different pody part images and then flatning
+	each body part image is selected from a folder containing all the images for that species
+
+	so from start to end
+
+		identify the character
+		find the file containing the needed body part images
+		
+
+		create a set of body part images arranged
+		turn/flatten this set into a single image
+		save the image to the character's image folder
 
 RESOURCES
 	https://www.oreilly.com/library/view/learning-java-4th/9781449372477/ch06s01.html

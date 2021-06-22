@@ -6215,7 +6215,7 @@ public abstract class GameCharacter implements XMLSaving {
 				}
 			}
 		}
-		tempPerkList.sort(Comparator.comparingInt(AbstractPerk::getRenderingPriority).reversed());
+		tempPerkList.sort(Comparator.comparingInt(AbstractPerk::getRenderingPriority).reversed());	// marker, sorting
 		return tempPerkList;
 	}
 	

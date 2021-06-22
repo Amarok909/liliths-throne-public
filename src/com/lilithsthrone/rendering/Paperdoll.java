@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import com.lilithsthrone.rendering.Pmage;
 import com.lilithsthrone.utils.Util;
+import com.lilithsthrone.utils.colours.PresetColour;
 
 import javafx.application.Application; 
 
@@ -78,6 +79,7 @@ public class Paperdoll {
 		return getImage(new File(path));
 	}
 
+	
 //**** Image Output ****//
 	public static void exportImage(String location, String name, String format, BufferedImage img) {
 		String saveLocation = location + "/" + name + "." + format;
@@ -113,6 +115,7 @@ public class Paperdoll {
 		}
 	}
 
+	
 //**** Image File Management ****//
 	public static File[] imageList(File input) {
 		if(input.exists()) {
@@ -163,8 +166,8 @@ public class Paperdoll {
 	}
 	
 	public static BufferedImage TestExport () {
-		int xLength = 2000*0+300*4;
-		int yLength = 3500*0+445*4;
+		int xLength = 300*4;
+		int yLength = 445*4;
 		BufferedImage img = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_ARGB); 
 		
 		for (int x = 0; x < xLength; x++) { 
@@ -211,7 +214,7 @@ public class Paperdoll {
 		return pete;
 	}
 
-	public static BufferedImage TestTessellate (BufferedImage base, Integer X, Integer Y) {
+	public static BufferedImage addTesselation (BufferedImage base, Integer X, Integer Y) {
 		int baseXLength = base.getWidth();
 		int baseYLength = base.getHeight();
 		int baseType = base.getType();
@@ -360,6 +363,43 @@ public class Paperdoll {
 
 		return base;
 	}
+	
+	/**
+	 * @param base the image on which content will be layered onto
+	 * @param implant the new image that is being added
+	 * @param fitExcess should the image be resized if implant goes over the borders of base
+	 * @return
+	 */
+	public BufferedImage layer(BufferedImage base, BufferedImage implant, int implantX, int implantY, boolean fitExcess) {
+		if(!fitExcess) {
+			Graphics2D g = base.createGraphics();
+			
+			g.translate(implantX, implantY);
+			g.drawImage(implant, 0, 0, null);
+			
+			g.dispose();
+			return base;
+		} else {
+			int outputW = implantX>=0 ? Math.max(implantX+implant.getWidth() /*-implant.offset.X*/, base.getWidth()) : base.getWidth()-implantX;
+			int outputH = implantY>=0 ? Math.max(implantY+implant.getHeight() /*-implant.offset.Y*/, base.getHeight()) : base.getHeight()-implantY;
+			BufferedImage output = new BufferedImage(outputW, outputH, BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g = output.createGraphics();
+			
+			int tx = implantX>=0 ? 0 : -implantX;	//if the implant is to the right of base, nothing needs to be done. if it is to the left, base needs to be shifted over by a matching amount
+			int ty = implantY>=0 ? 0 : -implantY;
+			g.translate(tx, ty);
+			g.drawImage(base, 0, 0, null);
+			g.translate(-tx, -ty);
+			
+			tx = implantX>=0 ? implantX /*-implant.offset.X*/ : 0;
+			ty = implantY>=0 ? implantY /*-implant.offset.Y*/ : 0;
+			g.translate(tx, ty);
+			g.drawImage(implant, 0, 0, null);
+			g.translate(-tx, -ty);
+			
+			return output;
+		}
+	}
 
 	public static BufferedImage rotateImage(BufferedImage input, double rotation) {
 		/* Some note before we start
@@ -370,6 +410,7 @@ public class Paperdoll {
 		
 		int w = input.getWidth();
 		int h = input.getHeight();
+		System.err.println("rotation (degrees): " + rotation);
 		rotation = Math.toRadians(rotation);
 		int hPrime = (int) (w * Math.abs(Math.sin(rotation)) + h * Math.abs(Math.cos(rotation)));
 		int wPrime = (int) (h * Math.abs(Math.sin(rotation)) + w * Math.abs(Math.cos(rotation)));
@@ -383,8 +424,8 @@ public class Paperdoll {
 		g.fillRect(0, 0, wPrime, 450);
 		
 		g.translate(wPrime/2, hPrime/2);
-		g.rotate(rotation);
-		g.translate(-w/2, -h/2);
+		g.rotate(-rotation);		// positive values of rotation are Anticlockwise, like math says it should be
+		g.translate(-w/2, -h/2);	// movement on the new coord system
 		g.drawImage(input, 0, 0, null);
 		g.dispose();
 		
@@ -398,10 +439,11 @@ public class Paperdoll {
 	
 	public static void ExperimentMethod() {
 		System.err.println("INPUT");
+		long timeStart = System.nanoTime();
 //		Paperdoll.TestExport();
 		
 		BufferedImage baseimg = Paperdoll.getImage(Paperdoll.getRandomFileFromFolder(new File("res/images/simulcrum")));
-		BufferedImage neonimg = Paperdoll.TestTessellate(baseimg, 3, 2);
+		BufferedImage neonimg = Paperdoll.addTesselation(baseimg, 3, 2);
 	//	BufferedImage neonimg = Paperdoll.addRibbon(baseimg, 2000);
 		neonimg = Paperdoll.addOval(baseimg);
 	//	neonimg = Paperdoll.TestTessellate(neonimg, 3, 2);
@@ -417,11 +459,16 @@ public class Paperdoll {
 	//	BufferedImage smol = Paperdoll.scaleDown(neonimg);
 		BufferedImage smol = layerImagesbyGraphics(neonimg, baseimg);
 		Paperdoll.exportImage("res/images/simulcrum", "Autogen", "png", smol);
-		Pmage dan = new Pmage(smol, null, lastExported, "png");
+		
+		Pmage dan = new Pmage(smol, new ArrayList<Integer>(Arrays.asList(10,110)), lastExported, "png");
 		dan.setFormat("dildos");
-		dan.origin = new ArrayList<Integer>(Arrays.asList(55, 88));
+	//	dan.format = "super dildos";	//both work
+	//	dan.origin = new ArrayList<Integer>(Arrays.asList(55, 88));
+		dan.setOrigin(55, 188);
 		dan.logData();
+		System.err.println("Generated in : "+(System.nanoTime()-timeStart)/1000000000f + " seconds");
 		System.err.println("TESTING");
+		Main.game.flashMessage(PresetColour.GENERIC_GOOD, "Image Generated!");
 	//	Pmage expo = new Pmage(smol).setFullName("Autogenous", "png");		//not quite working
 	//	expo.bulkExport();
 		
