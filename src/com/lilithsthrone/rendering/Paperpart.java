@@ -18,6 +18,9 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 	ArrayList<Integer> Parent = new ArrayList<Integer>();
 	ArrayList<ArrayList<Integer>> Children = new ArrayList<ArrayList<Integer>>();
 	int renderZ;
+	
+	Paperpart pp;
+	ArrayList<Paperpart> cc;
 
 	public Paperpart(
 		String name,
@@ -25,10 +28,11 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 		AbstractSubspecies supspecies,
 		BodyPartType part) {
 		// TODO Auto-generated constructor stub
+		this.Parent = compimage.origin;
 	}
 	
 	public Paperpart(GameCharacter npc, int sd) {
-		this(npc.getName(), "jg", npc.getSubspecies(), BodyPartType.ARM);
+		this(npc.getName(), "jpg", npc.getSubspecies(), BodyPartType.ARM);
 	}
 	
 	public String readData() {

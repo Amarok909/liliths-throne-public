@@ -3,8 +3,12 @@ package com.lilithsthrone.rendering;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+
 import com.lilithsthrone.rendering.Pmage;
 import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.colours.PresetColour;
@@ -44,6 +48,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
+import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.main.Main;
 
 import java.awt.image.BufferedImage; 
@@ -68,28 +73,28 @@ public class Paperdoll {
 	
 	public enum BodyParts {			// Important note: right and left here are defined as the character's right and left. this is encase sex scene Autogen is achieved, and the character is in front facing backwards. Also, all characters are assumed to be looking to our left, like the brax protraits
 		WAIST("waist", 4000),
-			TAIL("tail", 1000)^
-			LEFTLEG("leftleg", 3000)^,
+			TAIL("tail", 1000),
+			RIGHTLEG("rightleg", 3000),
 			TORSO("chest", 5000),
-				WINGS("wings", 0)^,				// Single caret means that this part has a lower Z number than its parent part
-				RIGHTARM("rightarm", 2000)^...,
-				PREGBELLY,
+				WINGS("wings", 0000),				// Single caret means that this part has a lower Z number than its parent part
+				RIGHTARM("rightarm", 2000),
+				BELLY,
 				BREASTS,
 				NECK,
 					HEAD,
-						HAIRBACK^,
+						HAIRBACK,
 						HAIRMID,
 						EARS,
 						HORNBASE,
 							HORNTIP,
-						HAIRFRONT^^	// Double caret just means that it has a lower Z layer than one of it's nibling parts before it
+						HAIRFRONT,	// Double caret just means that it has a lower Z layer than one of it's nibling parts before it
 				LEFTARM,
-					LEFTFOREARM^,
+					LEFTFOREARM,
 						LEFTHAND,
 			VAGINA,
 			TESTICLES,
 			PENIS,
-			BOOTY("chest", 400);
+			BUTTOCKS("buttocks", 400);
 		
 		private String name;
 		private int defaultRenderZ;		// may be overriden by the xml file if artist wishes
@@ -518,7 +523,7 @@ public class Paperdoll {
 		
 	}
 	
-	public static void collapse() {
+	public static void collapse(GameCharacter npc) {
 		/* First create a tree map, which has all of the body parts in correct root-parent order
 		 * Then create an arraylist with all body parts first sorted by draw order, then position in tree heirarchy
 		 * the tree is neededd to assertain parent and children locations, which lets the draw locations be determined
@@ -532,8 +537,82 @@ public class Paperdoll {
 		 */
 		Paperpart alsp = new Paperpart(null, 0);
 		Paperpart beth = new Paperpart(null, 0);
+		Paperdoll exp = new Paperdoll();
+		TreeNode<Paperpart> experiment = exp.new TreeNode<Paperpart>(beth);		// may need to externalise paper parts after all
+		TreeNode<Paperpart> AAA = experiment.addChild(alsp);
+		TreeNode<Paperpart> AAB = AAA.addChild(beth);
+		TreeNode<Paperpart> AAC = AAA.addChild(alsp);
+		
+		ArrayList<Paperpart> collecshan = new ArrayList<Paperpart>(Arrays.asList(
+			experiment.part,
+			AAA.part,
+			AAB.part,
+			AAC.part,
+			AAA.children.get(0).part
+		));
+		
+	//	collecshan.sort(Comparitor.comparing(Paperpart::part).thenComparing(Paperpart::parent));
+	//	Collectors.sort(collecshan, new RenderOrder());
+	//	collecshan.sort(exp.new Renderorder());
+	//	Collectors.sort(collecshan, )
+		collecshan.sort((p1, p2) -> 
+			p1.renderZ==p2.renderZ
+				? ((Integer) p1.part.ordinal()).compareTo((Integer) p2.part.ordinal())
+				: ((Integer) p1.renderZ).compareTo((Integer) p2.renderZ)
+			);
+		
+	//	System.err.println(experiment.getName());
 		
 		BufferedImage output = layer(alsp.compimage.image, beth.compimage.image, 0, 0, false);
 		Paperdoll.exportImage(Paperdoll.universalExport, "Test", "jpg", output);
+	}
+
+	public class TreeNode<T> /*implements Iterable<TreeNode<T>>*/ {
+		T part;
+	    TreeNode<T> parent;
+	    List<TreeNode<T>> children;
+	    
+	    ArrayList<Integer> parentCoords = new ArrayList<Integer>();
+		ArrayList<ArrayList<Integer>> childrenCoords = new ArrayList<ArrayList<Integer>>();
+	    
+	    public boolean isRoot() {
+			return parent == null;
+		}
+
+		public boolean isLeaf() {
+			return children.size() == 0;
+		}
+
+		public TreeNode(T part) {
+			this.part = part;
+			this.children = new LinkedList<TreeNode<T>>();
+
+			if(isRoot()) {
+				this.parentCoords = ((Paperpart) this.part).Parent;
+			} else {
+				this.parentCoords = ((Paperpart) this.parent.part).Parent;
+			}
+
+			if(!isLeaf()) {
+				this.part = this.children.get(0).part;
+				this.childrenCoords.add(	((Paperpart) this.children.get(0).part).Children.get(0)	);
+			}
+		}
+
+	    public TreeNode<T> addChild(T child) {
+	        TreeNode<T> childNode = new TreeNode<T>(child);
+	        childNode.parent = this;
+	        this.children.add(childNode);
+	        return childNode;
+	    }
+	    
+	    public TreeNode<T> getChild(int index) {
+	    	return this.children.get(index);
+	    }
+	    
+	    public TreeNode<T> getParent() {
+	    	return this.parent;
+	    }
+		
 	}
 }

@@ -1,80 +1,126 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-    basic info, such as game species, file name all images will use, artist, ect
-    the artist tag here will be the source of into for the artistPaperdoll xml
-    it will start off with just me, and collect the art of those who have contributed
+	basic info, such as game species, file name all images will use, artist, ect
+	the artist tag here will be the source of into for the artistPaperdoll xml
+	it will start off with just me, and collect the art of those who have contributed
 -->
 <metadata>
-    <species = "amarok_test_species">
-    <filename = "species_body">
-    <artist name="person" colour="BASE_PURPLE" folderName="personPaperdoll">
+	<species = "amarok_test_species">
+	<filename = "species_body">
+	<artist name="person" colour="BASE_PURPLE" folderName="personPaperdoll">
 		<website title="person's Myspace" url="https://person.myspace"/>
 	</artist>
 </metadata>
 <!--
-    info for each body part image
-    contains
-        image width and height
-        location of piviot point for parent image
-        location of piviot point for child image
-    can be overriden to refer to another species's parts
-    
-    final order of parts, pretty similar to inventory Z layer system, sorted so lowest layer at top, highest layer at bottom, albeit some children may be behind their parent
-    waist/stomach
-    	torso
-            wings
-    		pregbelly
-    		breasts
-    		neck
-    			head
-    				ears
-    				horn base
-                        horn tip        //for horns that go around ears, Z order is horn base, ears, horn tip
-    		upper arms
-    			lower arms
-    				hands
-    	penis
-    	vagina
-    	upper legs
-    		lower legs
-    			feet
-    	tail
-    	
-    simple order
-    body
-    	head
-    	arms
-    	legs
-    	tail
-    
-    draw order
+	info for each body part image
+	contains
+		image width and height
+		location of piviot point for parent image
+		location of piviot point for child image
+	can be overriden to refer to another species's parts
+	
+	final order of parts, pretty similar to inventory Z layer system, sorted so lowest layer at top, highest layer at bottom, albeit some children may be behind their parent
+	waist/stomach
+		torso
+			wings
+			pregbelly
+			breasts
+			neck
+				head
+					ears
+					horn base
+						horn tip        //for horns that go around ears, Z order is horn base, ears, horn tip
+			upper arms
+				lower arms
+					hands
+		penis
+		vagina
+		upper legs
+			lower legs
+				feet
+		tail
+		
+	simple order
+	body
+		head
+		arms
+		legs
+		tail
+	
+	draw order
+						default
+		wings			0000
+		tail			1000
+		backhair		1300
+		buttocks		1600
+
+		right hand		2000
+		right forearm	2300
+		right arm		2600
+
+		right foot		3000
+		right shin		3300
+		right leg		3600
+		
+		waist			4000
+
+		mound			5000
+		vagina			5300
+		testicles		5600
+		penis			5900
+
+		left foot		6000	//optionally, can be behind genitals
+		left shin		6300	//ditto
+		left leg		6600	//ditto
+
+		torso			7000
+		right breast	7300
+		belly			7600
+		left breast		7900
+
+		neck			8000
+		right horn tip	8470
+		right ear		8480	//always behind head
+		right horn base	8490
+		head			8500
+
+		midhair			8510	//main body of hair
+		left horn base	8520
+		left ear		8530
+
+		front hair		8540
+		left horn tip	8550
+
+		left hand		9000
+		left forearm	9300
+		left arm		9600
 -->
 <body>
-    <waist>
-        <pivots>
-            <node parent = "null" X = "40" Y = "20">    <!-- null parent = root, parent is image origin, in the case of waist, it will tell the program where to put it relative to the canvas-->
-            <node child1 = "head" X = "20" Y = "30">    <!-- null child = stem, nothing after it-->
-            <node child2 = "leftaarm" X = "20" Y = "40">
-        </pivots>
-    </waist>
-    <head>
-        <image = "head1.png">
-        <width = 50>
-        <height = 50>
-        <angle D = 40, CW = 20, AC = 5><!--default angle of 40, can go either 20º clockwise or 5º anticlockwise-->
-        <pivots>
-            <node parent = "torso" X = "40" Y = "20">
-            <node child1 = "ears" X = "20" Y = "30">
-            <node child2 = "horns" X = "20" Y = "40">
-        </pivots>
-    </head>
+	<waist>
+		<pivots>
+			<node parent = "null" X = "40" Y = "20">    <!-- null parent = root, parent is image origin, in the case of waist, it will tell the program where to put it relative to the canvas-->
+			<node child1 = "head" X = "20" Y = "30">    <!-- null child = stem, nothing after it-->
+			<node child2 = "leftaarm" X = "20" Y = "40">
+		</pivots>
+	</waist>
+	<head>
+		<image = "head1.png">
+		<width = 50>
+		<height = 50>
+		<angle D = 40, CW = 20, AC = 5><!--default angle of 40, can go either 20º clockwise or 5º anticlockwise-->
+		<pivots>
+			<node parent = "torso" X = "40" Y = "20">
+			<node child1 = "ears" X = "20" Y = "30">
+			<node child2 = "horns" X = "20" Y = "40">
+		</pivots>
+	</head>
 
-    <arm>
-        <override = "panther_arm">
-    </arm>
+	<arm>
+		<override = "panther_arm">
+	</arm>
 </body>
 <!--
-    info for detail bits, like muscle, fat, and hair
+	info for detail bits, like muscle, fat, and hair
 -->>
 <detail>
 </detail>

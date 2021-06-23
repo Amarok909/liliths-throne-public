@@ -3231,7 +3231,7 @@ public abstract class GameCharacter implements XMLSaving {
 	}
 	
 	public void generateImage() {
-		Paperdoll.collapse();
+		Paperdoll.collapse(this);
 	}
 	
 	public abstract boolean isUnique();
