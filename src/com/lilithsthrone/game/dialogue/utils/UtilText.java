@@ -2314,7 +2314,7 @@ public class UtilText {
 						"babe"),
 				true,
 				true,
-				"",
+				"(speaker)",
 				"Returns a random mean word to describe this person, based on the femininity of them and the speaker.") {
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
