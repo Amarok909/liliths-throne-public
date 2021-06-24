@@ -72,29 +72,41 @@ public class Paperdoll {
 	
 	
 	public enum BodyParts {			// Important note: right and left here are defined as the character's right and left. this is encase sex scene Autogen is achieved, and the character is in front facing backwards. Also, all characters are assumed to be looking to our left, like the brax protraits
-		WAIST("waist", 4000),
-			TAIL("tail", 1000),
-			RIGHTLEG("rightleg", 3000),
-			TORSO("chest", 5000),
-				WINGS("wings", 0000),				// Single caret means that this part has a lower Z number than its parent part
-				RIGHTARM("rightarm", 2000),
+		WAIST								("waist", 4000),
+			TAIL							("tail", 1000),
+			BUTTOCKS						("buttocks", 1900),
+			RIGHTLEG						("rightleg", 3600),
+				RIGHTSHIN,
+					RIGHTFOOT,
+			MOUND,
+				VAGINA,
+				TESTICLES,
+				PENIS,
+			LEFTLEG,
+				LEFTSHIN,
+					LEFTFOOT,
+			TORSO							("chest", 7000),
+				WINGS						("wings", 0000),
+				RIGHTARM					("rightarm", 2600),
+					RIGHTFOREARM			("rightforearm", 2300),
+						RIGHTHAND			("righthand", 2000),
+				RIGHTBREAST,
 				BELLY,
-				BREASTS,
+				LEFTBREAST,
 				NECK,
 					HEAD,
-						HAIRBACK,
+						HAIRBACK			("hairback", 1600),
+						RIGHTEAR,
+						RIGHTHORNBASE,
+							RIGHTHORNTIP,
 						HAIRMID,
-						EARS,
-						HORNBASE,
-							HORNTIP,
-						HAIRFRONT,	// Double caret just means that it has a lower Z layer than one of it's nibling parts before it
+						LEFTEAR,
+						LEFTHORNBASE,
+							LEFTHORNTIP,
+						HAIRFRONT,
 				LEFTARM,
 					LEFTFOREARM,
-						LEFTHAND,
-			VAGINA,
-			TESTICLES,
-			PENIS,
-			BUTTOCKS("buttocks", 400);
+						LEFTHAND;
 		
 		private String name;
 		private int defaultRenderZ;		// may be overriden by the xml file if artist wishes
@@ -535,6 +547,7 @@ public class Paperdoll {
 			https://stackoverflow.com/a/17490124
 
 		 */
+		colecto.clear();
 		Paperpart alsp = new Paperpart(null, 0);
 		Paperpart beth = new Paperpart(null, 0);
 		Paperdoll exp = new Paperdoll();
@@ -566,6 +579,8 @@ public class Paperdoll {
 		BufferedImage output = layer(alsp.compimage.image, beth.compimage.image, 0, 0, false);
 		Paperdoll.exportImage(Paperdoll.universalExport, "Test", "jpg", output);
 	}
+	
+	static ArrayList<Paperpart> colecto = new ArrayList<Paperpart>();
 
 	public class TreeNode<T> /*implements Iterable<TreeNode<T>>*/ {
 		T part;
@@ -586,6 +601,7 @@ public class Paperdoll {
 		public TreeNode(T part) {
 			this.part = part;
 			this.children = new LinkedList<TreeNode<T>>();
+			colecto.add((Paperpart) this.part);
 
 			if(isRoot()) {
 				this.parentCoords = ((Paperpart) this.part).Parent;
