@@ -11,11 +11,11 @@ DONE
     add getmarriages command
 
 TODO
-
     Add proposition option to well loved npc
         won't be able to marry slaves without freeing
     Possibly need to go on dates with npc before marriage
     Add to discription text, detailing relationship
+
 
 DATING
     go on roughly weekly dates to improve passion
@@ -23,6 +23,9 @@ DATING
     if you turn up as something they're not attracted to, they'll cancel the date there and then, and passion will be lost
     mutual, you have to perform actions to increase their passion towards you, and you have a choise of how to react to certain advancements which will alter your passion to them
     can do triple dates if forming a polycule, though will be more difficult as you have to convince both your new parter and your old one to like each other
+        selfish club partners might already have a partner (or two) that you will have to deal with
+        other clubbers might already be married, if you have a companion, this might lead to a quick 4polycule
+        you can attempt to try and woo all partners, or even try and sabotage their relationship so you can take one of them for yourself
 
     Guest
     Offspring
@@ -33,12 +36,14 @@ DATING
     Sub clubber
         hey, i really like you how bout i treat you to someplace better than this?
 
+
 MARRIAGE
     at mutual passion 80+, you can get married
     do through ashley, like with nyan
     max of 4 in a single marriage, so you can only do 3 in a row. Govt ordninace to prevent batchelors?
     npcs will move in with you, into your room. may limit amount of slaves permitted?
     children born in wedlock will stick about for 2 hours after birthh before leaving
+
 
 DATA
     CHARACTER   
