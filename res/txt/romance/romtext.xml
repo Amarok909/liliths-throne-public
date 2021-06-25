@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dialogue>
+	
+	<htmlContent tag="CLUBBER_START_DATING"><![CDATA[
+	<p>
+		hey npc, i know we've only knwown eaach other for a short while, but I really enjoy spending time with you. this is hard for even me to say, but I really like you, will you be my boyfriend
+	</p>
+    <p>
+		#IF npc.isKind()
+		#THEN A large smile breaks out on npc's face, [npc.speech(well, [pc.name], I wasn't expecting you to confess first. you're cute, adorable and smart and I would be honoured to be your boyfriend)]
+		#ELSE
+			#IF npc.isSelfish()
+			#THEN [npc.speech(Well damn, [pc.babe(npc)], after that, how could I say no. Yeah, I'll be your man/woman)] npc says, before leaning in and kissing you. his tongue abruptly surges forward, and your suddenly making out with your new boyfriend. Breaking off to let you breath, [npc.speech(now how could i leave such a cute boy/girl like you here, how bout we find somwere to go)]
+			#ELSE [npc.speech(Hi, [pc.name]! I saw you standing all alone, and thought you might want some company. You want to hang out together again?)]
+			#ENDIF
+		#ENDIF
+	</p>
+	<p>
+		Looking past these crowds to the establishments which have attracted them, you see all sorts of different bars and clubs open for business. The vast majority of them, however, seem to either be completely full, or to have huge queues trailing out into the streets.
+	</p>
+	<p>
+		Out of all the establishments that you pass, the only one which you'd have any hope of getting into tonight is the nightclub, 'The Watering Hole'. Although it looks to be just as good as any of the other clubs in this area, it's positioned near the far end of the street, which makes it a little less popular with the crowds of casual clubbers.
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="OUTSIDE_NIGHT_STORM"><![CDATA[
+	<p>
+		You find yourself walking through the area of Dominion known as 'Nightlife', which is currently deserted due to the ongoing arcane storm. The bright colours of neon signs join with the soft glow of lampposts to illuminate the empty street before you.
+	</p>
+	<p>
+		While all the bars and clubs that fill this area are still open for business, the vast majority of them seem to already be completely full. The only place which looks to still have some room left is the nightclub, 'The Watering Hole'.
+	</p>
+	]]>
+	</htmlContent>
+	
+</dialogue>
