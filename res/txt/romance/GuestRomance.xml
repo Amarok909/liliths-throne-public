@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dialogue>
+
+	<htmlContent tag="GUEST_START_DATING"><![CDATA[
+	<p>
+		hey npc, i know we've only known each other for a short while, but I really enjoy spending time with you.
+		 You're really hot, handsome, kind, and you know how to show a [pc.guy] a good time.
+		 This is hard for even me to say, but I really like you, will you be my boyfriend?
+
+		 I know you've had a rough life, so I don't want to force you or anything
+	</p>
+	]]>
+	</htmlContent>
+	
+</dialogue>

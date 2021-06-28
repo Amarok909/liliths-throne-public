@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dialogue>
+	
+	<htmlContent tag="CLUBBER_START_DATING"><![CDATA[
+	<p>
+		hey npc, i know we've only known each other for a short while, but I really enjoy spending time with you.
+		 You're really hot, handsome, kind, and you know how to show a [pc.guy] a good time.
+		 I guess what I'm trying to say is that I really like you, will you be my boyfriend?
+	</p>
+    <p>
+		#IF npc.isShy()
+		#THEN [npc.speech(O-Oh, oh my, [pc.name], I a um! Hi! H-How are you doing? I came here with a friend, but they left me standing alone again...)]
+		#ELSE
+			#IF npc.isConfident()
+			#THEN [npc.speech([pc.Name]! Hi again! How are you doing?!)]
+			#ELSE [npc.speech(Oh, [pc.name]! Hi! How are you?)]
+			#ENDIF
+		#ENDIF
+	</p>
+    <p>
+        [npc.speech(So um... What should me do now?)] npc says, blushing and twidling his fingers. You could spend the rest of the night here at the club, or go back home with your new boyfriend.
+    </p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="CLUBBER_DOM_START_DATING"><![CDATA[
+	<p>
+		hey npc, i know we've only known each other for a short while, but I really enjoy spending time with you.
+		 You're really hot, handsome, kind, and you know how to show a [pc.guy] a good time.
+		 This is hard for even me to say, but I really like you, will you be my boyfriend?
+	</p>
+    <p>
+		#IF npc.isKind()
+		#THEN A large smile breaks out on npc's face, [npc.speech(wow, [pc.name], I'm at a loss for words, that was really touching. you're cute, adorable and smart and I would be honoured to be your boyfriend.)] [npc.Name] takes hold of your hands and leans in and kisses you. You start kissing him back as you embrace each other under the clubs strobing lights. Breaking off the kiss, Npc speaks huskily, [npc.speech(It's getting a bit too crowded in here for my liking, how about we go back to my place and... unwind.)]
+		#ELSE
+			#IF npc.isSelfish()
+			#THEN [npc.speech(Well damn, [pc.babe(npc)], after that, how could I say no. Yeah, I'll be your man/woman)] npc says, before leaning in and kissing you. his tongue abruptly surges forward, and your suddenly making out with your new boyfriend. Breaking off to let you breath, [npc.speech(now how could i leave such a cute boy/girl like you here, how bout we find somwere to go)]
+			#ELSE [npc.speech(Aw gosh, [pc.name], that was really touching. I would love to be your boyfriend.)] npc says before placing his hands on your hips and pulling you in
+			#ENDIF
+		#ENDIF
+	</p>
+    <p>
+        Npc obviously has some thoughts on what do do for the rest of the night. you could either go with [npc.his] flow, or speak up now and decide what to do for the rest of the night with your new boyfirend
+    </p>
+	]]>
+	</htmlContent>
+	
+</dialogue>
