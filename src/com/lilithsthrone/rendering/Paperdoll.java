@@ -49,6 +49,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import com.lilithsthrone.game.character.GameCharacter;
+import com.lilithsthrone.game.character.body.valueEnums.LegConfiguration;
 import com.lilithsthrone.main.Main;
 
 import java.awt.image.BufferedImage; 
@@ -70,62 +71,77 @@ public class Paperdoll {
 	static String lastExported;
 	static String universalExport = "res/images/simulcrum";
 	
-	
-	public enum BodyParts {			// Important note: right and left here are defined as the character's right and left. this is encase sex scene Autogen is achieved, and the character is in front facing backwards. Also, all characters are assumed to be looking to our left, like the brax protraits
-		WAIST								("waist", 4000),
-			TAIL							("tail", 1000),
-			BUTTOCKS						("buttocks", 1900),
-			RIGHTLEG						("rightleg", 3600),
-				RIGHTSHIN,
-					RIGHTFOOT,
-			MOUND,
-				VAGINA,
-				TESTICLES,
-				PENIS,
-			LEFTLEG,
-				LEFTSHIN,
-					LEFTFOOT,
-			TORSO							("chest", 7000),
-				WINGS						("wings", 0000),
-				RIGHTARM					("rightarm", 2600),
-					RIGHTFOREARM			("rightforearm", 2300),
-						RIGHTHAND			("righthand", 2000),
-				RIGHTBREAST,
-				BELLY,
-				LEFTBREAST,
-				NECK,
-					HEAD,
-						HAIRBACK			("hairback", 1600),
-						RIGHTEAR,
-						RIGHTHORNBASE,
-							RIGHTHORNTIP,
-						HAIRMID,
-						LEFTEAR,
-						LEFTHORNBASE,
-							LEFTHORNTIP,
-						HAIRFRONT,
-				LEFTARM,
-					LEFTFOREARM,
-						LEFTHAND;
+	/* Important note: right and left here are defined as the character's right and left
+	 * This is in case sex scene Autogen is achieved, and the character is in front facing backwards
+	 * Also, all characters are assumed to be looking to our left, like the brax protraits
+	 * Currently, most body parts have been temporarily removed to simplify testing and development
+	 */
+	public enum BodyParts {
+		WAIST							("waist", 4000),
+	//		TAIL							("tail", 1000),
+	//		BUTTOCKS						("buttocks", 1900),
+			RIGHTLEG					("rightleg", 3600),
+	//			RIGHTSHIN					("rightshin", 3300),
+	//				RIGHTFOOT				("rightfoot", 3000),
+	//		MOUND						("mound", 5000),
+	//			VAGINA						("vagina", 5300),
+	//			TESTICLES					("testicles", 5600),
+	//			PENIS						("penis", 5900),
+			LEFTLEG						("leftleg", 6600),
+	//			LEFTSHIN					("leftshin", 6300),
+	//				LEFTFOOT				("leftfoot", 6000),
+			TORSO						("torso", 7000),
+	//			WINGS						("wings", 0000),
+				RIGHTARM				("rightarm", 2600),
+	//				RIGHTFOREARM			("rightforearm", 2300),
+	//					RIGHTHAND			("righthand", 2000),
+	//			RIGHTBREAST				("rightbreast", 7300),
+	//			BELLY						("belly", 7600),
+	//			LEFTBREAST					("leftbreast", 7900),
+				NECK					("neck", 8000),
+					HEAD					("head", 8500),
+	//					HAIRBACK			("hairback", 1600),
+	//					RIGHTEAR			("rightear", 8480),
+	//					RIGHTHORNBASE		("righthornbase", 8490),
+	//						RIGHTHORNTIP	("righthorntip", 8470),
+	//					HAIRMID				("hairmid", 8510),
+	//					LEFTHORNBASE		("lefthornbase", 8520),
+	//						LEFTHORNTIP		("lefthorntip", 8550),
+	//					LEFTEAR				("leftear", 8530),
+	//					HAIRFRONT			("hairfront", 8540),
+				LEFTARM					("leftarm", 9600);
+	//				LEFTFOREARM				("leftforearm", 9300),
+	//					LEFTHAND			("lefthand", 9000);
 		
 		private String name;
 		private int defaultRenderZ;		// may be overriden by the xml file if artist wishes
+		private LegConfiguration config;
 		
-		BodyParts(String name, int defaultRenderZ) {
+		BodyParts(String name, int defaultRenderZ, LegConfiguration config) {
 			this.name = name;
 			this.defaultRenderZ = defaultRenderZ;
-		}
-		BodyParts() {
-			// Delete me later, k
+			this.config = config;
 		}
 		
+		BodyParts(String name, int defaultRenderZ) {
+			this(name, defaultRenderZ, null);
+		}
+		
+		String getName() {
+			return name;
+		}
+
+		int getDefaultRenderZ() {
+			return defaultRenderZ;
+		}
+
 		public boolean isRenderZOverwritten(Paperpart part) {		//rewrite so a species can go in and it automatically knows which body part it is, so it can compare
 			return this.defaultRenderZ == part.renderZ;				// ie, if DOG_MORPH_paper.xml sets the renderZ for waists as 55, and the default is 100, WAIST.isOverwrite(DOG_MORPH) will return true
 		}
 	}
 	
 	
-//**** Image Input ****//
+// **** Image Input **** //
 	public static BufferedImage getImage(File input) {
 		try {
 			return ImageIO.read(input);
@@ -139,7 +155,7 @@ public class Paperdoll {
 	}
 
 	
-//**** Image Output ****//
+// **** Image Output **** //
 	public static void exportImage(String location, String name, String format, BufferedImage img) {
 		String saveLocation = location + "/" + name + "." + format;
 		try {
@@ -175,7 +191,7 @@ public class Paperdoll {
 	}
 
 	
-//**** Image File Management ****//
+// **** Image File Management **** //
 	public static File[] imageList(File input) {
 		if(input.exists()) {
 			FilenameFilter textFilter = new FilenameFilter() {
@@ -210,15 +226,15 @@ public class Paperdoll {
 	}
 	
 	
-//**** Image Data Manipulation ****//
+// **** Image Data Manipulation **** //
 	public static BufferedImage scaleDown(BufferedImage input) {
 		return CachedImage.scaleDown(input, 300, 445);
 	}
 	
 	
-//**** Paper-doll ****//
+// **** Paper-doll **** //
 
-//**** Development ****//
+// **** Development **** //
 	public static boolean Extwo() {
 		File dir = new File("res/images/primitives/test_species/test_species.xml");
 		return dir.exists();
@@ -604,14 +620,14 @@ public class Paperdoll {
 			colecto.add((Paperpart) this.part);
 
 			if(isRoot()) {
-				this.parentCoords = ((Paperpart) this.part).Parent;
+				this.parentCoords = ((Paperpart) this.part).parentCoords;
 			} else {
-				this.parentCoords = ((Paperpart) this.parent.part).Parent;
+				this.parentCoords = ((Paperpart) this.parent.part).parentCoords;
 			}
 
 			if(!isLeaf()) {
 				this.part = this.children.get(0).part;
-				this.childrenCoords.add(	((Paperpart) this.children.get(0).part).Children.get(0)	);
+				this.childrenCoords.add(	((Paperpart) this.children.get(0).part).childrenCoords.get(0)	);
 			}
 		}
 

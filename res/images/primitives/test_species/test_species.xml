@@ -116,12 +116,16 @@
 		<image = "head1.png">
 		<width = 50>
 		<height = 50>
+		<renderZ = null>
 		<angle D = 40, CW = 20, AC = 5><!--default angle of 40, can go either 20º clockwise or 5º anticlockwise-->
 		<pivots>
 			<node parent = "torso" X = "40" Y = "20">
 			<node child1 = "ears" X = "20" Y = "30">
 			<node child2 = "horns" X = "20" Y = "40">
 		</pivots>
+		<decals>
+			<deatil type = "fur" condition = "floof" X = 20 Y = 40 renderZ = "+5" D = 40>
+		</decals>
 	</head>
 
 	<arm>
