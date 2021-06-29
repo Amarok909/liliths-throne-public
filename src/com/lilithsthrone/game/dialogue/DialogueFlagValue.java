@@ -66,7 +66,6 @@ public enum DialogueFlagValue {
 	elizabethIntroduced,
 	vengarIntroduced,
 	murkIntroduced,
-	test,
 	
 	
 	// Red-light district:
