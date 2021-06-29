@@ -1482,6 +1482,67 @@ public enum Quest {
 			return getDescription();
 		}
 	},
+	
+	MARRIAGE_START(QuestType.SIDE, 1, 0) {
+		@Override
+		public String getName() {
+			return "Lilaya the love guide";
+		}
+		@Override
+		public String getDescription() {
+			return "You've found someone who just completes you, wanting to truely declare your love for them, you want to get married."
+					+ " However, you have no idea what the processes are in this new world, let alone if it even exists in the swinger culture of Dominion";
+		}
+		@Override
+		public String getCompletedDescription() {
+			return "You've asked Lilaya for help on how to get married, she has guided you to seek out the shop 'Dream Lover'";
+		}
+	},
+
+	MARRIAGE_ONE(QuestType.SIDE, 1, 0) {
+		@Override
+		public String getName() {
+			return "The angel of love";
+		}
+		@Override
+		public String getDescription() {
+			return "you need to go to Ashley to organise the wedding";
+		}
+		@Override
+		public String getCompletedDescription() {
+			return "you have orgainised the wedding with ashley, and recived your ring. you have a week to get things done otherwise you'll need to re-order the wedding.";
+		}
+	},
+
+	MARRIAGE_TWO(QuestType.SIDE, 1, 0) {
+		@Override
+		public String getName() {
+			return "The ring bearer";
+		}
+		@Override
+		public String getDescription() {
+			return "everything is prepared, all you need to do is find your beloved and propose to them";
+		}
+		@Override
+		public String getCompletedDescription() {
+			return "you have proposed, lets get married, darling!";
+		}
+	},
+
+	MARRIAGE_END(QuestType.SIDE, 1, 0) {
+		@Override
+		public String getName() {
+			return "love and bereaucrasy";
+		}
+		@Override
+		public String getDescription() {
+			return "you're a happy husband now, but before your honeymoon, theres a few things you must do";
+		}
+		@Override
+		public String getCompletedDescription() {
+			return "everything's done, lets have a honeymoon!";
+		}
+	},
         
 	// Romance quests:
 

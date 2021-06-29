@@ -256,6 +256,21 @@ public class Lab {
 			}
 		}
 		
+		if(Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE) && !Main.game.getPlayer().isQuestCompleted(QuestLine.SIDE_MARRIAGE)) {
+			if (!Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.MAIN, Quest.MAIN_1_A_LILAYAS_TESTS)) {
+				generatedResponses.add(new Response("Marriage", "You'll need to complete Lilaya's initial tests before you can ask her about getting married!", null));
+				
+			} else {
+				generatedResponses.add(new Response("Marriage", "Ask Lilaya about the process of getting married in Dominion.", LILAYA_PARTNER_MARRIAGE){
+					@Override
+					public void effects() {
+						setEntryFlags();
+						Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().setQuestProgress(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_START));
+					}
+				});
+			}
+		}
+		
 		if(!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.lilayaDateTalk)
 				&& Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.knowsDate)) {
 			generatedResponses.add(new Response("Current Date", "Ask Lilaya why the calendar in your room is three years ahead of the correct date.", LILAYA_CURRENT_DATE_TALK) {
@@ -1653,6 +1668,23 @@ public class Lab {
 			} else {
 				return null;
 			}
+		}
+	};
+	
+	public static final DialogueNode LILAYA_PARTNER_MARRIAGE = new DialogueNode("", "", true) {
+		@Override
+		public void applyPreParsingEffects() {
+	//		Main.game.getTextEndStringBuilder().append(Main.game.getNpc(Lilaya.class).incrementAffection(Main.game.getPlayer(), 5));
+	//		Main.game.getDialogueFlags().setFlag(DialogueFlagValue.lilayaHug, true);
+		}
+		@Override
+		public String getContent() {
+	//		return UtilText.parseFromXMLFile("places/dominion/lilayasHome/lab", "LAB_LILAYA_HUG");
+			return "Hey Lilaya, how do you get married";
+		}
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			return LAB_ENTRY.getResponse(0, index);
 		}
 	};
 

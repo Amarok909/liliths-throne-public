@@ -30,6 +30,7 @@ public class QuestTree {
 	public static TreeNode<Quest> natalyaTree = new TreeNode<Quest>(Quest.ROMANCE_NATALYA_1_INTERVIEW_START);
 	public static TreeNode<Quest> rebelBaseTree = new TreeNode<Quest>(Quest.REBEL_BASE_EXPLORATION);
 	public static TreeNode<Quest> rebelBaseFirebombTree = new TreeNode<Quest>(Quest.REBEL_BASE_FIREBOMBS_START);
+	public static TreeNode<Quest> marriageTree = new TreeNode<Quest>(Quest.MARRIAGE_START);
 	
 	
 	static {
@@ -227,6 +228,14 @@ public class QuestTree {
         node1.addChild(nodeBranchB);
         node1 = new TreeNode<Quest>(Quest.SIDE_UTIL_COMPLETE);
         nodeBranchA.addChild(node1);
+		
+        // Marriage
+        node1 = new TreeNode<Quest>(Quest.MARRIAGE_ONE);
+        marriageTree.addChild(node1);
+		node2 = new TreeNode<Quest>(Quest.MARRIAGE_TWO);
+		node1.addChild(node2);
+		node2 = new TreeNode<Quest>(Quest.MARRIAGE_END);
+        node1.addChild(node2);
 		
         
 		// Wes quest:

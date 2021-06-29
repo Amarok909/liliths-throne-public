@@ -42,7 +42,33 @@ MARRIAGE
     do through ashley, like with nyan
     max of 4 in a single marriage, so you can only do 3 in a row. Govt ordninace to prevent batchelors?
     npcs will move in with you, into your room. may limit amount of slaves permitted?
-    children born in wedlock will stick about for 2 hours after birthh before leaving
+    children born in wedlock will stick about for 2 hours after birth before leaving
+    the asker will walk/carry the askee down the aisle, unlike western marriages where the bride walks to the groom
+    maybe the parents wait at the aisle to 'challenge' the asker
+
+    marriage quest
+    1   reach marriageability level with any partner
+    2   talk to lilaya about it, she will guide you to Dream Lover
+    2a      Liliya will prefer your marriage is not a public event, as not to drag her and her mother into it. different matter if post-demon
+    3   Ashley will further warm up to you, being less abrasive. gives you ring and organizes wedding
+    3a      plan out wedding, choose what people are wearing
+    3b      Some time will need to pass to let ashley set it up, also allows you to invite friends to the wedding
+    3c      maybe a fade-to-black, auto invites? do it in wedding planner?
+    4   Find partner and give them ring, take them to wedding (if enough physique, describes you as physically picking them up over your shoulder / back if taur)
+    5   Get heckin' married
+    6   Final things before Honeymoon
+    6a      demon transformation, give ashley a performance review to her government manager
+    7   Honeymoon
+
+    Method
+        Pick partners
+        Facility
+        Extravagance/Lewdity
+        Aesthetic
+        Wedding clothes
+        Honeymoon
+        Review each stage/ cost breakdown
+        Pay
 
 
 DATA
