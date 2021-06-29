@@ -26,7 +26,7 @@ import com.lilithsthrone.game.character.race.AbstractSubspecies;
 import com.lilithsthrone.game.character.race.RaceStage;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
 import com.lilithsthrone.game.dialogue.DialogueNode;
-import com.lilithsthrone.game.dialogue.romance.RomanceDialogue;
+import com.lilithsthrone.game.dialogue.romance.ClubberRomanceDialogue;
 import com.lilithsthrone.game.dialogue.places.dominion.DominionPlaces;
 import com.lilithsthrone.game.dialogue.places.dominion.lilayashome.RoomPlayer;
 import com.lilithsthrone.game.dialogue.responses.Response;
@@ -742,7 +742,7 @@ public class NightlifeDistrict {
 					
 				} else if(index==5 && hasMetBefore) {
 					if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
-						return new Response("Date", "Ask NPC out on a date", RomanceDialogue.CLUBBER_OFFER_DATE) {
+						return new Response("Date", "Ask NPC out on a date", ClubberRomanceDialogue.CLUBBER_OFFER_DATE) {
 							@Override
 							public void effects() {
 								Main.game.getPlayer().incrementPassion(getPartner(), 10, "", true);
@@ -750,7 +750,7 @@ public class NightlifeDistrict {
 						};
 						
 					} else {
-						return new Response("Date", "Ask NPC out", RomanceDialogue.CLUBBER_START_DATING) {
+						return new Response("Date", "Ask NPC out", ClubberRomanceDialogue.CLUBBER_START_DATING) {
 							@Override
 							public void effects() {
 								Main.game.getPlayer().createRelationship(getPartner());
@@ -5178,7 +5178,7 @@ public class NightlifeDistrict {
 				
 			} else if(index==5 && hasMetBefore) {
 				if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
-					return new Response("Date", "Ask NPC for a date", RomanceDialogue.CLUBBER_REQUEST_DATE) {
+					return new Response("Date", "Ask NPC for a date", ClubberRomanceDialogue.CLUBBER_REQUEST_DATE) {
 						@Override
 						public void effects() {
 							Main.game.getPlayer().incrementPassion(getPartner(), 10, "", true);
@@ -5186,7 +5186,7 @@ public class NightlifeDistrict {
 					};
 					
 				} else {
-					return new Response("Date", "Ask NPC out", RomanceDialogue.CLUBBER_DOM_START_DATING) {
+					return new Response("Date", "Ask NPC out", ClubberRomanceDialogue.CLUBBER_DOM_START_DATING) {
 						@Override
 						public void effects() {
 							Main.game.getPlayer().createRelationship(getPartner());

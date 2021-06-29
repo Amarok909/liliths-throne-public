@@ -3,7 +3,6 @@ package com.lilithsthrone.game.dialogue.romance;
 import com.lilithsthrone.game.dialogue.DialogueNode;
 import com.lilithsthrone.game.dialogue.responses.Response;
 import com.lilithsthrone.game.dialogue.utils.UtilText;
-import com.lilithsthrone.game.dialogue.places.dominion.nightlife.NightlifeDistrict;
 
 /**
  * @since 0.4

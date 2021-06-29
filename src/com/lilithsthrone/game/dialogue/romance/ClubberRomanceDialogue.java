@@ -20,7 +20,7 @@ public class ClubberRomanceDialogue {
 		}
 		@Override
 		public String getContent() {
-			return UtilText.parseFromXMLFile("romance/romtext", "CLUBBER_START_DATING");
+			return UtilText.parseFromXMLFile("romance/ClubberRomance", "CLUBBER_START_DATING");
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {
