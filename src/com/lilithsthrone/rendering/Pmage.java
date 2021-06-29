@@ -163,6 +163,21 @@ public class Pmage /*extends Paperdoll*/ {
 	private ArrayList<ArrayList<Integer>> findCorners(int width, int height, ArrayList<Integer> o) {
 		return findCorners(width, height, o, 0);
 	}
+
+	public ArrayList<Integer> rotateAboutPoint(ArrayList<Integer> p, ArrayList<Integer> o, double rotation) {
+		int px = p.get(0);
+		int py = p.get(1);
+		int ox = o.get(0);
+		int oy = o.get(1);
+		
+		double ppx = Math.cos(rotation) * (px-ox) - Math.sin(rotation) * (py-oy) + ox;
+		double ppy = Math.sin(rotation) * (px-ox) + Math.cos(rotation) * (py-oy) + oy;
+		
+		X = (int) Math.round(ppx); 
+		Y = (int) Math.round(ppy);
+
+		return new ArrayList<Integer>(Arrays.asList(X, Y, rotation))); 
+	}
 	
 	@SuppressWarnings("unused")
 	private Pmage rotate(Pmage input, double rotation) {
@@ -194,7 +209,7 @@ public class Pmage /*extends Paperdoll*/ {
 // Rotation methods
 	public double getRotation() {return this.rotation;}
 	
-	public void setRotation(double r) {this.rotation = r;}
+	public void setRotation(double r) {this.rotation = r;}		// should actually rotate image?
 	
 	
 // Test methods

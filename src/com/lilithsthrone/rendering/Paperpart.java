@@ -27,6 +27,11 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 	
 	ArrayList<Integer> parentCoords = new ArrayList<Integer>();
 	ArrayList<ArrayList<Integer>> childrenCoords = new ArrayList<ArrayList<Integer>>();
+	double rotation;	// relative to parent
+
+	ArrayList<Integer> rootCoordsABS = new ArrayList<Integer>();
+	double rotationABS;	// relative to root
+
 	int renderZ;
 	int treeLvl = 0;
 	
@@ -86,6 +91,24 @@ public class Paperpart extends Paperdoll {	//Paperpart manages individual instan
 		//finds xml sheet and reads its data
 		//look at savefile read and write for tips
 		// Game.java.504, 652, 715
+	}
+
+	public ArrayList<Integer> traceCoords() {
+		PaperPart ref = this;
+		ArrayList<Paperpart> refList = new ArrayList<Paperpart>();
+
+		do {
+			reflList.add(ref);
+			ref = ref.parent;
+		} while(!ref.isRoot());
+
+		int relX, relY, relRot;
+		for(i = refList.size() - 1; i >= 0; i--) {
+			if(!refList.get(i).isLeaf) {
+				Paperpart P = refList.get(i);
+				Paperpart C = refList.get(i-1);
+			}
+		}
 	}
 
 }
