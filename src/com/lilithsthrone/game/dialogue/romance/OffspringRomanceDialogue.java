@@ -18,7 +18,23 @@ public class OffspringRomanceDialogue {
 		}
 		@Override
 		public String getContent() {
-			return UtilText.parseFromXMLFile("romance/romtext", "OFFSPRING_START_DATING");
+			return UtilText.parseFromXMLFile("romance/OffspringRomance", "OFFSPRING_START_DATING");
+		}
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	};
+
+	public static final DialogueNode OFFSPRING_OFFER_DATE = new DialogueNode("Go on a date", "take your [pc.relation(npc)] off for a date", true, true) {
+		@Override
+		public String getAuthor() {
+			return "Amarok";
+		}
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile("romance/OffspringRomance", "OFFSPRING_OFFER_DATE");
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {

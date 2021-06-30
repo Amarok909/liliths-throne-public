@@ -18,7 +18,7 @@ public class GuestRomanceDialogue {
 		}
 		@Override
 		public String getContent() {
-			return UtilText.parseFromXMLFile("romance/romtext", "GUEST_START_DATING");
+			return UtilText.parseFromXMLFile("romance/GuestRomance", "GUEST_START_DATING");
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {
@@ -34,7 +34,7 @@ public class GuestRomanceDialogue {
 		}
 		@Override
 		public String getContent() {
-			return UtilText.parseFromXMLFile("romance/romtext", "GUEST_OFFER_DATE");
+			return UtilText.parseFromXMLFile("romance/GuestRomance", "GUEST_OFFER_DATE");
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {
