@@ -26,6 +26,7 @@ public enum PropertyValue {
 	sillyMode(false),
 	weatherInterruptions(true),
 	useCommonwealthMum(false),				//Added by Amarok
+	automaticDialogueCopy(false),
 
 	autoLocale(true),
 	metricSizes(true),
@@ -60,6 +61,7 @@ public enum PropertyValue {
 	urethralContent(false, true),
 	analContent(true, true),
 	footContent(true, true),
+	armpitContent(true, true),
 	nipplePenContent(true, true),
 	gapeContent(true, true),
 	
