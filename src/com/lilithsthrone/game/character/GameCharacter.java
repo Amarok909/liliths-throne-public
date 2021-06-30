@@ -5004,24 +5004,41 @@ public abstract class GameCharacter implements XMLSaving {
 		return false;
 	}
 	
-	public List<String> getSpouces() {
-		return new ArrayList<String>(romanceMap.keySet());
+	public List<GameCharacter> getSpouces() {
+		ArrayList<GameCharacter> characs = new ArrayList<GameCharacter>();
+		for(Entry<String, Map<MaritalStatus, Float>> E : this.romanceMap.entrySet()) {
+			try {
+				GameCharacter C = Main.game.getNPCById(E.getKey());
+				if(this.getMaritalStatus(C) == MaritalStatus.MARRIED) characs.add(C);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	return characs;
 	}
 	
-//	public boolean hasBondWith(GameCharacter character) {
-//		return this.getRomanceMap().keySet().contains(character.getId());
-//	}
+	public List<GameCharacter> getFiances() {
+		ArrayList<GameCharacter> characs = new ArrayList<GameCharacter>();
+		for(Entry<String, Map<MaritalStatus, Float>> E : this.romanceMap.entrySet()) {
+			try {
+				GameCharacter C = Main.game.getNPCById(E.getKey());
+				if(this.getMaritalStatus(C) == MaritalStatus.DATING && this.getPassion(C) >= 80) characs.add(C);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	return characs;
+	}
 	
-//	public float getBond(GameCharacter character) {
-//		if(this.hasBondWith(character)) {
-//			return Math.round(this.getDatingMap().get(character.getId())*100)/100f;
-//		}
-//		return 0f;
-//	}
-	
-//	public void setBond(String id, long time) {
-//		datingMap.put(id, Math.max(-100, Math.min(100, time)));
-//	}
+	public List<GameCharacter> getPartners() {
+		ArrayList<GameCharacter> characs = new ArrayList<GameCharacter>();
+		for(Entry<String, Map<MaritalStatus, Float>> E : this.romanceMap.entrySet()) {
+			try {
+				GameCharacter C = Main.game.getNPCById(E.getKey());
+				if(this.getMaritalStatus(C) == MaritalStatus.DATING) characs.add(C);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	return characs;
+	}
 	
 	// Slavery:
 	
