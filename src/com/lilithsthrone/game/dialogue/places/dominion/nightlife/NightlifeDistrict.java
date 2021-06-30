@@ -26,6 +26,7 @@ import com.lilithsthrone.game.character.race.AbstractSubspecies;
 import com.lilithsthrone.game.character.race.RaceStage;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
 import com.lilithsthrone.game.dialogue.DialogueNode;
+import com.lilithsthrone.game.dialogue.romance.ClubberRomanceDialogue;
 import com.lilithsthrone.game.dialogue.places.dominion.DominionPlaces;
 import com.lilithsthrone.game.dialogue.places.dominion.lilayashome.RoomPlayer;
 import com.lilithsthrone.game.dialogue.responses.Response;
@@ -739,18 +740,22 @@ public class NightlifeDistrict {
 					};
 					
 				} else if(index==5 && hasMetBefore) {
-					return new Response("Date", "Ask NPC out on a date", null) {
-						@Override
-						public void effects() {
-							if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
-								Main.game.getPlayer().setPassion(getPartner(), Main.game.getPlayer().getPassion(getPartner()) + 10);
-								getPartner().setPassion(Main.game.getPlayer(), getPartner().getPassion(Main.game.getPlayer()) + 10);
-								
-							} else {
+					if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
+						return new Response("Date", "Ask NPC out on a date", ClubberRomanceDialogue.CLUBBER_OFFER_DATE) {
+							@Override
+							public void effects() {
+								Main.game.getPlayer().incrementPassion(getPartner(), 10, "", true);
+							}
+						};
+						
+					} else {
+						return new Response("Date", "Ask NPC out", ClubberRomanceDialogue.CLUBBER_START_DATING) {
+							@Override
+							public void effects() {
 								Main.game.getPlayer().createRelationship(getPartner());
 							}
-						}
-					};
+						};
+					}
 					
 				} if(index==9) {
 					return new Response("Say goodbye",
@@ -5171,20 +5176,22 @@ public class NightlifeDistrict {
 				};
 				
 			} else if(index==5 && hasMetBefore) {
-				return new Response("Date", "Ask NPC to take you out on a date", null) {
-					@Override
-					public void effects() {
-						if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
-							Main.game.getPlayer().setPassion(getPartner(), Main.game.getPlayer().getPassion(getPartner()) + 10);
-							getPartner().setPassion(Main.game.getPlayer(), getPartner().getPassion(Main.game.getPlayer()) + 10);
-							Main.game.getTextEndStringBuilder().append(getPartner().incrementAffection(Main.game.getPlayer(), 5));
-							
-						} else {
-							Main.game.getPlayer().createRelationship(getPartner());
-							Main.game.getTextEndStringBuilder().append(getPartner().incrementAffection(Main.game.getPlayer(), 25));
+				if(Main.game.getPlayer().hasRelationshipWith(getPartner())) {
+					return new Response("Date", "Ask NPC for a date", ClubberRomanceDialogue.CLUBBER_REQUEST_DATE) {
+						@Override
+						public void effects() {
+							Main.game.getPlayer().incrementPassion(getPartner(), 10, "", true);
 						}
-					}
-				};
+					};
+					
+				} else {
+					return new Response("Date", "Ask NPC out", ClubberRomanceDialogue.CLUBBER_DOM_START_DATING) {
+						@Override
+						public void effects() {
+							Main.game.getPlayer().createRelationship(getPartner());
+						}
+					};
+				}
 				
 			} else {
 				return null;

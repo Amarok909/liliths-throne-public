@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
@@ -4881,22 +4880,33 @@ public abstract class GameCharacter implements XMLSaving {
 
 	
 	public String incrementPassion(GameCharacter character, float passionIncrement) {
-		return incrementPassion(character, passionIncrement, "");
+		return incrementPassion(character, passionIncrement, "", false);
 	}
 	
 	/**
 	 * Increments this character's passion towards the supplied GameCharacter.
 	 * @param passionChangeDescription The description to be added to the returned String. Is parsed with "npc" being this character, and "npc2" being the passed in character. 
 	 */
-	public String incrementPassion(GameCharacter character, float passionIncrement, String passionChangeDescription) {
-		setPassion(character, getPassion(character) + passionIncrement);
-		
-		return UtilText.parse(this, character,
-				"<p style='text-align:center'>"
-					+ (passionChangeDescription!=null && !passionChangeDescription.isEmpty()?"<i>"+passionChangeDescription+"</i><br/>":"")
-					+ "[npc.Name] "+(passionIncrement>0?"[style.boldGood(gains)]":"[style.boldBad(loses)]")+" <b>"+Math.abs(passionIncrement)+"</b> [style.boldAffection(passion)] towards [npc2.name]!<br/>"
-					+ PassionLevel.getDescription(this, character, getAffectionLevel(character), true)
-				+ "</p>");
+	public String incrementPassion(GameCharacter character, float passionIncrement, String passionChangeDescription, boolean mutual) {
+
+		if(!mutual) {
+			setPassion(character, getPassion(character) + passionIncrement);
+			return UtilText.parse(this, character,
+					"<p style='text-align:center'>"
+						+ (passionChangeDescription!=null && !passionChangeDescription.isEmpty()?"<i>"+passionChangeDescription+"</i><br/>":"")
+						+ "[npc.Name] "+(passionIncrement>0?"[style.boldGood(gains)]":"[style.boldBad(loses)]")+" <b>"+Math.abs(passionIncrement)+"</b> [style.boldAffection(passion)] towards [npc2.name]!<br/>"
+						+ PassionLevel.getDescription(this, character, getAffectionLevel(character), true)
+					+ "</p>");
+		} else {
+			this.setPassion(character, this.getPassion(character) + passionIncrement);
+			character.setPassion(this, character.getPassion(this) + passionIncrement);
+			return UtilText.parse(this, character,
+					"<p style='text-align:center'>"
+						+ (passionChangeDescription!=null && !passionChangeDescription.isEmpty()?"<i>"+passionChangeDescription+"</i><br/>":"")
+						+ "[npc.Name] and [npc2.Name] "+(passionIncrement>0?"[style.boldGood(gain)]":"[style.boldBad(lose)]")+" <b>"+Math.abs(passionIncrement)+"</b> [style.boldAffection(passion)] towards each other!<br/>"
+						+ PassionLevel.getDescription(this, character, getAffectionLevel(character), true)
+					+ "</p>");
+		}
 	}
 
 	// Dating

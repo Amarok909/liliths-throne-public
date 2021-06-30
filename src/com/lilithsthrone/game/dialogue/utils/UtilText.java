@@ -2690,7 +2690,7 @@ public class UtilText {
 						return "hun";
 					}
 				} else {
-					ParserTarget parserTarget = findParserTargetWithTag(arguments.replaceAll("\u200b", ""));
+					AbstractParserTarget parserTarget = findParserTargetWithTag(arguments.replaceAll("\u200b", ""));
 					GameCharacter speaker = parserTarget.getCharacter(arguments.toLowerCase(), specialNPCs);
 					if(speaker.isFeminine()) {
 						if(character.isFeminine()) {
