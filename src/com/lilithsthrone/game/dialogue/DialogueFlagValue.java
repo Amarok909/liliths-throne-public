@@ -103,6 +103,7 @@ public class DialogueFlagValue {
 	
 	public static AbstractDialogueFlagValue ashleySexToysDiscovered = new AbstractDialogueFlagValue();
 	public static AbstractDialogueFlagValue ashleyAttitude = new AbstractDialogueFlagValue();
+	public static AbstractDialogueFlagValue ashleyLimit = new AbstractDialogueFlagValue();
 	
 	public static AbstractDialogueFlagValue reactedToKatePregnancy = new AbstractDialogueFlagValue();
 	
