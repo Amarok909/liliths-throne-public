@@ -256,7 +256,7 @@ public class Lab {
 			}
 		}
 		
-		if(Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE) && !Main.game.getPlayer().isQuestCompleted(QuestLine.SIDE_MARRIAGE)) {
+		if(Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE) && Main.game.getPlayer().getQuest(QuestLine.SIDE_MARRIAGE) == Quest.MARRIAGE_START) {
 			if (!Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.MAIN, Quest.MAIN_1_A_LILAYAS_TESTS)) {
 				generatedResponses.add(new Response("Marriage", "You'll need to complete Lilaya's initial tests before you can ask her about getting married!", null));
 				
@@ -265,7 +265,7 @@ public class Lab {
 					@Override
 					public void effects() {
 						setEntryFlags();
-						Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().setQuestProgress(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_START));
+						Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().setQuestProgress(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_ONE));
 					}
 				});
 			}
@@ -1672,11 +1672,11 @@ public class Lab {
 	};
 	
 	public static final DialogueNode LILAYA_PARTNER_MARRIAGE = new DialogueNode("", "", true) {
-		@Override
-		public void applyPreParsingEffects() {
+	//	@Override
+	//	public void applyPreParsingEffects() {
 	//		Main.game.getTextEndStringBuilder().append(Main.game.getNpc(Lilaya.class).incrementAffection(Main.game.getPlayer(), 5));
 	//		Main.game.getDialogueFlags().setFlag(DialogueFlagValue.lilayaHug, true);
-		}
+	//	}
 		@Override
 		public String getContent() {
 	//		return UtilText.parseFromXMLFile("places/dominion/lilayasHome/lab", "LAB_LILAYA_HUG");

@@ -229,14 +229,13 @@ public class QuestTree {
         node1 = new TreeNode<Quest>(Quest.SIDE_UTIL_COMPLETE);
         nodeBranchA.addChild(node1);
 		
-        // Marriage
-        node1 = new TreeNode<Quest>(Quest.MARRIAGE_ONE);
-        marriageTree.addChild(node1);
+		// Marriage
+		node1 = new TreeNode<Quest>(Quest.MARRIAGE_ONE);
+		marriageTree.addChild(node1);
 		node2 = new TreeNode<Quest>(Quest.MARRIAGE_TWO);
 		node1.addChild(node2);
-		node2 = new TreeNode<Quest>(Quest.MARRIAGE_END);
-        node1.addChild(node2);
-		
+		node1 = new TreeNode<Quest>(Quest.MARRIAGE_END);
+		node2.addChild(node1);
         
 		// Wes quest:
 

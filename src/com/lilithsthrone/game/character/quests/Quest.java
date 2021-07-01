@@ -1482,7 +1482,7 @@ public enum Quest {
 			return getDescription();
 		}
 	},
-	
+		
 	MARRIAGE_START(QuestType.SIDE, 1, 0) {
 		@Override
 		public String getName() {

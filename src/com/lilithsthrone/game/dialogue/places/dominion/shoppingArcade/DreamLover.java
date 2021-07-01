@@ -24,6 +24,10 @@ import com.lilithsthrone.game.character.quests.QuestLine;
  */
 public class DreamLover {
 
+	static boolean attitudeFixed() {
+		return Main.game.getDialogueFlags().values.contains(DialogueFlagValue.ashleyAttitude);
+	}
+
 	public static final DialogueNode EXTERIOR = new DialogueNode("Dream Lover (Exterior)", "-", false) {
 
 		@Override
@@ -82,6 +86,7 @@ public class DreamLover {
 		
 		private boolean attitudeFixed = Main.game.getDialogueFlags().values.contains(DialogueFlagValue.ashleyAttitude);
 
+
 		@Override
 		public String getAuthor() {
 			return "Kumiko, Amarok";
@@ -124,7 +129,7 @@ public class DreamLover {
 				if(index == 1) {
 					return new ResponseTrade("Trade", "Wander around the shop and see what items there are for sale...", Main.game.getNpc(Ashley.class));
 					
-				} else if(index==2 && !attitudeFixed) {
+				} else if(index==2 && !attitudeFixed()) {
 					return new Response("Confront Ashley", "What's with this person's attitude? Walk up to the counter and confront them about it.", CONFRONT_ASHLEY) {
 						@Override
 						public void effects() {
@@ -137,7 +142,7 @@ public class DreamLover {
 					};
 					
 				} else if((Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_START) || true)		// temporary override during testing
-					&& ((index==2 && attitudeFixed) || (index==3 && !attitudeFixed))) {
+					&& ((index==2 && attitudeFixed()) || (index==3 && !attitudeFixed()))) {
 					if(Main.game.getPlayer().getSpouces().size() >= 3) {
 						return new Response("Wedding Planner", "You're already married to three partners, and legally can't marry any more, so there is nothing for Ashley to do", null);
 						
@@ -400,7 +405,7 @@ public class DreamLover {
 		@Override
 		public String getContent() {
 			// TODO Auto-generated method stub
-			return null;
+			return "standard issue text";
 		}
 		
 		@Override
@@ -433,7 +438,7 @@ public class DreamLover {
 			} else if(index==1) {
 				if (pickedOutfits.stream().limit(2 + pickedPartners.size()).anyMatch(e -> e==null)) {
 					return new Response("Next", "you can't move on until you've decided everyone's dress!", null);
-				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_LOCATION);
+				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_REVIEW);
 				
 			} for (int i = 0; i < outfits.size(); i++) {
 				if(index==i+2 && outfits.get(i)!=null) {
