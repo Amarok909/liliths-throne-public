@@ -9,11 +9,12 @@ import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.AffectionLevel;
 import com.lilithsthrone.game.character.attributes.Attribute;
-import com.lilithsthrone.game.character.attributes.MarriageLevel.*;
+import com.lilithsthrone.game.character.attributes.MarriageLevel.MaritalStatus;
 import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.character.npc.NPC;
 import com.lilithsthrone.game.character.npc.NPCFlagValue;
 import com.lilithsthrone.game.character.persona.Occupation;
+import com.lilithsthrone.game.character.quests.QuestLine;
 import com.lilithsthrone.game.dialogue.DialogueNode;
 import com.lilithsthrone.game.dialogue.DialogueNodeType;
 import com.lilithsthrone.game.dialogue.places.dominion.lilayashome.RoomPlayer;
@@ -360,6 +361,16 @@ public class OccupantDialogue {
 					}
 					
 					if(Main.game.getPlayer().getPassion(occupant())>=80 && Main.game.getPlayer().getMaritalStatus(occupant())!=MaritalStatus.MARRIED) {	// Ready to Marry
+						
+						if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE)) {
+							return new Response("Marry Quest", UtilText.parse(occupant(), "Need to quest before proposing"), OCCUPANT_START) {
+								@Override
+								public void effects() {
+									Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().startQuest(QuestLine.SIDE_MARRIAGE));
+								}
+							};
+						}
+						
 						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
 							@Override
 							public void effects() {
