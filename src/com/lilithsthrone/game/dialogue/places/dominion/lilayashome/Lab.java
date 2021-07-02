@@ -1680,7 +1680,11 @@ public class Lab {
 		@Override
 		public String getContent() {
 	//		return UtilText.parseFromXMLFile("places/dominion/lilayasHome/lab", "LAB_LILAYA_HUG");
-			return "Hey Lilaya, how do you get married";
+			return "Hey Lilaya, how do you get married"
+					+ "Rose speaks up, mistriss, I do know of a particually good wedding vendor"
+					+ "Dream Lover,at the shopping mall is both quality and reasonable prices"
+					+ "rose, how do you know this?"
+					+ "one of my siblings used it";
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {
