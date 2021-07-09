@@ -392,7 +392,7 @@ public class OccupantDialogue {
 						};
 					}
 					
-					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getPassion(npc)]"), null) {	// Start dating content
+					return new Response("Ask out", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getPassion(npc)]"), null) {	// Start dating content
 						@Override
 						public void effects() {
 							Main.game.getPlayer().createRelationship(occupant);

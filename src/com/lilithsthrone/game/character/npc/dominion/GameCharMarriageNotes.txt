@@ -15,6 +15,12 @@ TODO
         won't be able to marry slaves without freeing
     Possibly need to go on dates with npc before marriage
     Add to discription text, detailing relationship
+    Add saved longs for planning and proposing
+    Add feature to invie npcs to wedding
+
+GENERAL IDEAS
+    convince rose and lilaya to get married
+        requires you to have been married AND to have met lilaya's mum
 
 
 DATING
