@@ -2,51 +2,56 @@ package com.lilithsthrone.utils.time;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.ArrayList;
-
-import com.lilithsthrone.main.Main;
 
 /**
- * Implemented using equations found here: https://www.subsystems.us/uploads/9/8/9/4/98948044/moonphase.pdf
- * 
  * @since 0.4
- * @version 0.4
+ * @version 0.4.1
  * @author Amarok
  */
-
  public class Lunation {
 
 	private static double synodicMonth = 29.530589;
-	private static int socialFullMoon = 1;	// how many days before and after the true full moon are socially considered 'full moons', set to 0 to turn off
-	private static LocalDateTime referenceDate = LocalDateTime.of(2000, 1, 6, 18, 3, 0, 0);    // reference new moon, 2000/6/1 18:03 UTC
+	private static LocalDateTime referenceDate = LocalDateTime.of(2020, 1, 24, 21, 42, 0, 0);    // reference new moon, 2020/1/24 21:42 UTC
 
 	private static double lunarPhase(LocalDateTime date) {	// 0 = new moon, 0.5 = full moon
-		return (DateAndTime.julianDate(date) - DateAndTime.julianDate(referenceDate)) % synodicMonth;
+		return ((DateAndTime.julianDate(date, true) - DateAndTime.julianDate(referenceDate, true)) / synodicMonth) % 1;
 	}
-	
+
 	private static double lunarPortion(LocalDateTime date) {
-		return (8*lunarPhase(date) + 0.5) % 8;		// turns the [0, 1] phase into [0, 8] phase and then shifts left by 1/16 so phases are at their maximum when equal to x.5, rather than x.0
+		return (8*lunarPhase(date) + 0.5) % 8;		// turns the [0, 1] phase into [0, 8] portion and then shifts left by 1/16 so phases are at their maximum when equal to x.5, rather than x.0
 	}
-	
-	static double lunarIllumination(LocalDateTime date) {	// returns a number between 0 and 100 describing how much of the moon's surface is illuminated
-		return 100 * Math.pow(Math.sin(Math.PI * lunarPhase(date)), 2);
+
+	static int lunarIllumination(LocalDateTime date) {	// returns a number between 0 and 100 describing how much of the moon's surface is illuminated
+		double math = Math.pow(Math.sin(Math.PI * lunarPhase(date)), 2);
+		return (int) Math.round(100 * math);
 	}
-	
-	public static String lunarDescription() {
+
+	public static String lunarDescription(LocalDateTime date) {
 		StringBuilder sb = new StringBuilder();
 		
-		LocalDateTime date = Main.game.getDateNow();
-		
 		if(isMaximumPhaseToday(date, MoonPhase.NEW_MOON)
-				|| isMaximumPhaseToday(date, MoonPhase.FIRST_QUARTER)
-				|| isMaximumPhaseToday(date, MoonPhase.FULL_MOON)
+				|| isMaximumPhaseToday(date, MoonPhase.FULL_MOON)) {
+			sb.append("Today is the day of the " + getMoonPhaseName(date));
+			
+		} else if(isMaximumPhaseToday(date.plusDays(1), MoonPhase.FULL_MOON)
+				&& dateOfNextPhase(date, MoonPhase.FULL_MOON, 0).get(ChronoField.MINUTE_OF_DAY) < 720) {
+			sb.append("Today is the eve of the " + getMoonPhaseName(date));
+			
+		} else if(isMaximumPhaseToday(date, MoonPhase.FIRST_QUARTER)
 				|| isMaximumPhaseToday(date, MoonPhase.THIRD_QUARTER)) {
-			sb.append("Today is the day of the " + getMoonPhaseName(date) + ".");
+			sb.append("The moon is currently in " + getMoonPhaseName(date));
+			
+		} else if(getMoonPhase(date) == MoonPhase.NEW_MOON
+				|| getMoonPhase(date) == MoonPhase.FIRST_QUARTER
+				|| getMoonPhase(date) == MoonPhase.FULL_MOON
+				|| getMoonPhase(date) == MoonPhase.THIRD_QUARTER) {
+			sb.append("The moon is currently " + (getMoonPhaseName(date).contains("moon")?"a near ":"near ") + getMoonPhaseName(date));
+			
 		} else {
-			sb.append("The current lunar phase is a " + getMoonPhaseName(date) + ".");
+			sb.append("The moon is currently a " + getMoonPhaseName(date));
 		}
 		
-		sb.append("<br>The moon is " + lunarIllumination(date) + "% illuminated");
+		sb.append(" (" + lunarIllumination(date) + "% lit)");
 		
 		return sb.toString();
 	}
@@ -83,8 +88,8 @@ import com.lilithsthrone.main.Main;
 			return maximumOctal;
 		}
 		
-		public int getMedianValue() {
-			return minimumOctal + (maximumOctal - minimumOctal) / 2;
+		public double getMedianValue() {
+			return minimumOctal + (maximumOctal - minimumOctal) / 2d;
 		}
 	
 		public static MoonPhase valueOf(LocalDateTime date) {
@@ -99,39 +104,48 @@ import com.lilithsthrone.main.Main;
 		}
 	}
 
-	public static double daysToNextPhase(LocalDateTime date, MoonPhase phase, double dayOffset) {
-		double portion = lunarPortion(date);
+	public static double daysToNextPhase(LocalDateTime date, MoonPhase phase, long dayOffset) {
+		double portion = lunarPortion(date.minusDays(dayOffset));
 		double target = phase.getMedianValue();
 		double wait = target - portion + (portion<=target?0:8);
-		
 		return wait * synodicMonth / 8;
 	}
 
-	public static LocalDateTime dateOfNextPhase(LocalDateTime date, MoonPhase phase, double dayOffset) {
-		long period = (long) daysToNextPhase(date, phase, dayOffset);
-		return date.plusSeconds(period * 24 * 3600);
+	public static LocalDateTime dateOfNextPhase(LocalDateTime date, MoonPhase phase, long dayOffset) {
+		double days = daysToNextPhase(date, phase, dayOffset);
+		long period = Math.round(days * 86400d);
+		LocalDateTime next = date.plusSeconds(period);
+		return next;
 	}
 	
 	public static boolean isMaximumPhaseToday(LocalDateTime date, MoonPhase phase) {		// ie, does the true full moon happen today?, closest day where portion = x.5
 		LocalDateTime daystart = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0, 0, 0);
 		LocalDateTime dayend = daystart.plusDays(1).minusNanos(1);
 		
-		double timestart = (8*lunarPhase(daystart) + 0.5) % 8;
-		double timeend = (8*lunarPhase(dayend) + 0.5) % 8;
+		double timestart = lunarPortion(daystart);
+		double timeend = lunarPortion(dayend);
 		double portion = phase.getMedianValue();
 		
-		return timestart>=portion && portion<=timeend;
+		return timestart<=portion && portion<=timeend;
+	}
+
+	public static MoonPhase getMoonPhase(LocalDateTime date) {
+		return MoonPhase.valueOf(date);
 	}
 
 	public static String getMoonPhaseName(LocalDateTime date) {
 		return MoonPhase.valueOf(date).getName();
 	}
-	
+
 	public boolean isSocialFullMoon(LocalDateTime date) {
-		for(int i = -socialFullMoon; i <= socialFullMoon; i++) {
-			if(isMaximumPhaseToday(date.plusDays(i), MoonPhase.FULL_MOON)) {
-				return true;
-			}
+		date = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0, 0, 0);	// this stops the equations from going weird when the time surpasses the time of the lunar phase
+		
+		if(isMaximumPhaseToday(date.plusDays(1), MoonPhase.FULL_MOON)	// if full moon is this evening, but actually happens tomorrow morning
+				&& dateOfNextPhase(date, MoonPhase.FULL_MOON, 0).get(ChronoField.MINUTE_OF_DAY) < 720) {
+			return true;
+		} else if(isMaximumPhaseToday(date, MoonPhase.FULL_MOON)		// if the full moon is this evening, and happens today
+				&& dateOfNextPhase(date, MoonPhase.FULL_MOON, 1).get(ChronoField.MINUTE_OF_DAY) >= 720) {
+			return true;
 		}
 		return false;
 	}
