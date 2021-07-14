@@ -36,6 +36,35 @@ DATING
     Sub clubber
         hey, i really like you how bout i treat you to someplace better than this?
 
+DATES
+    PLANNED
+        DAY
+            Museum trip
+		    Fields picnic
+            Home lunch
+            Oaken Glades lunch
+        NIGHT
+            Demon home fireworks
+            Helena's hotel restaurant
+			Manor house hotel 
+            High society dance
+            Home dinner
+            Oaken Glades dinner
+    IMMEDIATE
+        DAY 
+            Park visit
+            Riverside cafe
+        NIGHT
+            Park visit
+            Bar
+            Nightclub
+            
+    dates can be initiated by either you or your partner(s)
+    some can only be started by you, and some only by your parter
+    some might result in sex, some might not
+    planned dates let you choose which partners to bring along
+    immediate dates only allow present partners
+
 
 MARRIAGE
     at mutual passion 80+, you can get married

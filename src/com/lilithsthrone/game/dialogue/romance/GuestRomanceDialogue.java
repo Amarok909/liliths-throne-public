@@ -39,6 +39,35 @@ public class GuestRomanceDialogue {
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			// TODO Auto-generated method stub
+			if(index==0) {
+				return new Response("Back", "Decide against taking npc on a date, being lead on like this is sure to dissapont them", null);
+
+			} else if(index==1) {
+				return new Response("Plan", "Instead of going on a date right now, plan one out", GUEST_DATE_PLANNER);
+
+			}
+			return null;
+		}
+	};
+
+	public static final DialogueNode GUEST_DATE_PLANNER = new DialogueNode("Date planner", "take your firend off for a date", true, true) {
+		@Override
+		public String getAuthor() {
+			return "Amarok";
+		}
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile("romance/GuestRomance", "GUEST_DATE_PLANNER");
+		}
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			// TODO Auto-generated method stub
+			if(index==0) {
+				return new Response("Back", "go back to picking a date to go on", null);
+
+			} else if(index==1) {
+
+			}
 			return null;
 		}
 	};
