@@ -1371,7 +1371,7 @@
 	</p>
 	<p>
 		#IF((npc.getMother()!=null && npc.getMother().equals(lyssieth)) || (npc.getFather()!=null && npc.getFather().equals(lyssieth)))
-				[npc.speech(So Lilaya's my half-sister?)] [npc.name] gasps once again, [npc.speech(Is there any chance of convincing her to have mommy recognise me as well?)]
+				[npc.speech(So Lilaya's my half-sister?)] [npc.name] gasps once again, [npc.speech(Is there any chance of convincing her to have [lyssieth.mommy] recognise me as well?)]
 			</p>
 			<p>
 				[pc.speech(I think that would be pushing your luck,)] you reply, but before you can say anything further, the front door swings open, and you're greeted by the familiar sight of the cat-girl maid, Rose.

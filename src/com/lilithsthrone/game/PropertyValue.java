@@ -25,7 +25,7 @@ public enum PropertyValue {
 	tattooRemovalConfirmations(true),
 	sillyMode(false),
 	weatherInterruptions(true),
-	useCommonwealthMum(false),				//Added by Amarok
+	useCommonwealthMum(false),
 
 	autoLocale(true),
 	metricSizes(true),

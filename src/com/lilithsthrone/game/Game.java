@@ -4533,7 +4533,7 @@ public class Game implements XMLSaving {
 		return Main.getProperties().hasValue(PropertyValue.debugMode);
 	}
 	
-	public boolean isCommonwealthMum() {										//Amarok adition
+	public boolean isCommonwealthMum() {
 		return Main.getProperties().hasValue(PropertyValue.useCommonwealthMum);
 	}
 

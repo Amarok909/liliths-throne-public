@@ -6644,7 +6644,7 @@ public class MainControllerInitMethod {
 					new Value<>("SPITTING_ENABLED", PropertyValue.spittingEnabled),
 					new Value<>("OPPORTUNISTIC_ATTACKERS", PropertyValue.opportunisticAttackers),
 					new Value<>("SHARED_ENCYCLOPEDIA", PropertyValue.sharedEncyclopedia),
-					new Value<>("MOM_MUM", PropertyValue.useCommonwealthMum)						//Added by Amarok
+					new Value<>("MOM_MUM", PropertyValue.useCommonwealthMum)
 					);
 			
 			for(Entry<String, PropertyValue> entry : settingsMap.entrySet()) {

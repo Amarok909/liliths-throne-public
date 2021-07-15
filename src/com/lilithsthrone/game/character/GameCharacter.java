@@ -3949,7 +3949,7 @@ public abstract class GameCharacter implements XMLSaving {
 		return petNameMap;
 	}
 	
-	public String getPetName(GameCharacter target) {				//Modified by Amarok, true should return mum value, and be at top. pet name used in name picking pcName
+	public String getPetName(GameCharacter target) {
 		String petName = getPetNameMap().get(target.getId());
 		
 		if(petName!=null) {

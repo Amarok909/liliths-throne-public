@@ -1953,7 +1953,7 @@ public class OptionsDialogue {
 				UtilText.nodeContentSB.append("</div></div>");
 			}
 			
-			UtilText.nodeContentSB.append(getContentPreferenceDiv(ContentOptionsPage.MISC,		//Added by Amarok
+			UtilText.nodeContentSB.append(getContentPreferenceDiv(ContentOptionsPage.MISC,
 								"MOM_MUM",
 								PresetColour.FEMININE_PLUS,
 								"Maternal Terms",
