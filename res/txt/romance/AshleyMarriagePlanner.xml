@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dialogue>
+	<htmlContent tag="LILAYA_PARTNER_MARRIAGE"><![CDATA[
+	<p>
+		"Hey Lilaya, does the concept of marriage exist here in dominion?"
+					+ "how do you get married"
+					+ "any thing special i should know about"
+					+ "cant marry slaves and one other thing. considering you don't have lilin i image this is different to how it was back on your home world, but marriages happen in a day"
+					+ "uh well, tradition states tht you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet an married that day"
+					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
+					
+	</p>
+	<p>
+		+ "Rose speaks up, mistress, I do know of a particularly good wedding vendor"
+					+ "Dream Lover, at the shopping mall is both quality and reasonable prices"
+					+ "rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with"
+					+ "one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental";
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="EXTERIOR"><![CDATA[
+	<p>
+		Unlike the rest of the buildings in the Arcade, the one in front of you has no real storefront to speak of, and the only indication of it being a shop at all is the rather plain-looking sign above the entrance bearing the name 'Dream Lover'. It's not like the place is in a state of decay, so you can't say that it's the worst looking shop you've ever seen, although it would definitely be in the running for the blandest.
+	</p>
+	<p>
+		Taking a closer inspection of the property, you can't find any information that reveals the shop's working hours, or even what sort of goods are stocked here. Despite all of this, there's also no indication that the store is closed, so you could try taking a look inside if you wanted to.
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="EXTERIOR_CLOSED"><![CDATA[
+	<p>
+		Intrigued by the thought of what this store might offer, you walk up to the entrance and give the door knob a tentative twist; to your dismay, you discover that the store is [style.colourBad(closed)], leaving you with no other option but to step back and consider returning at a later time.
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="EXIT"><![CDATA[
+	<p>
+		Having had enough of this store for now, you turn to look at Ashley, wondering if you should wave them goodbye.
+		 You doubt you'll get any response, but, considering that you're the only two people here, it seems a little impolite not to say anything, so you call out,
+		 [pc.speech(I'll be leaving now.)]
+	</p>
+	<p>
+		Ashley doesn't look at you, but you hear them mutter,
+		 [Ashley.speech(Feel free to come back any time.)]
+		 It's a passionless plea, more like a social obligation than anything else, but at least they said something back.
+	</p>
+	<p>
+		With a sigh of relief, you finally leave the building and the rude owner within it.
+		 As you step outside, you reflect on the fact that this is the only store of its kind in the Arcade, and even if you never get a lover, you could perhaps find a use for the sex toys...
+	</p>
+	]]>
+	</htmlContent>
+	
+	
+</dialogue>

@@ -1672,24 +1672,9 @@ public class Lab {
 	};
 	
 	public static final DialogueNode LILAYA_PARTNER_MARRIAGE = new DialogueNode("", "", true) {
-	//	@Override
-	//	public void applyPreParsingEffects() {
-	//		Main.game.getTextEndStringBuilder().append(Main.game.getNpc(Lilaya.class).incrementAffection(Main.game.getPlayer(), 5));
-	//		Main.game.getDialogueFlags().setFlag(DialogueFlagValue.lilayaHug, true);
-	//	}
 		@Override
 		public String getContent() {
-	//		return UtilText.parseFromXMLFile("places/dominion/lilayasHome/lab", "LAB_LILAYA_HUG");
-			return "Hey Lilaya, does the concept of marriage exist here in dominion?"
-					+ "how do you get married"
-					+ "any thing special i should know about"
-					+ "cant marry slaves and one other thing. considering you don't have lilin i image this is different to how it was back on your home world, but marriages happen in a day"
-					+ "uh well, tradition states tht you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet an married that day"
-					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
-					+ "Rose speaks up, mistress, I do know of a particularly good wedding vendor"
-					+ "Dream Lover, at the shopping mall is both quality and reasonable prices"
-					+ "rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with"
-					+ "one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental";
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "LILAYA_PARTNER_MARRIAGE");
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {

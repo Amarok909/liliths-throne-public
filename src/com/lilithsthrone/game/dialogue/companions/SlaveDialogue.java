@@ -6,6 +6,7 @@ import java.util.List;
 import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.AffectionLevelBasic;
+import com.lilithsthrone.game.character.attributes.MarriageLevel.MaritalStatus;
 import com.lilithsthrone.game.character.attributes.ObedienceLevelBasic;
 import com.lilithsthrone.game.character.body.CoverableArea;
 import com.lilithsthrone.game.character.fetishes.Fetish;
@@ -660,6 +661,32 @@ public class SlaveDialogue {
 						};
 					} else {
 						return new Response("Pettings", UtilText.parse(getSlave(), "You've already spent time petting [npc.name] today."), null);
+					}
+					
+				} else if (index == 8) {
+					if(Main.game.getPlayer().getMaritalStatus(getSlave())!=MaritalStatus.MARRIED
+					&& getSlave().getPassion(Main.game.getPlayer()) >= 80
+					&& Main.game.getPlayer().getPassion(getSlave()) >= 80) {	// Marriage Mode
+
+						if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE)) {	// Hasn't started marriage quest
+							return null;
+						} else if(Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_START)) {	// Knows you can't marry slaves
+							return null;
+						} else {	// Started marriage quest, but has not seen Lilaya yet
+							return null;
+						}
+
+					} else {	// Dating Mode
+						if(getSlave().isRelatedTo(Main.game.getPlayer()) && (!Main.game.isIncestEnabled() || !getSlave().hasFetish(Fetish.FETISH_INCEST))) {
+							return new Response("Ask out", UtilText.parse(getSlave(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
+						}
+
+						return new Response("Ask out", UtilText.parse(getSlave(), "Ask [npc.Name] to be your [npc.girlfriend]"), null) {	// Start dating content
+							@Override
+							public void effects() {
+								Main.game.getPlayer().createRelationship(getSlave());
+							}
+						};
 					}
 					
 				} else if(index == 9) {
