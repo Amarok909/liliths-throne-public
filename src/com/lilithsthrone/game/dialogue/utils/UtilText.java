@@ -1710,10 +1710,25 @@ public class UtilText {
 						"lowerSelf"),
 				true,
 				false,
-				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."
-				+ "returns either (lower yourself, lowers himself, lowers herself, kneel, or kneels) based on non-legged leg configuration (lamia and scyallia) and third/first person"
-				+ "next word is the word after 'kneel' or 'lower yourself', works around text complexity"){
+				"(override pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's decending movement action based on their leg configuration."
+				+ "<br/><b>Override pronoun (boolean):</b> Only meaningful to player. When true or is a npc, returns either 'kneels' or 'lowers him/herself'. When null or false and is player, returns either 'kneel' or 'lower yourself'."
+				+ "<br/><b>Next word (string):</b> the next word(s) after 'sink' or 'kneel'."
+				
+				+ "<br/>Examples:"
+				+ "<br/>[pc.kneel] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneel]")
+				+ "<br/>[pc.kneels()] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneel()]")
+				+ "<br/>[pc.kneel(false)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneel(false)]")
+				+ "<br/>[pc.kneel(true)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneel(true)]")
+				+ "<br/>[pc.lowerSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneel(false, quietly)]")
+				+ "<br/>[pc.lowerSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneel(true, suddenly)]") + "<br/>"
+
+				+ "<br/>[brax.kneel] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneel]")
+				+ "<br/>[brax.kneels()] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneel()]")
+				+ "<br/>[brax.kneel(false)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneel(false)]")
+				+ "<br/>[brax.kneel(true)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneel(true)]")
+				+ "<br/>[brax.lowerSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneel(false, quietly)]")
+				+ "<br/>[brax.lowerSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneel(true, suddenly)]")){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
@@ -1731,7 +1746,7 @@ public class UtilText {
 				switch(character.getLegConfiguration()) {
 					case TAIL_LONG:
 					case CEPHALOPOD:
-						if(arg1.equals("false") && character.isPlayer()) {
+						if(arg1.equals("false") && character.isPlayer()) {							// would removing player requirement sove that dialoge issue with seats in the night club?
 							String text = arg2.equals("") ? ("lower " + UtilText.parse(character, "[npc.herself]")) : ("sink "+arg2);
 							if(Cap) {
 								return text.substring(0, 1).toUpperCase() + text.substring(1);		//For some reason, Utiltext.parse won't auto capitalise text, so it needs to be done manually
@@ -1758,8 +1773,25 @@ public class UtilText {
 						"loweringSelf"),
 				true,
 				false,
-				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."){
+				"(override pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's decending movement action based on their leg configuration."
+				+ "<br/><b>Override pronoun (boolean):</b> Only applicible to player. When true, returns either 'kneeling' or 'lowering him/herself'. When null or false, returns either 'kneeling' or 'lowering yourself'."
+				+ "<br/><b>Next word (string):</b> the next word(s) after 'sinking' or 'kneeling'."
+				
+				+ "<br/>Examples:"
+				+ "<br/>[pc.kneeling] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeling]")
+				+ "<br/>[pc.kneeling()] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeling()]")
+				+ "<br/>[pc.kneeling(false)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeling(false)]")
+				+ "<br/>[pc.kneeling(true)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeling(true)]")
+				+ "<br/>[pc.loweringSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeling(false, quietly)]")
+				+ "<br/>[pc.loweringSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeling(true, suddenly)]") + "<br/>"
+
+				+ "<br/>[brax.kneeling] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeling]")
+				+ "<br/>[brax.kneeling()] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeling()]")
+				+ "<br/>[brax.kneeling(false)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeling(false)]")
+				+ "<br/>[brax.kneeling(true)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeling(true)]")
+				+ "<br/>[brax.loweringSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeling(false, quietly)]")
+				+ "<br/>[brax.loweringSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeling(true, suddenly)]")){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
@@ -1793,6 +1825,26 @@ public class UtilText {
 				}
 			}
 		});
+
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"kneelingCont",
+						"loweringSelfCont"),
+				true,
+				false,
+				"",
+				"Returns the appropriate continuious participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						return "sprawled out"
+					default:
+						return "kneeling"
+				}
+			}
+		});
 		
 		commandsList.add(new ParserCommand(
 				Util.newArrayListOfValues(
@@ -1801,8 +1853,26 @@ public class UtilText {
 						"loweredSelf"),
 				true,
 				false,
-				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."){
+				"(override pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's decending movement action based on their leg configuration."
+				+ " If command uses kneeled or loweredSelf, 'kneeled' will be used where appropriate. If knelt, then 'knelt' will be used."
+				+ "<br/><b>Override pronoun (boolean):</b> Only applicible to player. When true, returns either 'kneeled' or 'lowered him/herself'. When null or false, returns either 'kneeled' or 'lowered yourself'."
+				+ "<br/><b>Next word (string):</b> the next word(s) after 'sunk' or 'kneeled'."
+				
+				+ "<br/>Examples:"
+				+ "<br/>[pc.kneeled] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeled]")
+				+ "<br/>[pc.kneelt()] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneelt()]")
+				+ "<br/>[pc.kneeled(false)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeled(false)]")
+				+ "<br/>[pc.kneelt(true)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneelt(true)]")
+				+ "<br/>[pc.loweredSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeled(false, quietly)]")
+				+ "<br/>[pc.loweredSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.kneeled(true, suddenly)]") + "<br/>"
+
+				+ "<br/>[brax.kneeled] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeled]")
+				+ "<br/>[brax.kneelt()] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneelt()]")
+				+ "<br/>[brax.kneeled(false)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeled(false)]")
+				+ "<br/>[brax.kneelt(true)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneelt(true)]")
+				+ "<br/>[brax.loweredSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeled(false, quietly)]")
+				+ "<br/>[brax.loweredSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.kneeled(true, suddenly)]")){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
@@ -1848,10 +1918,25 @@ public class UtilText {
 						"raiseSelf"),
 				true,
 				false,
-				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."
-				+ "returns either (raise yourself, raises himself, raises herself, stand, or stands) based on non-legged leg configuration (lamia and scyallia) and third/first person"
-				+ "next word is the word after 'stand' or 'raise yourself', works around text complexity"){
+				"(override pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's accending movement action based on their leg configuration."
+				+ "<br/><b>Override pronoun (boolean):</b> Only applicible to player. When true, returns either 'stands' or 'raises him/herself'. When null or false, returns either 'stand' or 'raise yourself'."
+				+ "<br/><b>Next word (string):</b> the next word(s) after 'rise' or 'stand'."
+				
+				+ "<br/>Examples:"
+				+ "<br/>[pc.stand] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stand]")
+				+ "<br/>[pc.stands()] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stand()]")
+				+ "<br/>[pc.stand(false)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stand(false)]")
+				+ "<br/>[pc.stand(true)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stand(true)]")
+				+ "<br/>[pc.raiseSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stand(false, quietly)]")
+				+ "<br/>[pc.raiseSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stand(true, suddenly)]") + "<br/>"
+
+				+ "<br/>[brax.stand] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stand]")
+				+ "<br/>[brax.stands()] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stand()]")
+				+ "<br/>[brax.stand(false)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stand(false)]")
+				+ "<br/>[brax.stand(true)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stand(true)]")
+				+ "<br/>[brax.raiseSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stand(false, quietly)]")
+				+ "<br/>[brax.raiseSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stand(true, suddenly)]")){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
@@ -1896,8 +1981,25 @@ public class UtilText {
 						"raisingSelf"),
 				true,
 				false,
-				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."){
+				"(override pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's accending movement action based on their leg configuration."
+				+ "<br/><b>Override pronoun (boolean):</b> Only applicible to player. When true, returns either 'standing' or 'raising him/herself'. When null or false, returns either 'standing' or 'raising yourself'."
+				+ "<br/><b>Next word (string):</b> the next word(s) after 'rising' or 'standing'."
+				
+				+ "<br/>Examples:"
+				+ "<br/>[pc.standing] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.standing]")
+				+ "<br/>[pc.standing()] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.standing()]")
+				+ "<br/>[pc.standing(false)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.standing(false)]")
+				+ "<br/>[pc.stastandingnd(true)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.standing(true)]")
+				+ "<br/>[pc.raisingSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.standing(false, quietly)]")
+				+ "<br/>[pc.raisingSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.standing(true, suddenly)]") + "<br/>"
+
+				+ "<br/>[brax.standing] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.standing]")
+				+ "<br/>[brax.standing()] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.standing()]")
+				+ "<br/>[brax.standing(false)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.standing(false)]")
+				+ "<br/>[brax.standing(true)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.standing(true)]")
+				+ "<br/>[brax.raisingSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.standing(false, quietly)]")
+				+ "<br/>[brax.raisingSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.standing(true, suddenly)]")){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
@@ -1931,6 +2033,26 @@ public class UtilText {
 				}
 			}
 		});
+
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						"standingCont",
+						"standingSelfCont"),
+				true,
+				false,
+				"",
+				"Returns the appropriate continuious participle verb for this character's individual movement action."){
+			@Override
+			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
+				switch(character.getLegConfiguration()) {
+					case TAIL_LONG:
+					case CEPHALOPOD:
+						return "raised up"
+					default:
+						return "standing"
+				}
+			}
+		});
 		
 		commandsList.add(new ParserCommand(
 				Util.newArrayListOfValues(
@@ -1938,8 +2060,25 @@ public class UtilText {
 						"raisedSelf"),
 				true,
 				false,
-				"(real pronoun, next word)",
-				"Returns the appropriate past participle verb for this character's individual movement action."){
+				"(override pronoun, next word)",
+				"Returns the appropriate past participle verb for this character's accending movement action based on their leg configuration."
+				+ "<br/><b>Override pronoun (boolean):</b> Only applicible to player. When true, returns either 'stood' or 'raised him/herself'. When null or false, returns either 'stood' or 'raised yourself'."
+				+ "<br/><b>Next word (string):</b> the next word(s) after 'rose' or 'stood'."
+				
+				+ "<br/>Examples:"
+				+ "<br/>[pc.stood] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stood]")
+				+ "<br/>[pc.stood()] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stood()]")
+				+ "<br/>[pc.stood(false)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stood(false)]")
+				+ "<br/>[pc.stood(true)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stood(true)]")
+				+ "<br/>[pc.raisedSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stood(false, quietly)]")
+				+ "<br/>[pc.raisedSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getPlayer(), "[pc.stood(true, suddenly)]") + "<br/>"
+
+				+ "<br/>[brax.stood] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stood]")
+				+ "<br/>[brax.stood()] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stood()]")
+				+ "<br/>[brax.stood(false)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stood(false)]")
+				+ "<br/>[brax.stood(true)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stood(true)]")
+				+ "<br/>[brax.raisedSelf(false, quietly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stood(false, quietly)]")
+				+ "<br/>[brax.raisedSelf(true, suddenly)] -> " + Utiltext.parse(Main.game.getNpc(Brax.class), "[brax.stood(true, suddenly)]")){
 			@Override
 			public String parse(List<GameCharacter> specialNPCs, String command, String arguments, String target, GameCharacter character) {
 				Boolean Cap = Character.isUpperCase(command.codePointAt(0));
