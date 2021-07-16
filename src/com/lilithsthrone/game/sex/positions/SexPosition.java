@@ -2423,14 +2423,7 @@ public class SexPosition {
 				if(behind!=null) {
 					sb.append(UtilText.parse(behind, allFours,
 							!behind.isTaur()
-								?" [npc.NameIsFull] "+(positions.get(1).isStanding(behind)
-									?"#IF(#npc.getLegConfiguration()==LEG_CONFIGURATION_TAIL_LONG)"
-											+ "rising up"
-										+ "#ELSE"
-											+ "standing"
-										+ "#ENDIF"
-									:"kneeling")
-									+" just behind [npc2.herHim], in a position where [npc.she] can start fucking [npc2.herHim] at any moment."
+								?" [npc.NameIsFull] "+(positions.get(1).isStanding(behind)?"[npc.standingCont]":"[npc.kneelingCont]")+" just behind [npc2.herHim], in a position where [npc.she] can start fucking [npc2.herHim] at any moment."
 								:" [npc.NameHasFull] stepped fully over the top of [npc2.herHim] with [npc.her] feral [npc.legRace]'s body, effectively mounting [npc2.herHim]."));
 					continuation = true;
 				}

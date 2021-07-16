@@ -79,7 +79,7 @@
 			#IF(pc.hasLegs())
 				 [jules.speech(Hey, my little cocksucker's back! Come over here and get on your knees, and you can skip the queue again!)]
 			#ELSE
-				 [jules.speech(Hey, my little cocksucker's back! Come over here and blow me, and you can skip the queue again!)]
+				 [jules.speech(Hey, my little cocksucker's back! Give me another real good blowjob, and you can skip the queue again!)]
 			#ENDIF
 		#ELSE
 			 [jules.speech(Hey, it's you again! You gonna suck my cock this time, or what?)]
@@ -520,7 +520,7 @@
 				Due to the fact that the two of you have rather unusual lower bodies, you and [npc.name] have ended up sitting down with your humanoid upper-bodies next to one another. In such a position, it'd be impossible to reach over far enough to give [npc.namePos] groin a grope, so, thinking up a quick excuse to move over to [npc.her] lower half, you tell [npc.herHim] that the sofa's cushion looks to be about to fall off.
 			<p>
 			<p>
-				Telling your partner to remain seated, you [pc.stand(false, up)] and quickly [pc.step] forwards, before [pc.kneeling] down and patting the sofa's cushion. Instead of then [pc.standing] up again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before moving down to [npc.her] groin and starting to grope and stroke [npc.her] crotch.
+				Telling your partner to remain seated, you [pc.stand(false, up)] and quickly [pc.step] forwards, before [pc.kneeling(false, down)] and patting the sofa's cushion. Instead of then [pc.standing(false, up)] again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before moving down to [npc.her] groin and starting to grope and stroke [npc.her] crotch.
 				#IF(npc.hasPenis())
 					 Running your [pc.fingers] over the [npc.penisSize] bulge of [npc.her] cock, you let out a cheeky laugh before giving it a few firm strokes.
 				#ENDIF
@@ -586,7 +586,7 @@
 				Due to the fact that the two of you have rather unusual lower bodies, you and [npc.name] have ended up sitting down with your humanoid upper-bodies next to one another. In such a position, it'd be impossible to reach over far enough to give [npc.namePos] groin a grope, so, thinking up a quick excuse to move over to [npc.her] lower half, you tell [npc.herHim] that the sofa's cushion looks to be about to fall off.
 			<p>
 			<p>
-				Telling your partner to remain seated, you [pc.stand(false, up] and quickly step forwards, before [pc.kneeling] down and patting the sofa's cushion. Instead of then [pc.standing(false, up)] again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before starting to move your touch over between [npc.her] hind legs.
+				Telling your partner to remain seated, you [pc.stand(false, up)] and quickly [pc.step] forwards, before [pc.kneeling(false, down)] and patting the sofa's cushion. Instead of then [pc.standing(false, up)] again, you slide your [pc.hand] up and over [npc.namePos] animalistic rump, before starting to move your touch over between [npc.her] hind legs.
 			</p>
 			<p>
 				#IF(npc.isShy())
@@ -600,7 +600,7 @@
 				#ENDIF
 			</p>
 			<p>
-				Having had your daring advances rejected, you [pc.stand] up and return to your seat, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
+				Having had your daring advances rejected, you [pc.stand] up and return to your seat while apologising, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
 			</p>
 		#ENDIF
 	#ENDIF
@@ -786,7 +786,7 @@
 		[npc.speech(Great! Have a safe trip home!)] [npc.she] responds, leaning down to kiss you again before turning and taking [npc.her] leave.
 	</p>
 	<p>
-		With [npc.namePos] [npc.scent+] still lingering in the air, you lean back and let out another deeply satisfied sigh. After watching [npc.herHim] walk off into the crowd, you [pc.stand] up, wondering what to do next...
+		With [npc.namePos] [npc.scent+] still lingering in the air, you lean back and let out another deeply satisfied sigh. After watching [npc.herHim] walk off into the crowd, you [pc.stand(false, up)], wondering what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -799,7 +799,7 @@
 		[npc.speech(Eugh, you could at least <i>try</i> to sound sincere,)] [npc.she] responds, letting out an annoyed huff before turning and taking [npc.her] leave.
 	</p>
 	<p>
-		With [npc.namePos] [npc.scent+] still lingering in the air, you lean back and let out a relieved sigh. After watching [npc.herHim] walk off into the crowd, you [pc.stand] up, wondering what to do next...
+		With [npc.namePos] [npc.scent+] still lingering in the air, you lean back and let out a relieved sigh. After watching [npc.herHim] walk off into the crowd, you [pc.stand(false, up)], wondering what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -1234,7 +1234,7 @@
 		Kalahari follows suit, pulling her thong and tube top back into position, before brushing off her micro-skirt and standing up. [kalahari.speech(I've got to get back to work now. We should do this again another night!)]
 	</p>
 	<p>
-		Agreeing with the happy lioness, you [pc.stand] up and walk along beside her as you both head back out past the pair of lion bouncers. Turning to plant a kiss on your cheek, Kalahari laughs, before whispering into your ear, [kalahari.speech(I really can't wait for the next time!)]
+		Agreeing with the happy lioness, you [pc.stand(false, up)] and walk along beside her as you both head back out past the pair of lion bouncers. Turning to plant a kiss on your cheek, Kalahari laughs, before whispering into your ear, [kalahari.speech(I really can't wait for the next time!)]
 	</p>
 	<p>
 		With that, she bounds off in the direction of the bar, leaving you standing alone outside the VIP area.
@@ -1282,7 +1282,7 @@
 		[kalahari.speech(Aww, it looks like my break time is over,)] Kalahari sighs, before standing up and getting her clothing in order. [kalahari.speech(I'd better get back to the bar.)]
 	</p>
 	<p>
-		You [pc.stand] up and walk along beside Kalahari as you both head back out past the pair of lion bouncers. Turning to plant a quick kiss on your cheek, Kalahari laughs, before whispering into your ear, [kalahari.speech(We should have some real fun next time!)]
+		You [pc.stand(false, up)] and walk along beside Kalahari as you both head back out past the pair of lion bouncers. Turning to plant a quick kiss on your cheek, Kalahari laughs, before whispering into your ear, [kalahari.speech(We should have some real fun next time!)]
 	</p>
 	<p>
 		With that, she bounds off in the direction of the bar, leaving you standing alone outside the VIP area. 
@@ -1604,7 +1604,7 @@
 		#ENDIF
 	</p>
 	<p>
-		You [pc.step] back, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
+		You [pc.step] back and apologise, giving [npc.name] some space and letting [npc.herHim] cool off. As [npc.her] expression softens a little, you move forwards again and wonder what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -1953,7 +1953,7 @@
 		[pc.speech(Rose can show you out,)] you shout out after [npc.name], tugging on the bell-pull in order to summon the cat-girl maid.
 	</p>
 	<p>
-		As [npc.name] storms out of your room, Rose appears to show [npc.herHim] back down to the front door. [pc.Stepping] back to collapse down onto your bed, you let out a deep sigh, and after lying down for a few minutes, you [pc.stand] back up, wondering what to do next...
+		As [npc.name] storms out of your room, Rose appears to show [npc.herHim] back down to the front door. [pc.Stepping] back to collapse down onto your bed, you let out a deep sigh, and after lying down for a few minutes, you get back up, wondering what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -2047,7 +2047,7 @@
 		[pc.speech(Rose can show you out,)] you shout out after [npc.name], tugging on the bell-pull in order to summon the cat-girl maid.
 	</p>
 	<p>
-		As [npc.name] storms out of your room, Rose appears to show [npc.herHim] back down to the front door. [pc.Stepping] back to collapse down onto your bed, you let out a deep sigh, and after lying down for a few minutes, you [pc.stand] back up, wondering what to do next...
+		As [npc.name] storms out of your room, Rose appears to show [npc.herHim] back down to the front door. [pc.Stepping] back to collapse down onto your bed, you let out a deep sigh, and after lying down for a few minutes, you get back up, wondering what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -2070,7 +2070,7 @@
 		[pc.speech(Rose can show you out,)] you shout out after [npc.name], tugging on the bell-pull in order to summon the cat-girl maid.
 	</p>
 	<p>
-		As [npc.name] storms out of your room, Rose appears to show [npc.herHim] back down to the front door. [pc.Stepping] back to collapse down onto your bed, you let out a deep sigh, and after lying down for a few minutes, you [pc.stand] back up, wondering what to do next...
+		As [npc.name] storms out of your room, Rose appears to show [npc.herHim] back down to the front door. [pc.Stepping] back to collapse down onto your bed, you let out a deep sigh, and after lying down for a few minutes, you get back up, wondering what to do next...
 	</p>
 	]]>
 	</htmlContent>
@@ -2929,7 +2929,7 @@
 				#ENDIF
 			#ELSE
 				<p>
-					Due to the fact that you have a rather unusual lower body, your rear end is quite outside of [npc.namePos] reach. This proves to be an issue for your partner, as, after making a feeble excuse about the cushion you're sitting on about to fall off the sofa, [npc.she] stands up and quickly moves over towards you and [npc.kneel] down beside your hind-quarters.
+					Due to the fact that you have a rather unusual lower body, your rear end is quite outside of [npc.namePos] reach. This proves to be an issue for your partner, as, after making a feeble excuse about the cushion you're sitting on about to fall off the sofa, [npc.she] [npc.stands(false, up)] and quickly moves over towards you and [npc.kneels(false, down)] beside your hind-quarters.
 				<p>
 				#IF(npc.isKind())
 					After giving the sofa's cushion a quick pat, [npc.name] makes playful, flirtatious remark, before placing [npc.her] [npc.hand] on your [pc.hips+]. As [npc.she] starts to slide [npc.her] touch down between your [pc.legs], you wonder if you should play along, and let [npc.herHim] get a good feel of your lower half, or quickly put a stop to this unsolicited contact.
@@ -3153,7 +3153,7 @@
 		[pc.speech(Yeah, I don't think so,)] you flatly reply. [pc.speech(This evening's been pretty boring, and I'm thinking you'll be as lousy in bed as have been at showing me a good time. Bye.)]
 	</p>
 	<p>
-		[npc.speech(Huh, well, if that's how you feel, then fine,)] [npc.name] replies, before [pc.standing(false, up)] and marching off in the direction of the exit.
+		[npc.speech(Huh, well, if that's how you feel, then fine,)] [npc.name] replies, before [pc.standing(false, up)] and storming off in the direction of the exit.
 	</p>
 	<p>
 		Letting out a frustrated sigh, you wait until [npc.sheHas] departed, before [pc.standing] up and wondering what to do next...
@@ -3259,7 +3259,7 @@
 		You roughly shove [npc.name] away from you, causing [npc.herHim] to fall off [npc.her] seat. With an angry frown on your face, you scowl, [pc.speech(There's no way I'm fucking someone like you! Go on, get out of here!)]
 	</p>
 	<p>
-		[npc.speech(Fucking [pc.bitch],)] [npc.name] snaps, before [pc.standing(false, up)] and marching off in the direction of the exit.
+		[npc.speech(Fucking [pc.bitch],)] [npc.name] snaps, before [pc.standing(false, up)] and storming off in the direction of the exit.
 	</p>
 	<p>
 		Letting out a frustrated sigh, you wait until [npc.sheHas] departed, before [pc.standing] up and wondering what to do next...
@@ -3481,7 +3481,7 @@
 		The two of you fall back on the bed, panting and sweating as you both stare up at the ceiling. As you're lying there, [npc.name] rolls over next to you, and pulls you into a loving hug.
 	</p>
 	<p>
-		You spend the next ten minutes or so lying in [npc.namePos] embrace, before finally telling [npc.herHim] that you need to be on your way. [pc.Standing(false, up)] and gathering your things, you head to the front door, with your partner walking along beside you.
+		You spend the next ten minutes or so lying in [npc.namePos] embrace, before finally telling [npc.herHim] that you need to be on your way. [pc.Standing(false, up)] and gathering your things, you head to the front door, with your partner [npc.walking] along beside you.
 	</p>
 	<p>
 		As [npc.she] opens the door for you, [npc.name] asks if [npc.she]'ll see you at the club again, and you turn to give [npc.herHim] your answer...
@@ -3494,7 +3494,7 @@
 		The two of you fall back on the bed, panting and sweating as you both stare up at the ceiling. As you're lying there, [npc.name] makes a frustrated whining noise, and, rolling over next to you, [npc.she] sighs, [npc.speech(You didn't exactly satisfy me, you know...)]
 	</p>
 	<p>
-		You spend the next ten minutes or so lying next to [npc.name], before finally telling [npc.herHim] that you need to be on your way. [pc.Standing(false, up)] and gathering your things, you head to the front door, with your partner walking along beside you.
+		You spend the next ten minutes or so lying next to [npc.name], before finally telling [npc.herHim] that you need to be on your way. [pc.Standing(false, up)] and gathering your things, you head to the front door, with your partner [npc.walking] along beside you.
 	</p>
 	<p>
 		As [npc.she] opens the door for you, [npc.name] asks if [npc.she]'ll see you at the club again, and you turn to give [npc.herHim] your answer...

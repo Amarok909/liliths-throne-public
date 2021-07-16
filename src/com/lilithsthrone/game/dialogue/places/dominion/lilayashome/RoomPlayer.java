@@ -1107,7 +1107,7 @@ public class RoomPlayer {
 							
 							if(npc.isShy()) {
 								endGreetings.add("[npc.name] says in a quiet voice, before blushing and looking down at the floor.");								
-								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {	//Amarok, Remove before flight
+								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {
 									endGreetings.add("[npc.name] says, looking at the floor and shyly shuffling [npc.her] [npc.feet].");
 									endGreetings.add("[npc.name] quietly greets you while shyly shuffling [npc.her] [npc.feet].");
 								} else {
@@ -1140,7 +1140,7 @@ public class RoomPlayer {
 							
 							if(npc.isShy()) {
 								endGreetings.add("[npc.name] says in a quiet voice, before blushing and shyly continuing,");
-								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {	//Amarok, Remove before flight
+								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {
 									endGreetings.add("[npc.name] says, looking at the floor and shyly shuffling [npc.her] [npc.feet], before continuing,");
 									endGreetings.add("[npc.name] quietly greets you while shyly shuffling on [npc.her] [npc.feet], before blushing and continuing,");
 								} else {
@@ -1195,7 +1195,7 @@ public class RoomPlayer {
 								speechGreetings.add("[npc.speech(Why did [pc.she] have to come back,)]");
 								
 								endGreetings.add("[npc.name] mumbles, before casting [npc.her] gaze to the floor and refusing to look up at you.");
-								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {	//Amarok, Remove before flight
+								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {
 									endGreetings.add("[npc.name] mutters under [npc.her] breath, before looking at the floor and shuffling [npc.her] [npc.feet].");
 									endGreetings.add("[npc.name] mutters in annoyance, before shuffling [npc.her] [npc.feet] and letting out another quiet curse.");
 								} else {
@@ -1224,7 +1224,7 @@ public class RoomPlayer {
 								endGreetings.add("[npc.name] sighs, clearly not at all happy with being assigned to your room.");
 								endGreetings.add("[npc.name] says, before sighing and rolling [npc.her] [npc.eyes] in a clear sign of displeasure.");
 								endGreetings.add("[npc.name] says, crossing [npc.her] [npc.arms] and letting out an annoyed sigh.");
-								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {	//Amarok, Remove before flight
+								if (npc.getLegConfiguration()!=LegConfiguration.TAIL_LONG) {
 									endGreetings.add("[npc.name] says, before letting out a weary sigh and tapping [npc.her] [npc.foot] on the floor.");
 								} else {
 									endGreetings.add("[npc.name] says, before letting out a weary sigh while [npc.her] tail swishes against the floor.");
