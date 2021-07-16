@@ -2784,6 +2784,8 @@ public class ItemType {
 				case DARK_SIREN_SIRENS_CALL:
 				case LIGHTNING_SPHERE_DISCHARGE:
 				case LIGHTNING_SPHERE_OVERCHARGE:
+				case ARCANE_CHAIN_LIGHTNING:
+				case ARCANE_LIGHTNING_SUPERBOLT:
 					break;
 			}
 			
@@ -3041,20 +3043,25 @@ public class ItemType {
 								?"impish"
 								:(mainSubspecies.getRace()==Race.DEMON && override >= 5 && override <= 20
 									?"demonic"
-									:(mainSubspecies.getRace()==Race.DEMON && override >= 5000
+									:(mainSubspecies==Subspecies.LILIN
 										?"lilin"
-										:raceName.toLowerCase()))))
+										:(mainSubspecies==Subspecies.ELDER_LILIN
+											?"elder lilin"
+											:raceName.toLowerCase())))))
 							+ " intuition",
 						null,
 						mainSubspecies.getColour(null),
 						true,
 						Util.newHashMapOfValues(new Util.Value<>(Attribute.MAJOR_PHYSIQUE, 2f),
 								new Util.Value<>(
-									(mainSubspecies.getRace()==Race.DEMON && override <= 2
+									mainSubspecies.getRace()==Race.DEMON && override <= 2
 										?Attribute.DAMAGE_IMP
-										:mainSubspecies.getRace()==Race.DEMON && override >= 5000
-										?Attribute.DAMAGE_LILIN
-										:Attribute.getRacialDamageAttribute(mainSubspecies.getRace())), 25f)),
+										:(mainSubspecies==Subspecies.LILIN
+											?Attribute.DAMAGE_LILIN
+											:mainSubspecies==Subspecies.ELDER_LILIN
+												?Attribute.DAMAGE_ELDER_LILIN
+												:Attribute.getRacialDamageAttribute(mainSubspecies.getRace())),
+									25f)),
 						null) {
 					@Override
 					public String getDescription(GameCharacter target) {
@@ -3118,11 +3125,10 @@ public class ItemType {
 						null,
 						Rarity.EPIC,
 						Util.newArrayListOfValues(new ItemEffect(effectType)),
-						Util.newArrayListOfValues(ItemTag.ESSENCE)) {
-						// TODO revisit this and potentially make demon/angel essence contraband when adding more essence effects
-//						((mainSubspecies.getSubspeciesOverridePriority()>=5) // Half-Demon+ (and Angels) are contraband
-//								?Util.newArrayListOfValues(ItemTag.ESSENCE,ItemTag.CONTRABAND_HEAVY)
-//								:Util.newArrayListOfValues(ItemTag.ESSENCE)))
+						(((mainSubspecies.getRace()==Race.DEMON && mainSubspecies.getSubspeciesOverridePriority()>5) || mainSubspecies.getRace()==Race.ANGEL) // Demon+ (and Angels) are contraband
+								?Util.newArrayListOfValues(ItemTag.ESSENCE, ItemTag.CONTRABAND_HEAVY)
+								:Util.newArrayListOfValues(ItemTag.ESSENCE))) {
+						
 					@Override
 					public String getUseName() {
 						return "absorb";
