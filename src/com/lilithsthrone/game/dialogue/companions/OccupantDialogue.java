@@ -14,6 +14,7 @@ import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.character.npc.NPC;
 import com.lilithsthrone.game.character.npc.NPCFlagValue;
 import com.lilithsthrone.game.character.persona.Occupation;
+import com.lilithsthrone.game.character.quests.Quest;
 import com.lilithsthrone.game.character.quests.QuestLine;
 import com.lilithsthrone.game.dialogue.DialogueNode;
 import com.lilithsthrone.game.dialogue.DialogueNodeType;
@@ -356,48 +357,54 @@ public class OccupantDialogue {
 					}
 					
 				} else if (index == 8) {
-					if(occupant().isRelatedTo(Main.game.getPlayer()) && (!Main.game.isIncestEnabled() || !occupant().hasFetish(Fetish.FETISH_INCEST))) {
-						return new Response("Date", UtilText.parse(occupant(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
-					}
-					
-					if(Main.game.getPlayer().getPassion(occupant())>=80 && Main.game.getPlayer().getMaritalStatus(occupant())!=MaritalStatus.MARRIED) {	// Ready to Marry
+					if(Main.game.getPlayer().getMaritalStatus(occupant())!=MaritalStatus.MARRIED
+					&& occupant().getPassion(Main.game.getPlayer()) >= 80
+					&& Main.game.getPlayer().getPassion(occupant()) >= 80) {	// Marriage Mode
 						
-						if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE)) {
+						if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE)) {	// Hasn't started marriage quest
 							return new Response("Marry Quest", UtilText.parse(occupant(), "Need to quest before proposing"), OCCUPANT_START) {
 								@Override
 								public void effects() {
 									Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().startQuest(QuestLine.SIDE_MARRIAGE));
 								}
 							};
+
+						} else if(Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_ONE)) {	// planned out marriage
+							return new Response("Propose", UtilText.parse(occupant(), "Propose to [npc.Name]"), null) {
+								@Override
+								public void effects() {
+									Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
+									occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
+									Main.game.getPlayer().setMaritalStatus(occupant(), MaritalStatus.MARRIED);
+									occupant().setMaritalStatus(Main.game.getPlayer(), MaritalStatus.MARRIED);
+								}
+							};
+
+						} else {	// Started marriage quest, but has not seen Lilaya yet
+							//
+						}
+
+					} else {	// Dating Mode
+						if(occupant().isRelatedTo(Main.game.getPlayer()) && (!Main.game.isIncestEnabled() || !occupant().hasFetish(Fetish.FETISH_INCEST))) {
+							return new Response("Ask out", UtilText.parse(occupant(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
+						}
+
+						if(Main.game.getPlayer().hasRelationshipWith(occupant())) {
+							return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name]"), null) {
+								@Override
+								public void effects() {
+									Main.game.getTextEndStringBuilder().append(pc.incrementPassion(occupant(), 10, "", true));
+								}
+							};
 						}
 						
-						return new Response("Marry", UtilText.parse(occupant(), "Propose to [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
+						return new Response("Ask out", UtilText.parse(occupant(), "Ask [npc.Name] to be your [npc.boyfriend]"), null) {	// Start dating content
 							@Override
 							public void effects() {
-								Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
-								occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
-								Main.game.getPlayer().setMaritalStatus(occupant(), MaritalStatus.MARRIED);
-								occupant().setMaritalStatus(Main.game.getPlayer(), MaritalStatus.MARRIED);
+								Main.game.getPlayer().createRelationship(occupant);
 							}
 						};
 					}
-					
-					if(Main.game.getPlayer().hasRelationshipWith(occupant())) {	// Dating Content Started
-						return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name] <br/>[#pc.getPassion(npc)]"), null) {
-							@Override
-							public void effects() {
-								Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
-								occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
-							}
-						};
-					}
-					
-					return new Response("Date", UtilText.parse(occupant(), "Ask [npc.Name] out on a date <br/>[#pc.getPassion(npc)]"), null) {	// Start dating content
-						@Override
-						public void effects() {
-							Main.game.getPlayer().createRelationship(occupant);
-						}
-					};
 					
 				} else if (index == 10) {
 					if(hasJob()) {

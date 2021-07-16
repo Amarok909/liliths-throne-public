@@ -15,6 +15,12 @@ TODO
         won't be able to marry slaves without freeing
     Possibly need to go on dates with npc before marriage
     Add to discription text, detailing relationship
+    Add saved longs for planning and proposing
+    Add feature to invie npcs to wedding
+
+GENERAL IDEAS
+    convince rose and lilaya to get married
+        requires you to have been married AND to have met lilaya's mum
 
 
 DATING
@@ -71,7 +77,33 @@ MARRIAGE
     do through ashley, like with nyan
     max of 4 in a single marriage, so you can only do 3 in a row. Govt ordninace to prevent batchelors?
     npcs will move in with you, into your room. may limit amount of slaves permitted?
-    children born in wedlock will stick about for 2 hours after birthh before leaving
+    children born in wedlock will stick about for 2 hours after birth before leaving
+    the asker will walk/carry the askee down the aisle, unlike western marriages where the bride walks to the groom
+    maybe the parents wait at the aisle to 'challenge' the asker
+
+    marriage quest
+    1   reach marriageability level with any partner
+    2   talk to lilaya about it, she will guide you to Dream Lover
+    2a      Liliya will prefer your marriage is not a public event, as not to drag her and her mother into it. different matter if post-demon
+    3   Ashley will further warm up to you, being less abrasive. gives you ring and organizes wedding
+    3a      plan out wedding, choose what people are wearing
+    3b      Some time will need to pass to let ashley set it up, also allows you to invite friends to the wedding
+    3c      maybe a fade-to-black, auto invites? do it in wedding planner?
+    4   Find partner and give them ring, take them to wedding (if enough physique, describes you as physically picking them up over your shoulder / back if taur)
+    5   Get heckin' married
+    6   Final things before Honeymoon
+    6a      demon transformation, give ashley a performance review to her government manager
+    7   Honeymoon
+
+    Method
+        Pick partners
+        Facility
+        Extravagance/Lewdity
+        Aesthetic
+        Wedding clothes
+        Honeymoon
+        Review each stage/ cost breakdown
+        Pay
 
 
 DATA
@@ -87,3 +119,35 @@ DATA
         Dating
         Married
         Divorced
+
+TEXT
+    LILAYA_PARTNER_MARRIAGE
+        Hey Lilaya, does the concept of marriage exist here in dominion?
+        lilaya's cheecks turn a tinge red, what? yes of cource PC name. couples get married all the time
+        oh good, I wasn't sure if it was a thing
+            INNOCENT/SHY considering... you gesture your hand to refer to everything, the culture here
+            ELSE        considering how everyone seems to be fucking someone new everyday
+        
+        mmm, sure there is a lot of... causal romance going on in our world, but like i said before, there are plently of couples who decide to dedicate themselves for life. Well, some couples are more open to fooling about, and some are more excusionary, notwithstanding the occasional arccane storm. That's just a part of life, 
+        but i''m sure we still have some things in commom, like proposing, taking your betrhothed to a church or someplace similar, exchanging your vows, and then going off to a honeymoon
+        you nod in the affermitive
+
+        So uh, how come you ask PC?
+        I like my partner NPC a lot, and i stiil plan on ggoing home, its just that they mean a lot to me and i want to show them that our bond means something
+        oh PC, congradulations, lilaya says hugging you
+
+		so how do you get married here? any thing special rules or traditions that i should know about?
+        oh certainly, considering you don't have lilin, i imagine this is different to how it was back on your home world, but marriages usually happen in a day
+        noting the puzzled look on your face, she continues, uh well, tradition states tht you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet and married that day"
+					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
+        though you can't just marry anyone, worker protection laws mean you cant marry your own or someone else's slaves. And although you are meant to swwep them of their feet, you can't force them to marry you; no means no.
+
+        So who do i plan the wedding through?
+        well we do have dedicated wedding vendors and specailists, hmm, i just can't think of any off the top of of my headd though
+
+        coming to the rescure of her master, Rose speaks up. mistress, I do know of a particularly good wedding vendor
+		Dream Lover, at the shopping mall is both quality and reasonable prices"
+		rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with
+		one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental;
+        
+        well PC, looks like you know where to go now. If you need anymore help, feel free to talk to me at any time

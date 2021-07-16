@@ -1672,15 +1672,9 @@ public class Lab {
 	};
 	
 	public static final DialogueNode LILAYA_PARTNER_MARRIAGE = new DialogueNode("", "", true) {
-	//	@Override
-	//	public void applyPreParsingEffects() {
-	//		Main.game.getTextEndStringBuilder().append(Main.game.getNpc(Lilaya.class).incrementAffection(Main.game.getPlayer(), 5));
-	//		Main.game.getDialogueFlags().setFlag(DialogueFlagValue.lilayaHug, true);
-	//	}
 		@Override
 		public String getContent() {
-	//		return UtilText.parseFromXMLFile("places/dominion/lilayasHome/lab", "LAB_LILAYA_HUG");
-			return "Hey Lilaya, how do you get married";
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "LILAYA_PARTNER_MARRIAGE");
 		}
 		@Override
 		public Response getResponse(int responseTab, int index) {
