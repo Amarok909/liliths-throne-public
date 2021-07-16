@@ -69,7 +69,7 @@ public class ClubberRomanceDialogue {
 		@Override
 		public String getContent() {
 			// TODO Auto-generated method stub
-			return "hey npc, i know we've only knwown eaach other for a short while, but I really enjoy spending time with you. this is hard for even me to say, but I really like you, will you be my boyfriend";
+			return UtilText.parseFromXMLFile("romance/ClubberRomance", "CLUBBER_DOM_START_DATING");
 		}
 
 		@Override

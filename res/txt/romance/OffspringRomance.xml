@@ -9,6 +9,13 @@
 
 		 Look son, you may be an adult, but you'll always be my precious little boy, and I will always love you.
 		 How about I give you one of [pc.daddy]'s make-everything-better kisses, you say, taking your son's head in your hands and placing a kiss on his forehead
+
+		#IF(pc.getTotalTimesHadSex(npc)>=1)
+		#THEN hey npc, ive been thinking. we have a special relationship, I think we should make it offical
+		#ELSE hey npc, i'm concerned about your romantic development, I think it's time you got a girlfriend.
+				 but I want you to be prepared when you meet the right person for you, and dont think i haven't noticed the sneak peeks youve been taking at me, so will you be [pc.daddy]'s boyfriend?
+		#ENDIF
+
 	</p>
 	]]>
 	</htmlContent>
