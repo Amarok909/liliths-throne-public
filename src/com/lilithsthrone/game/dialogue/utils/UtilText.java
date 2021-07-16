@@ -1312,51 +1312,6 @@ public class UtilText {
 		return input;
 	}
 
-	//Special utility parsing commands to expand capibilities of XML based modding
-	//Allows xml files with long sequences to acsess custom xml files in res/mods/AUTHORNAME/txt
-
-	/**
-	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
-	 */
-	public String getTextFromXMLFile(String pathName, String tag) {
-		return parseFromXMLFile(new ArrayList<>(), "res/txt/", pathName, tag, new ArrayList<>());
-	}
-
-	/**
-	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
-	 */
-	public String getTextFromXMLFile(List<ParserTag> parserTags, String pathName, String tag) {
-		return parseFromXMLFile(parserTags, "res/txt/", pathName, tag, new ArrayList<>());
-	}
-	
-	/**
-	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
-	 */
-	public String getTextFromXMLFile(String pathName, String tag, GameCharacter... specialNPCs) {
-		return parseFromXMLFile(new ArrayList<>(), "res/txt/", pathName, tag, Util.newArrayListOfValues(specialNPCs));
-	}
-	
-	/**
-	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
-	 */
-	public String getTextFromXMLFile(List<ParserTag> parserTags, String pathName, String tag, GameCharacter... specialNPCs) {
-		return parseFromXMLFile(parserTags, "res/txt/", pathName, tag, Util.newArrayListOfValues(specialNPCs));
-	}
-	
-	/**
-	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
-	 */
-	public String getTextFromXMLFile(String pathName, String tag, List<GameCharacter> specialNPC) {
-		return parseFromXMLFile(new ArrayList<>(), "res/txt/", pathName, tag, specialNPC);
-	}
-	
-	/**
-	 * Parses the tagged htmlContent from an xml file. If there is more than one htmlContent entry, it returns a random one.
-	 */
-	public String getTextFromXMLFile(List<ParserTag> parserTags, String folderPath, String pathName, String tag, List<GameCharacter> specialNPC) {
-		return parseFromXMLFile(parserTags, folderPath, pathName, tag, specialNPC);
-	}
-
 	
 	public static List<ParserCommand> commandsList = new ArrayList<>();
 	public static Map<BodyPartType, List<ParserCommand>> commandsMap = new EnumMap<>(BodyPartType.class);
@@ -9566,7 +9521,6 @@ public class UtilText {
 		engine.put("combat", Main.combat);
 		engine.put("properties", Main.getProperties());
 		engine.put("itemGen", Main.game.getItemGen());
-		engine.put("utility", Main.utility);						//Amarok utility addtion to parser
 		engine.put("flags", Main.game.getDialogueFlags());
 		engine.put("dialogueManager", Main.game.getDialogueManager());
 		
