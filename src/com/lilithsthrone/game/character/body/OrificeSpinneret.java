@@ -475,31 +475,26 @@ public class OrificeSpinneret implements OrificeInterface, BodyPartInterface {
 
 	@Override
 	public BodyPartTypeInterface getType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getDeterminer(GameCharacter gc) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getName(GameCharacter gc) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getNameSingular(GameCharacter gc) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getNamePlural(GameCharacter gc) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
