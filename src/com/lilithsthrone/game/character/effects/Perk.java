@@ -788,6 +788,85 @@ public class Perk {
 		}
 	};
 	
+	public static AbstractPerk JOB_TAUR_TRANSPORT = new AbstractPerk(20,
+			true,
+			"Keep on pulling!",
+			PerkCategory.JOB,
+			"perks/jobs/taur_transport",
+			PresetColour.BASE_GOLD,
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, 15),
+					new Value<>(Attribute.RESISTANCE_PHYSICAL, 5)),
+			null,
+			null, null, null) {
+		@Override
+		public String getDescription(GameCharacter owner) {
+			return UtilText.parse(owner,
+					"Having spent a significant amount of time using [npc.her] tauric body to pull carts and carry cargo, [npc.nameHasFull] built up a considerable level of physical fitness.");
+		}
+	};
+	
+	public static AbstractPerk JOB_NPC_MAYOR = new AbstractPerk(20,
+			true,
+			"Weight of Responsibility",
+			PerkCategory.JOB,
+			"perks/jobs/mayor",
+			Util.newArrayListOfValues(
+					PresetColour.BASE_GOLD,
+					PresetColour.BASE_AQUA,
+					PresetColour.BASE_GOLD),
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.CRITICAL_DAMAGE, 25),
+					new Value<>(Attribute.RESISTANCE_LUST, 5)),
+			null,
+			null, null, null) {
+		@Override
+		public String getDescription(GameCharacter owner) {
+			return UtilText.parse(owner,
+					"Having had to make countless difficult decisions which affect the lives of thousands of people, [npc.nameHasFull] hardened [npc.her] mind and [npc.is] able to act with full conviction.");
+		}
+	};
+	
+	public static AbstractPerk JOB_NPC_ASSISTANT = new AbstractPerk(20,
+			true,
+			"A Helping Hand",
+			PerkCategory.JOB,
+			"perks/jobs/assistant",
+			PresetColour.BASE_GREEN,
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, 10)),
+			null,
+			null, null, null) {
+		@Override
+		public String getDescription(GameCharacter owner) {
+			return UtilText.parse(owner,
+					"Acting as [npc.her] superior's personal assistant, [npc.nameHasFull] to always be in prime physical condition in order to always be ready to offer a helping hand.");
+		}
+	};
+	
+	public static AbstractPerk JOB_LUNETTE_HERD = new AbstractPerk(20,
+			true,
+			"Merciless Raider",
+			PerkCategory.JOB,
+			"perks/jobs/lunette_raider",
+			Util.newArrayListOfValues(
+					PresetColour.BASE_PURPLE,
+					PresetColour.BASE_CRIMSON),
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, 15),
+					new Value<>(Attribute.DAMAGE_MELEE_WEAPON, 25),
+					new Value<>(Attribute.DAMAGE_RANGED_WEAPON, 25),
+					new Value<>(Attribute.CRITICAL_DAMAGE, 50),
+					new Value<>(Attribute.DAMAGE_PHYSICAL, 25),
+					new Value<>(Attribute.RESISTANCE_PHYSICAL, 5)),
+			null,
+			null, null, null) {
+		@Override
+		public String getDescription(GameCharacter owner) {
+			return UtilText.parse(owner,
+					"Having spent time training alongside Lunette herself, this demonic-centaur strives to be as destructive and merciless as [npc.her] mother!");
+		}
+	};
 	
 	
 	
@@ -2355,7 +2434,7 @@ public class Perk {
 	public static AbstractPerk BARREN = new AbstractPerk(20,
 			true,
 			"barren",
-			PerkCategory.PHYSICAL,
+			PerkCategory.LUST,
 			"perks/barren",
 			PresetColour.GENERIC_SEX,
 			Util.newHashMapOfValues(new Value<>(Attribute.FERTILITY, -200)),
@@ -2370,7 +2449,7 @@ public class Perk {
 	public static AbstractPerk FIRING_BLANKS = new AbstractPerk(20,
 			true,
 			"sterile",
-			PerkCategory.PHYSICAL,
+			PerkCategory.LUST,
 			"perks/firing_blanks",
 			PresetColour.GENERIC_SEX,
 			Util.newHashMapOfValues(new Value<>(Attribute.VIRILITY, -200)),
@@ -5709,7 +5788,20 @@ public class Perk {
 				|| id.equalsIgnoreCase("HEALTH_FANATIC")
 				|| id.equalsIgnoreCase("MARTIAL_BACKGROUND")) {
 			id = "SPECIAL_"+id;
+		} else if(id.equalsIgnoreCase("BRAWLER")) {
+			id = "FEROCIOUS_WARRIOR";
+		} else if(id.equalsIgnoreCase("ARCANE_BASE_NPC")) {
+			id = "ARCANE_BASE";
+		} else if(id.equalsIgnoreCase("PHYSIQUE_5")) {
+			id = "PHYSIQUE_BOOST_MAJOR";
+		} else if(id.equalsIgnoreCase("ARCANE_5")) {
+			id = "ARCANE_BOOST_MAJOR";
+		} else if(id.equalsIgnoreCase("SPELL_DAMAGE_5")) {
+			id = "SPELL_DAMAGE_MAJOR";
+		} else if(id.equalsIgnoreCase("ELEMENTALIST_5")) {
+			id = "ELEMENTAL_BOOST";
 		}
+		
 		
 		id = Util.getClosestStringMatch(id, idToPerkMap.keySet());
 //		System.out.println("  set to: "+id);
@@ -5791,7 +5883,7 @@ public class Perk {
 						return true;
 					}
 				};
-//				System.out.println(subToUse.toString()+" "+racePerk.getName(null)+" "+racePerk.hashCode());
+//				System.out.println("Added perk: "+Subspecies.getIdFromSubspecies(subToUse)+" "+racePerk.getName(null)+" "+racePerk.hashCode());
 				perkToIdMap.put(racePerk, Subspecies.getIdFromSubspecies(subToUse));
 				idToPerkMap.put(Subspecies.getIdFromSubspecies(subToUse), racePerk);
 				allPerks.add(racePerk);
