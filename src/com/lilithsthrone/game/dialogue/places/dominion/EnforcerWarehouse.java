@@ -194,8 +194,7 @@ public class EnforcerWarehouse {
 		if(Main.game.getNpc(Claire.class).getLust()>75) {
 			return new ResponseSex(
 					"Offer help",
-					"There's a suitable place behind some nearby crates where you could help Claire get some relief...<br/>"
-							+ "[style.italicsSex(Claire will be unwilling to perform any more sexual actions after doing this.)]",
+					"There's a suitable place behind some nearby crates where you could help Claire get some relief...",
 					true,
 					true,
 					new SMClaireWarehouse(
@@ -498,7 +497,7 @@ public class EnforcerWarehouse {
 		@Override
 		public String getContent() {
 			if(!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.claireWarning)) {
-				NPC guard = Main.game.getCharactersPresent(Main.game.getWorlds().get(WorldType.ENFORCER_WAREHOUSE).getNearestCell(PlaceType.ENFORCER_WAREHOUSE_ENFORCER_GUARD_POST, Main.game.getPlayer().getLocation())).get(0);
+				NPC guard = Main.game.getCharactersPresent(Main.game.getWorlds().get(WorldType.ENFORCER_WAREHOUSE).getClosestCell(Main.game.getPlayer().getLocation(), PlaceType.ENFORCER_WAREHOUSE_ENFORCER_GUARD_POST)).get(0);
 				return UtilText.parseFromXMLFile("places/dominion/enforcerWarehouse/generic", "CLAIRE_WARNING", guard);
 			} else {
 				return CORRIDOR.getContent();
