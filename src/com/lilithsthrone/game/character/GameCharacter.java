@@ -16209,7 +16209,7 @@ public abstract class GameCharacter implements XMLSaving {
 	}
 	
 	/**
-	 * @return true if the orifice is a vagina or anus and the insertion length of the penetrationType is >15% of the penetrated character's height.
+	 * @return true if the orifice is a vagina or anus and the insertion length of the penetrationType is >12.5% of the penetrated character's height, or if the orifice is a spinneret and the inserted length of the Penetration type minus the length of the tail is >12.5% of the character's height.
 	 */
 	public static boolean isStomachBulging(GameCharacter characterPenetrating, SexAreaPenetration penetrationType, GameCharacter characterPenetrated, SexAreaInterface orifice) {
 		if(characterPenetrated.isVisiblyPregnant() || !(orifice instanceof SexAreaOrifice) || (orifice!=SexAreaOrifice.VAGINA && orifice!=SexAreaOrifice.ANUS)) {
@@ -16218,6 +16218,10 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		float insertedLength = characterPenetrating.getPenetrationLengthInserted(penetrationType, characterPenetrated, (SexAreaOrifice)orifice);
 		float penetratedHeight = characterPenetrated.getHeightValue();
+		
+		if(characterPenetrated.hasSpinneret() && orifice==SexAreaOrifice.SPINNERET) {
+			return (insertedLength - characterPenetrated.getTailLength(false)) > penetratedHeight*0.125f;
+		}
 		
 		return insertedLength > penetratedHeight*0.125f;
 	}

@@ -485,17 +485,17 @@ public class OrificeSpinneret implements OrificeInterface, BodyPartInterface {
 
 	@Override
 	public String getName(GameCharacter gc) {
-		return null;
+		return "spinneret";
 	}
 
 	@Override
 	public String getNameSingular(GameCharacter gc) {
-		return null;
+		return "spinneret";
 	}
 
 	@Override
 	public String getNamePlural(GameCharacter gc) {
-		return null;
+		return "spinnerets";
 	}
 
 	@Override

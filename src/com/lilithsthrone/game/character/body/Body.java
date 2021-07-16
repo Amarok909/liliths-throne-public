@@ -5293,7 +5293,7 @@ public class Body implements XMLSaving {
 		
 		if(owner.isFeral()) {
 			descriptionSB.append(" [style.colourFeral(As is to be expected, [npc.her] [npc.spinneret] is entirely feral in form, and is no different to that of a normal)]");
-		} else if(ass.isFeral(owner)) {
+		} else if(spinneret.isFeral(owner)) {
 			descriptionSB.append(" [style.colourFeral(As it is located on the lower, animalistic part of [npc.her] body, [npc.her] [npc.spinneret] is no different to that of a feral)]");
 		}
 		

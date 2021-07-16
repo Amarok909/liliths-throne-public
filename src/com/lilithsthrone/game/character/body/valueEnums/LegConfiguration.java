@@ -11,6 +11,7 @@ import com.lilithsthrone.game.character.body.BodyPartInterface;
 import com.lilithsthrone.game.character.body.BreastCrotch;
 import com.lilithsthrone.game.character.body.Clitoris;
 import com.lilithsthrone.game.character.body.Leg;
+import com.lilithsthrone.game.character.body.OrificeSpinneret;
 import com.lilithsthrone.game.character.body.Penis;
 import com.lilithsthrone.game.character.body.Tail;
 import com.lilithsthrone.game.character.body.Tentacle;
@@ -406,7 +407,7 @@ public enum LegConfiguration {
 			"statusEffects/race/raceBackgroundLegArachnid") {
 		@Override
 		public List<Class<? extends BodyPartInterface>> getFeralParts() {
-			return Util.newArrayListOfValues(Ass.class, Anus.class, Leg.class, Penis.class, Testicle.class, Vagina.class, Clitoris.class);
+			return Util.newArrayListOfValues(Ass.class, Anus.class, Leg.class, Penis.class, Testicle.class, Vagina.class, Clitoris.class, OrificeSpinneret.class);
 		}
 		@Override
 		public List<FootStructure> getPermittedFootStructuresOverride() {
