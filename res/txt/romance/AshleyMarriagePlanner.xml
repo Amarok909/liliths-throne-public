@@ -2,19 +2,42 @@
 <dialogue>
 	<htmlContent tag="LILAYA_PARTNER_MARRIAGE"><![CDATA[
 	<p>
-		"Hey Lilaya, does the concept of marriage exist here in dominion?"
-					+ "how do you get married"
-					+ "any thing special i should know about"
-					+ "cant marry slaves and one other thing. considering you don't have lilin i image this is different to how it was back on your home world, but marriages happen in a day"
-					+ "uh well, tradition states tht you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet an married that day"
-					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
-					
+	    Hey Lilaya, does the concept of marriage exist here in dominion?
+         Lilaya's cheecks turn a tinge red, what? yes of cource PC name. couples get married all the time
+         Oh good, I wasn't sure if it was a thing
+            INNOCENT/SHY considering... you gesture your hand to refer to everything, the culture here
+            ELSE        considering how everyone seems to be fucking someone new everyday
+    </p>
+	<p>
+        mmm, sure there is a lot of... causal romance going on in our world, but like I said before, there are plently of couples who decide to dedicate themselves for life.
+		 Well, some couples are more open to fooling about, and some are more excusionary, notwithstanding the occasional arccane storm. That's just a part of life, 
+        but I'm sure we still have some things in commom, like proposing, taking your betrhothed to a church or someplace similar, exchanging your vows, and then going off to a honeymoon
+        you nod in the affermitive
 	</p>
 	<p>
-		+ "Rose speaks up, mistress, I do know of a particularly good wedding vendor"
-					+ "Dream Lover, at the shopping mall is both quality and reasonable prices"
-					+ "rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with"
-					+ "one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental";
+        So uh, how come you ask PC?
+        I like my partner NPC a lot, and i stiil plan on ggoing home, its just that they mean a lot to me and i want to show them that our bond means something
+        oh PC, congradulations, lilaya says hugging you
+	</p>
+	<p>
+		so how do you get married here? any thing special rules or traditions that i should know about?
+        oh certainly, considering you don't have lilin, i imagine this is different to how it was back on your home world, but marriages usually happen in a day
+        noting the puzzled look on your face, she continues, uh well, tradition states tht you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet and married that day"
+					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
+        though you can't just marry anyone, worker protection laws mean you cant marry your own or someone else's slaves. And although you are meant to swwep them of their feet, you can't force them to marry you; no means no.
+	</p>
+	<p>
+        So who do i plan the wedding through?
+        well we do have dedicated wedding vendors and specailists, hmm, i just can't think of any off the top of of my headd though
+	</p>
+	<p>
+        coming to the rescure of her master, Rose speaks up. mistress, I do know of a particularly good wedding vendor
+		Dream Lover, at the shopping mall is both quality and reasonable prices"
+		rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with
+		one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental;
+    </p>
+	<p>
+        well PC, looks like you know where to go now. If you need anymore help, feel free to talk to me at any time
 	</p>
 	]]>
 	</htmlContent>

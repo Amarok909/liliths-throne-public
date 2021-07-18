@@ -381,7 +381,7 @@ public class OccupantDialogue {
 							};
 
 						} else {	// Started marriage quest, but has not seen Lilaya yet
-							//
+							return null;
 						}
 
 					} else {	// Dating Mode
@@ -393,7 +393,7 @@ public class OccupantDialogue {
 							return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name]"), null) {
 								@Override
 								public void effects() {
-									Main.game.getTextEndStringBuilder().append(pc.incrementPassion(occupant(), 10, "", true));
+									Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().incrementPassion(occupant(), 10, "", true));
 								}
 							};
 						}
