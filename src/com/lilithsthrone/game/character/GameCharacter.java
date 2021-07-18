@@ -4016,7 +4016,12 @@ public abstract class GameCharacter implements XMLSaving {
 	}
 	
 	public void resetDescription() {
-		this.description = null;
+		if(this instanceof DominionAlleywayAttacker
+		|| this instanceof DominionClubNPC
+		|| this instanceof DominionSuccubusAttacker
+		|| this instanceof NPCOffspring) {
+			this.description = null;
+		}
 	}
 
 	public String getBirthdayString() {
