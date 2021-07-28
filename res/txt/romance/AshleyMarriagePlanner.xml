@@ -36,8 +36,8 @@
 	</p>
 	<p>
         coming to the rescure of her master, Rose speaks up. mistress, I do know of a particularly good wedding vendor
-		Dream Lover, at the shopping mall is both quality and reasonable prices"
-		rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with
+		Dream Lover, at the shopping mall. Although it is fairly unknown, both it's quality and reasonable prices make it one of, if not the best vendor in the city"
+		rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with. Knowing of the relationship your aunt has with her maid, you can easily guess what she's thinking
 		one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental;
     </p>
 	<p>
@@ -71,12 +71,21 @@
 	</htmlContent>
 
 	<htmlContent tag="MARRIAGE_PLANING_LOCATION"><![CDATA[
+	#IF(partners == 1)
 	<p>
 		eurg really, you're marrying two people?"
 					+ "is that going to be a problem?"
 					+ "it won't effect the ceremony, its just that i''m losing what little respect I had for you"
-					+ "she says, writing down notes on your spouses-to-be"
-					+ ""
+					+ "they say, writing down notes on your bethrothed
+	</p>
+	#ELSE
+	<p>
+		Ashley hums in aprovral, good, just one parter
+		why, some kind of problem having two?
+		oh there's no difficulty with the process, you just prove yourself to be too horny
+		they say, writing down notes on your bethrothed
+	</p>
+	#ENDIF
 					+ "Anyway, next step is to pick a location"
 					+ "ashley then passes you a brochure"
 					+ "so there's a bunch of options, but these two are the ones i personally recommend, ashley says, pointing at 'Dominion Town Hall' and 'the oaken glade'"
@@ -107,19 +116,37 @@
 	</p>
 	]]>
 	</htmlContent>
+
+	<htmlContent tag="MARRIAGE_PLANING_RING"><![CDATA[
+	<p>
+		time to pick out rings
+		picking out a key from within their cloak, they turn around and unlock a cabinet, pulling out out an ornate box and placing it before you. openign in it, are a multidude of rings
+		unlike everything else, i can give you the ring today
+	</p>
+	]]>
+	</htmlContent>
 	
 	<htmlContent tag="MARRIAGE_PLANING_CEREMONY"><![CDATA[
 	<p>
-		Intrigued by the thought of what this store might offer, you walk up to the entrance and give the door knob a tentative twist; to your dismay, you discover that the store is [style.colourBad(closed)], leaving you with no other option but to step back and consider returning at a later time.
+		Ashly slides you a napkin that has a few notes on it
+		And with that, I've done my state obligation ok, Ashley huffs, you better not <i>actually</i> pick it
 	</p>
 	]]>
 	</htmlContent>
 	
 	<htmlContent tag="MARRIAGE_PLANING_HONEYMOON"><![CDATA[
 	<p>
-		telling them  the type of ceremony you want, ashley nods in approvral / harrumphs in disaproval.
+		telling them  the type of ceremony you want, ashley nods in approvral / harrumphs in disaproval. i can't belive it, are you doing this just to spite me, or are you that horny? no don't answer that, they say shaking their head. collecting themselves, they continue.
 		 [ashley.speech(ok [pc.name], the type of ceremony that you've chosen comes bundled with a honeymoon package.)] Ashley informs you, before handing you another pamphlet. Opening it up, you see a variety of diifferent seetings. beach side resorts, cosy woodland inns, ornate hotels.
-		 Flipping through it, one particular package catches your eye; Manor House resort
+		 #IF(been to manor house on date)
+		 Flipping through it, a familiar location catches your eye; Manor House resort. you show the pecific page to them
+		 I've been here before on a date with a partner so I know a bit about it already, but can you tell me about these 'lovebird specialties'?
+		 Not a bad choise this one, as you would already know, there's a lot to do there for the bargin price
+		 #ELSE
+		 Flipping through it, one particular package catches your eye; Manor House resort. you show the pecific page to them
+		 "can you tell me more?"
+		 Ah yes, this isn't a bad choice. despite the apperance and the high quality of service, it's modestly priced.
+		#ENDIF
 	</p>
 	]]>
 	</htmlContent>
@@ -137,11 +164,14 @@
 	
 	<htmlContent tag="MARRIAGE_PLANING_PAY"><![CDATA[
 	<p>
-		ok so that's everything sorted. now since you're going for a traditional wedding, i'll need two days to organise everything."
-					+ "then after that, you only have a week to propose to your fiance."
-					+ "after a week, my contractors will consider this a no-show and will cancel their preparations"
-					+ "If you actually want to marry them, which you should have done that week, then you'll need to come back here so we can organise another wedding"
-					+ "if you want to change anything regarding your wedding, come talk to me and I'll get it done, though it will be costly
+		looking over the inteneiaty, you hand it back to ashly, [pc.speech(yup, this is fine.)]
+		ok so that's everything sorted. now since you're going for a traditional wedding, i'll need two days to organise everything with my contacts.
+		 If you want to change anything regarding your wedding, come talk to me before 9 in the morning and I'll get it done. The shop will be shut for the rest of the day as I'll be out organising everything.
+		
+		Then after that, you only have a week to propose to your fiance. After a week, my contractors will consider this a no-show and will cancel their preparations. If you actually want to marry them, <i>which you should have done that week</i>, then you'll need to come back here so we can organise another wedding.
+
+		In short, you've got until [#SPECIAL_PARSE0] to make any last changes, and [#SPECIAL_PARSE1] to get married.
+		All in all, that comes to [#SPECIAL_PARSE2] flames.
 	</p>
 	]]>
 	</htmlContent>

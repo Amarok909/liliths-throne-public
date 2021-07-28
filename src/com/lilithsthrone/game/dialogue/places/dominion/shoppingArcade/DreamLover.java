@@ -632,7 +632,31 @@ public class DreamLover {
 		}
 		
 	};
+	
+	public static final DialogueNode MARRIAGE_PLANING_RING = new DialogueNode("Dream Lover", "-", true, true) {
 
+		@Override
+		public String getAuthor() {
+			return "Amarok";
+		}
+
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_RING");
+		}
+
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			if(index==0) {
+				goBack();
+
+			} else if(index==1) {
+				return new Response("plain ol ring", "give your partners each a plain ol ring", MARRIAGE_PLANING_HONEYMOON);
+			}
+			return null;
+		}
+	};
+	
 	public static final DialogueNode MARRIAGE_PLANING_CEREMONY = new DialogueNode("Dream Lover", "-", true, true) {
 		
 		@Override
@@ -687,30 +711,6 @@ public class DreamLover {
 			return null;
 		}
 		
-	};
-	
-	public static final DialogueNode MARRIAGE_PLANING_RING = new DialogueNode("Dream Lover", "-", true, true) {
-
-		@Override
-		public String getAuthor() {
-			return "Amarok";
-		}
-
-		@Override
-		public String getContent() {
-			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_RING");
-		}
-
-		@Override
-		public Response getResponse(int responseTab, int index) {
-			if(index==0) {
-				goBack();
-
-			} else if(index==1) {
-				return new Response("plain ol ring", "give your parners each a plain ol ring", MARRIAGE_PLANING_HONEYMOON);
-			}
-			return null;
-		}
 	};
 	
 	public static final DialogueNode MARRIAGE_PLANING_HONEYMOON = new DialogueNode("Dream Lover", "-", true, true) {

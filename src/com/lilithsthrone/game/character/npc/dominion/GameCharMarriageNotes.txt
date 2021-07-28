@@ -21,6 +21,8 @@ TODO
 GENERAL IDEAS
     convince rose and lilaya to get married
         requires you to have been married AND to have met lilaya's mum
+    if manor house picked as honeymoon, get a 'murder' mystery Black Butler/Midsommar muders style
+        insead of bing murderd, guested get fucked into ahego-mindbreak
 
 
 DATING
@@ -51,6 +53,11 @@ MARRIAGE
     children born in wedlock will stick about for 2 hours after birth before leaving
     the asker will walk/carry the askee down the aisle, unlike western marriages where the bride walks to the groom
     maybe the parents wait at the aisle to 'challenge' the asker
+    if using Ashley, can only marry people in Dominion/Submission, Foloi fields have their own system
+    instead of going door-to-door, to find each partner, go to one on the list and use one single dialogue node describing finding all of them
+    next dialogue node will be taking them to location, signing the paper work, getting them dressed
+    next dialogue node will be the actual ceremony
+    then honeymoon
 
     marriage quest
     1   reach marriageability level with any partner
