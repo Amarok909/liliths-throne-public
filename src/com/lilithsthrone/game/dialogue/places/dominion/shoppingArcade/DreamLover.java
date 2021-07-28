@@ -1,5 +1,6 @@
 package com.lilithsthrone.game.dialogue.places.dominion.shoppingArcade;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -250,6 +251,9 @@ public class DreamLover {
 	public static String pickedFlowers = null;
 	public static String pickedBanners = null;
 	public static String pickedHoneymoon = null;
+	public static LocalDateTime prepTime;
+	public static LocalDateTime proposalTime;
+	public static boolean partnerLimit = Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.ashleyLimit);
 
 	public static void resetMarriagePlanner() {
 		pickedPartners.clear();
@@ -260,6 +264,15 @@ public class DreamLover {
 		pickedFlowers = null;
 		pickedBanners = null;
 		pickedHoneymoon = null;
+	}
+	
+	private static Response goBack() {
+		if(reviewMode) {
+			return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
+		}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
+			@Override
+			public void effects() {resetMarriagePlanner();}
+		};
 	}
 
 	public static final DialogueNode MARRIAGE_PLANING_START = new DialogueNode("Dream Lover", "-", true, false) {
@@ -275,17 +288,11 @@ public class DreamLover {
 			for(GameCharacter npc : pickedPartners) {
 				names.add(npc.getName());
 			}
-			return "hey Ashley, I need your help, im planning to get married, can you help me"
-					+ "Ashley picks up at this, but seems to be eyeing you suspiciously, why use me? there's a bunch of others if you just need a certificate"
-					+ "no, i want a proper ceremony, so I can show them just how much I love them, plus, my aunt's maid reckoned that you were the best at traditional one-day marrigages"
-					+ "aw jeez, ok lets do this, I'll make sure you have the best, most lovely ceremony possible"
-					+ "so can you tell me a bit more about your partner"
-					+ ""
-					+ ". Partners: " + Util.stringsToStringList(names, false);
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_START");
 		}
 		
 		@Override
-		public String getResponseTabTitle(int index) {
+		public String getResponseTabTitle(int index) {		// FIXME remove this test object
 			if(index == 0) {
 				return "[style.colourTfPartial("+(pickedPartners.size()<1 || pickedPartners.get(0)==null?"Minimal":pickedPartners.get(0).getName())+")]";
 			} else if(index == 1) {
@@ -305,26 +312,21 @@ public class DreamLover {
 			
 			if(index==0) {
 			// Back
-				if(reviewMode) {
-					return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-				}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
-					@Override
-					public void effects() {resetMarriagePlanner();}
-				};
+				goBack();
 
 			} else if(index==1) {
 			// Next
 				if(pickedPartners.size()==0) {
-					return new Response("Next", "you need to select at least one partner before you can procede", null);
+					return new Response("Next", "you need to select at least one partner before you can proceed", null);
 					
-				} else if(pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 4 && !Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.ashleyLimit)) {		//TODO turn these into variables 
+				} else if(pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 4 && !partnerLimit) {
 					return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_TOO_MANY) {
 						@Override
 						public void effects() {Main.game.getDialogueFlags().setFlag(DialogueFlagValue.ashleyLimit, true);}
 					};
 					
-				} else if(pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 4 && Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.ashleyLimit)) {
-					return new Response("Next", "ashley has already told you that you can't be married to more than three partners, you'll need to deselect some", null);	
+				} else if(pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 4 && partnerLimit) {
+					return new Response("Next", "Ashley has already told you that you can't be married to more than three partners, you'll need to deselect some", null);	
 				
 				} else {
 					return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_LOCATION);
@@ -402,13 +404,9 @@ public class DreamLover {
 			for(GameCharacter npc : pickedPartners) {
 				names.add(npc.getName());
 			}
-			return "whoa sorry bud, how many people did you want to marry again?"
-					+ "4, " + Util.stringsToStringList(names, false)
-					+ "yeah sorry not happening bud"
-					+ "you look at her quizzically, you got a reason, or are you just being moody"
-					+ "I'm not being moody, I just think you should be dedicating yourself to one person, and it's not just me. State law says there can only be a maximum of four people in a marrige, ie you and three others."
-					+ "muttering under breath, at least these horn dogs have some limits"
-					+ "knowing that you'll only be able to marry three of your partners, you think who you really want the most";
+			UtilText.addSpecialParsingString(Util.intToString(names.size()), true);
+			UtilText.addSpecialParsingString(Util.stringsToStringList(names, false), false);
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_TOO_MANY");
 		}
 
 		@Override
@@ -426,33 +424,13 @@ public class DreamLover {
 
 		@Override
 		public String getContent() {
-			return "eurg really, you're marrying two people?"
-					+ "is that going to be a problem?"
-					+ "it won't effect the ceremony, its just that i''m losing what little respect I had for you"
-					+ "she says, writing down notes on your spouses-to-be"
-					+ ""
-					+ "Anyway, next step is to pick a location"
-					+ "ashley then passes you a brochure"
-					+ "so there's a bunch of options, but these two are the ones i personally recommend, ashley says, pointing at 'Dominion Town Hall' and 'the oaken glade'"
-					+ "the town hall is good for small and simple ceremonies, the glade is fairly prestigious, but I have a few contacts that can get you in there though it'll cost"
-					+ ""
-					+ "I am however, legally obliged, she says stressing the words, to mention that the Cult of lilith offerers the services of their curches for you ceremony and has <i>excelent</i> deals"
-					+ "after finishing her obligatory spiel, ashley then makes a gagging motion, though it's a bit hard to tell under their cloak"
-					+ ""
-					+ "these a few others in  the brochure, letting you have a read of it"
-					+ "If you have a place yourself, we can do it there"
-					+ "so what are you thinking?";
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_LOCATION");
 		}
 
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			if(index==0) {
-				if(reviewMode) {
-					return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-				}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
-					@Override
-					public void effects() {resetMarriagePlanner();}
-				};
+				goBack();
 
 			} else if(index==1) {
 				return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_DRESSING);
@@ -479,9 +457,7 @@ public class DreamLover {
 		
 		@Override
 		public String getContent() {
-			return "okey, now we'll need to pick out what you, your partners, and  the officiant are wearing"
-					+ "Now, I am able tto offer you a large selection of dresses in both traditional and modern styles."
-					+ "I even have a variety on suits, in case, you find a tuxedo too plain";
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_DRESSING");
 		}
 		
 		@Override
@@ -512,12 +488,7 @@ public class DreamLover {
 					"Military 3", "Kimono 1", "Kimono 2"));
 			
 			if(index==0 || index==29) {
-				if(reviewMode) {
-					return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-				}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
-					@Override
-					public void effects() {resetMarriagePlanner();}
-				};
+				goBack();
 				
 			} else if(index==1 || index==15) {
 				if (pickedOutfits.stream().limit(2 + pickedPartners.size()).anyMatch(e -> e==null)) {
@@ -527,7 +498,7 @@ public class DreamLover {
 			}
 			
 			else if(index==6) {
-				return new Response("Change betrohed", "description", MARRIAGE_PLANING_START);
+				return new Response("Change betrothed", "description", MARRIAGE_PLANING_START);
 			}
 			
 			
@@ -557,68 +528,6 @@ public class DreamLover {
 			return null;
 		}
 	};
-
-	public static final DialogueNode MARRIAGE_PLANING_CEREMONY = new DialogueNode("Dream Lover", "-", true, true) {
-		
-		@Override
-		public String getAuthor() {
-			return "Amarok";
-		}
-
-		@Override
-		public String getContent() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Response getResponse(int responseTab, int index) {
-			ArrayList<String> ceremony = new ArrayList<String>(Arrays.asList(
-					"Peaceful", "Exerbrient", "Lewd", null, null,
-					"Royal", "Casual", "Debacherous"));
-			ArrayList<String> description = new ArrayList<String>(Arrays.asList(
-					"walk to aisle, words exchanged, kiss, off to honeymoon",
-					"walk to aisle, words exchanged, kiss, party, off to honeymoon",
-					"walk to aisle, words exchanged, fuck on altar, off to honeymoon", null, null,
-					"Royal", "Casual",
-					"walk to aisle, words exchanged, fuck on altar, orgy, off to honeymoon"));
-			
-			if(index==0) {
-				if(reviewMode) {
-					return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-				}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
-					@Override
-					public void effects() {resetMarriagePlanner();}
-				};
-				
-			} else if(index==1) {
-				if (pickedCeremony == null) {
-					return new Response("Next", "you can't move on until you've decided on a ceremony style!", null);
-				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_AESTHETICS);
-				
-			}
-			
-			for (int i = 0; i < ceremony.size(); i++) {
-				if(index==i+2 && ceremony.get(i)!=null) {
-					final String C = ceremony.get(i);
-					
-					return new ResponseEffectsOnly(C, "select this type of ceremony<br>" + description.get(i)) {
-						@Override
-						public void effects() {pickedCeremony = C;}
-						@Override
-						public Colour getHighlightColour() {
-							if(pickedCeremony==C) {
-								return PresetColour.GENERIC_MINOR_GOOD;
-							}	return PresetColour.TEXT;
-						}
-					};
-				}
-			}
-
-			return null;
-		}
-		
-	};
 	
 	public static final DialogueNode MARRIAGE_PLANING_AESTHETICS = new DialogueNode("Dream Lover", "-", true, true) {
 		
@@ -638,13 +547,12 @@ public class DreamLover {
 			}
 			return null;
 		}
-
+		
 		@Override
 		public String getContent() {
-			// TODO Auto-generated method stub
-			return null;
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_AESTHETICS");
 		}
-
+		
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			ArrayList<String> colours = new ArrayList<String>(Arrays.asList(
@@ -655,17 +563,12 @@ public class DreamLover {
 					"Plain", "Jazzy", "Lewd"));
 			
 			if(index==0) {
-				if(reviewMode) {
-					return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-				}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
-					@Override
-					public void effects() {resetMarriagePlanner();}
-				};
+				goBack();
 				
 			} else if(index==1) {
 				if (pickedColour==null || pickedFlowers==null || pickedBanners==null) {
-					return new Response("Next", "you can't move on until you've decided everyone's outfits!", null);
-				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_HONEYMOON);
+					return new Response("Next", "you can't move on until you've decided on the colour pallete, banners and flowers for the ceremony!", null);
+				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_CEREMONY);
 				
 			}
 			
@@ -673,7 +576,7 @@ public class DreamLover {
 				for (int i = 0; i < colours.size(); i++) {
 					if(index==i+2 && colours.get(i)!=null) {
 						final String C = colours.get(i);
-
+						
 						return new ResponseEffectsOnly(C, "select this type of colour for decorations") {
 							@Override
 							public void effects() {pickedColour = C;}
@@ -691,7 +594,7 @@ public class DreamLover {
 				for (int i = 0; i < flowers.size(); i++) {
 					if(index==i+2 && flowers.get(i)!=null) {
 						final String C = flowers.get(i);
-
+						
 						return new ResponseEffectsOnly(C, "select this type of flowers for decorations") {
 							@Override
 							public void effects() {pickedFlowers = C;}
@@ -729,6 +632,86 @@ public class DreamLover {
 		}
 		
 	};
+
+	public static final DialogueNode MARRIAGE_PLANING_CEREMONY = new DialogueNode("Dream Lover", "-", true, true) {
+		
+		@Override
+		public String getAuthor() {
+			return "Amarok";
+		}
+
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_CEREMONY");
+		}
+
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			ArrayList<String> ceremony = new ArrayList<String>(Arrays.asList(
+					"Peaceful", "Exerbrient", "Lewd", null, null,
+					"Royal", "Casual", "Debacherous"));
+			ArrayList<String> description = new ArrayList<String>(Arrays.asList(
+					"walk to aisle, words exchanged, kiss, off to honeymoon",
+					"walk to aisle, words exchanged, kiss, party, off to honeymoon",
+					"walk to aisle, words exchanged, fuck on altar, off to honeymoon", null, null,
+					"Royal", "Casual",
+					"walk to aisle, words exchanged, fuck on altar, orgy, off to honeymoon"));
+			
+			if(index==0) {
+				goBack();
+				
+			} else if(index==1) {
+				if (pickedCeremony == null) {
+					return new Response("Next", "you can't move on until you've decided on a ceremony style!", null);
+				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_RING);
+				
+			}
+			
+			for (int i = 0; i < ceremony.size(); i++) {
+				if(index==i+2 && ceremony.get(i)!=null) {
+					final String C = ceremony.get(i);
+					
+					return new ResponseEffectsOnly(C, "select this type of ceremony<br>" + description.get(i)) {
+						@Override
+						public void effects() {pickedCeremony = C;}
+						@Override
+						public Colour getHighlightColour() {
+							if(pickedCeremony==C) {
+								return PresetColour.GENERIC_MINOR_GOOD;
+							}	return PresetColour.TEXT;
+						}
+					};
+				}
+			}
+
+			return null;
+		}
+		
+	};
+	
+	public static final DialogueNode MARRIAGE_PLANING_RING = new DialogueNode("Dream Lover", "-", true, true) {
+
+		@Override
+		public String getAuthor() {
+			return "Amarok";
+		}
+
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_RING");
+		}
+
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			if(index==0) {
+				goBack();
+
+			} else if(index==1) {
+				return new Response("plain ol ring", "give your parners each a plain ol ring", MARRIAGE_PLANING_HONEYMOON);
+			}
+			return null;
+		}
+	};
 	
 	public static final DialogueNode MARRIAGE_PLANING_HONEYMOON = new DialogueNode("Dream Lover", "-", true, true) {
 		
@@ -739,22 +722,16 @@ public class DreamLover {
 
 		@Override
 		public String getContent() {
-			// TODO Auto-generated method stub
-			return null;
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_HONEYMOON");
 		}
 
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			if(index==0) {
-				if(reviewMode) {
-					return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-				}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
-					@Override
-					public void effects() {resetMarriagePlanner();}
-				};
+				goBack();
 
 			} else if(index==1) {
-				return new Response("Manor house hotel", "spend your honeymoon at the Manor house hotel, an upmarket resort on the outskirts of dominion", MARRIAGE_PLANING_REVIEW);
+				return new Response("Manor House hotel", "spend your honeymoon at the Manor House hotel, an upmarket resort on the outskirts of dominion", MARRIAGE_PLANING_REVIEW);
 			}
 			return null;
 		}
@@ -775,8 +752,7 @@ public class DreamLover {
 
 		@Override
 		public String getContent() {
-			// TODO Auto-generated method stub
-			return null;
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_REVIEW");
 		}
 
 		@Override
@@ -811,12 +787,7 @@ public class DreamLover {
 
 		@Override
 		public String getContent() {
-			// TODO Auto-generated method stub
-			return "ok so that's everything sorted. now since you're going for a traditional wedding, i'll need two days to organise everything."
-					+ "then after that, you only have a week to propose to your fiance."
-					+ "after a week, my contractors will consider this a no-show and will cancel their preparations"
-					+ "If you actually want to marry them, which you should have done that week, then you'll need to come back here so we can organise another wedding"
-					+ "if you want to change anything regarding your wedding, come talk to me and I'll get it done, though it will be costly";
+			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_PAY");
 		}
 
 		@Override
