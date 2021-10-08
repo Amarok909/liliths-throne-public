@@ -244,7 +244,7 @@ public class DreamLover {
 
 	public static ArrayList<GameCharacter> pickedPartners = new ArrayList<GameCharacter>();
 	public static boolean reviewMode = false;
-	public static int maxPartners = 3;
+	public static int maxPartners = 3;			// max size of a polycule/marriage, excluding PC. if 0, no max limit
 	public static ArrayList<String> pickedOutfits = new ArrayList<String>();
 	public static String pickedCeremony = null;
 	public static String pickedColour = null;
@@ -253,9 +253,9 @@ public class DreamLover {
 	public static String pickedHoneymoon = null;
 	public static LocalDateTime prepTime;
 	public static LocalDateTime proposalTime;
-	public static boolean partnerLimit = Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.ashleyLimit);
+	public static boolean partnerLimit = false;		// do you know about the limit on partners?
 
-	public static void resetMarriagePlanner() {
+	private static void resetMarriagePlanner() {
 		pickedPartners.clear();
 		reviewMode = false;
 		pickedOutfits.clear();
@@ -267,9 +267,9 @@ public class DreamLover {
 	}
 	
 	private static Response goBack() {
-		if(reviewMode) {
-			return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
-		}	return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
+		if(reviewMode) return new Response("Back", "go back to reviewing the wedding", MARRIAGE_PLANING_REVIEW);
+		
+		return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
 			@Override
 			public void effects() {resetMarriagePlanner();}
 		};
@@ -282,6 +282,10 @@ public class DreamLover {
 			return "Amarok";
 		}
 
+		public void applyPreParsingEffects() {
+			partnerLimit = Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.ashleyLimit);
+		}
+
 		@Override
 		public String getContent() {
 			ArrayList<String> names = new ArrayList<String>();
@@ -291,7 +295,7 @@ public class DreamLover {
 			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_START");
 		}
 		
-		@Override
+	/*	@Override
 		public String getResponseTabTitle(int index) {		// FIXME remove this test object
 			if(index == 0) {
 				return "[style.colourTfPartial("+(pickedPartners.size()<1 || pickedPartners.get(0)==null?"Minimal":pickedPartners.get(0).getName())+")]";
@@ -305,49 +309,45 @@ public class DreamLover {
 				return "[style.colourTfGreater("+(pickedPartners.size()<5 || pickedPartners.get(4)==null?"Greater":pickedPartners.get(4).getName())+")]";
 			}
 			return null;
-		}
+		}	*/
 
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			
-			if(index==0) {
-			// Back
+			if(index==0) {				// Back
 				goBack();
 
-			} else if(index==1) {
-			// Next
+			} else if(index==1) {		// Next
 				if(pickedPartners.size()==0) {
 					return new Response("Next", "you need to select at least one partner before you can proceed", null);
 					
-				} else if(pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 4 && !partnerLimit) {
-					return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_TOO_MANY) {
+				// over the limit
+				} else if(maxPartners > 0 && pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 1 + maxPartners) {
+					if(!partnerLimit) return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_TOO_MANY) {
 						@Override
 						public void effects() {Main.game.getDialogueFlags().setFlag(DialogueFlagValue.ashleyLimit, true);}
 					};
-					
-				} else if(pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 4 && partnerLimit) {
 					return new Response("Next", "Ashley has already told you that you can't be married to more than three partners, you'll need to deselect some", null);	
 				
-				} else {
+				} else {				// under the limit or no limit
 					return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_LOCATION);
 
 				}
 
-			} else if(index==2) {
-			// Select all
+			} else if(index==2) {		// Select all
 				return new ResponseEffectsOnly("[style.colourGood(Select all)]", "select all possible partners") {
 					@Override
 					public void effects() {
 						for(GameCharacter C : Main.game.getPlayer().getFiances()) {
 							if(!pickedPartners.contains(C)) pickedPartners.add(C);
 						}
+					//	pickedPartners.addAll(Main.game.getPlayer().getFiances())
 						Main.game.updateResponses();
 					}
 				};
 				
-			} else if(index==3) {
-			// Deselect all
-				return new ResponseEffectsOnly("[style.colourBad(Select none)]", "deselect all possible partners") {
+			} else if(index==3) {		// Deselect all
+				return new ResponseEffectsOnly("[style.colourBad(Select none)]", "unselect all possible partners") {
 					@Override
 					public void effects() {
 						pickedPartners.clear();
@@ -356,22 +356,23 @@ public class DreamLover {
 				};
 			}
 			
-			for(int i = 0; i < Main.game.getPlayer().getFiances().size(); i++) {
-			// Pick individually
+			for(int i = 0; i < Main.game.getPlayer().getFiances().size(); i++) {		// Pick individually
 				if(index == i + 4) {
 					GameCharacter C = Main.game.getPlayer().getFiances().get(i);
-					if(pickedPartners.contains(C)) {
+					if(pickedPartners.contains(C)) {									// list contains character
 						return new ResponseEffectsOnly(C.getName(), "Remove "+C.getName()) {
+
 							@Override
 							public void effects() {
 								pickedPartners.remove(C);
 								Main.game.updateResponses();
 							}
+
 							@Override
 							public Colour getHighlightColour() {return PresetColour.GENERIC_MINOR_GOOD;}
 						};
 						
-					} else {
+					} else {															// list does not contain character
 						return new ResponseEffectsOnly(C.getName(), "Add "+C.getName()) {
 							@Override
 							public void effects() {
@@ -404,6 +405,7 @@ public class DreamLover {
 			for(GameCharacter npc : pickedPartners) {
 				names.add(npc.getName());
 			}
+
 			UtilText.addSpecialParsingString(Util.intToString(names.size()), true);
 			UtilText.addSpecialParsingString(Util.stringsToStringList(names, false), false);
 			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_TOO_MANY");
@@ -558,7 +560,7 @@ public class DreamLover {
 			ArrayList<String> colours = new ArrayList<String>(Arrays.asList(
 					"Purple", "Gold", "Red"));
 			ArrayList<String> flowers = new ArrayList<String>(Arrays.asList(
-					"Lillies", "Roses", "Driping Liliths"));
+					"Lilies", "Roses", "Dripping Liliths"));
 			ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
 					"Plain", "Jazzy", "Lewd"));
 			
@@ -567,12 +569,12 @@ public class DreamLover {
 				
 			} else if(index==1) {
 				if (pickedColour==null || pickedFlowers==null || pickedBanners==null) {
-					return new Response("Next", "you can't move on until you've decided on the colour pallete, banners and flowers for the ceremony!", null);
+					return new Response("Next", "you can't move on until you've decided on the colour pallet, banners, and flowers for the ceremony!", null);
 				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_CEREMONY);
 				
 			}
 			
-			if(responseTab==0) {
+			if(responseTab==0) {			// colour selection
 				for (int i = 0; i < colours.size(); i++) {
 					if(index==i+2 && colours.get(i)!=null) {
 						final String C = colours.get(i);
@@ -590,7 +592,7 @@ public class DreamLover {
 					}
 				}
 				
-			} else if(responseTab==1) {
+			} else if(responseTab==1) {			// flower selection
 				for (int i = 0; i < flowers.size(); i++) {
 					if(index==i+2 && flowers.get(i)!=null) {
 						final String C = flowers.get(i);
@@ -608,7 +610,7 @@ public class DreamLover {
 					}
 				}
 				
-			} else if(responseTab==2) {
+			} else if(responseTab==2) {			// banner selection
 				for (int i = 0; i < banners.size(); i++) {
 					if(index==i+2 && banners.get(i)!=null) {
 						final String C = banners.get(i);
@@ -623,11 +625,11 @@ public class DreamLover {
 								}	return PresetColour.TEXT;
 							}
 						};
+
 					}
 				}
-				
 			}
-			
+
 			return null;
 		}
 		
@@ -651,7 +653,7 @@ public class DreamLover {
 				goBack();
 
 			} else if(index==1) {
-				return new Response("plain ol ring", "give your partners each a plain ol ring", MARRIAGE_PLANING_HONEYMOON);
+				return new Response("plain ol' ring", "give your partners each a plain ol' ring", MARRIAGE_PLANING_HONEYMOON);
 			}
 			return null;
 		}
@@ -672,7 +674,7 @@ public class DreamLover {
 		@Override
 		public Response getResponse(int responseTab, int index) {
 			ArrayList<String> ceremony = new ArrayList<String>(Arrays.asList(
-					"Peaceful", "Exerbrient", "Lewd", null, null,
+					"Peaceful", "Exuberant", "Lewd", null, null,
 					"Royal", "Casual", "Debacherous"));
 			ArrayList<String> description = new ArrayList<String>(Arrays.asList(
 					"walk to aisle, words exchanged, kiss, off to honeymoon",
@@ -760,11 +762,11 @@ public class DreamLover {
 			if(index==0) {
 				return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
 					@Override
-						public void effects() {
-						//	Main.game.getTextEndStringBuilder().append(UtilText.parseFromXMLFile("places/dominion/shoppingArcade/dreamLover", "SEX_TOY_DISCOVERY"));
-							Main.game.getTextEndStringBuilder().append("well thanks for wasting my time!");
-							resetMarriagePlanner();
-						}
+					public void effects() {
+					//	Main.game.getTextEndStringBuilder().append(UtilText.parseFromXMLFile("places/dominion/shoppingArcade/dreamLover", "SEX_TOY_DISCOVERY"));
+						Main.game.getTextEndStringBuilder().append("well thanks for wasting my time!");
+						resetMarriagePlanner();
+					}
 				};
 			} else if(index==1) {
 				return new Response("Finish and Pay", "Everything looks to be in order, review the prices and then pay", MARRIAGE_PLANING_PAY);
@@ -787,6 +789,9 @@ public class DreamLover {
 
 		@Override
 		public String getContent() {
+			UtilText.addSpecialParsingString(prepTime.getMonthName + " " + prepTime.getDayOfMonth, true);
+			UtilText.addSpecialParsingString(proposalTime.getMonthName + " " + proposalTime.getDayOfMonth, false);
+			UtilText.addSpecialParsingString("20000", false);
 			return UtilText.parseFromXMLFile("romance/AshleyMarriagePlanner", "MARRIAGE_PLANING_PAY");
 		}
 

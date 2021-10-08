@@ -3,8 +3,8 @@
 	<htmlContent tag="LILAYA_PARTNER_MARRIAGE"><![CDATA[
 	<p>
 	    [pc.speech(Hey Lilaya, does the concept of marriage exist here in dominion?)]
-         Lilaya's cheecks turn a tinge red, [lilaya.speech(What? yes of cource [pc.Name]. Couples get married all the time.
-		 Sure it's popularitiy varies with the times, going in and out of fashion, but recent tax benifits have seen an increase in marrigages over the last few months)]
+         Lilaya's cheecks turn a tinge red, [lilaya.speech(What? yes of course [pc.Name]. Couples get married all the time.
+		 Sure it's popularitiy varies with the times, going in and out of fashion, but recent tax benifits have seen an increase in marrigages)]
          [pc.speech(Oh good, I wasn't sure if it was a thing
         #IF(pc.hasPesonalityTrait(PERSONALITY_TRAIT_INNOCENT) || pc.hasPersonalityTrait(PERSONALITY_TRAIT_SHY))
 		 considering... the culture here.
@@ -16,11 +16,11 @@
         [lilaya.speech(Mmm, sure there is a lot of... causal romance going on, but like I said before, there are plently of couples who decide to dedicate themselves.
 		 Well, some couples are more open to fooling about, and some are more excusionary, notwithstanding the occasional arccane storm; That's just a part of life. 
          But I'm sure we still have some things in common, like proposing, taking your betrhothed to a church or someplace similar, exchanging your vows, and then going off to a honeymoon.)]
-        you nod in the affermitive, confirming your aunt's hypothesis.
+        You nod in the affermitive, confirming your aunt's speculation.
 	</p>
 	<p>
         So uh, how come you ask PC?
-        I like my partner NPC a lot, and i stiil plan on ggoing home, its just that they mean a lot to me and i want to show them that our bond means something
+        I like my partner NPC a lot, and i stiil plan on going home, its just that they mean a lot to me and I want to show them that our bond means something
         oh PC, congradulations, lilaya says hugging you
 	</p>
 	<p>
@@ -28,17 +28,20 @@
         oh certainly, considering you don't have lilin, i imagine this is different to how it was back on your home world, but marriages usually happen in a day
         noting the puzzled look on your face, she continues, uh well, tradition states that you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet and married that day"
 					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
-        though you can't just marry anyone, worker protection laws mean you cant marry your own or someone else's slaves. And although you are meant to swwep them of their feet, you can't force them to marry you; no means no.
+        though you can't just marry anyone, worker protection laws mean you cant marry your own or someone else's slaves. And although you are meant to sweep them off their feet, you can't force them to marry you; no means no.
 	</p>
 	<p>
-        So how do i plan the wedding through?
+        So how do i plan the wedding though?
         well we do have dedicated wedding vendors and specailists, hmm, i just can't think of any off the top of of my headd though
 	</p>
 	<p>
         coming to the rescure of her master, Rose speaks up. mistress, I do know of a particularly good wedding vendor
 		Dream Lover, at the shopping mall. Although it is fairly unknown, both it's quality and reasonable prices make it one of, if not the best vendor in the city"
-		rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with. Knowing of the relationship your aunt has with her maid, you can easily guess what she's thinking
+		rose, how do you know this?, lilaya asks blushing, and suddenly finding her tail interesting to play with. Knowing of the relationship your aunt has with her maid, you can easily guess what she's thinking.
 		one of my siblings used it, do you remember my sister lily? Though she did warn me that although the owner goes above and beyond in quality, they're a bit... temperamental;
+		#IF(metashley)
+		 you nod, recalling the shopkepper's attitude
+		#ENDIF
     </p>
 	<p>
         well PC, looks like you know where to go now. If you need anymore help, feel free to talk to me at any time
@@ -48,17 +51,24 @@
 	
 	<htmlContent tag="MARRIAGE_PLANING_START"><![CDATA[
 	<p>
-		hey Ashley, I need your help, im planning to get married, can you help me"
-					+ "Ashley picks up at this, but seems to be eyeing you suspiciously, why use me? there's a bunch of others if you just need a certificate"
-					+ "no, i want a proper ceremony, so I can show them just how much I love them, plus, my aunt's maid reckoned that you were the best at traditional one-day marrigages"
-					+ "aw jeez, ok lets do this, I'll make sure you have the best, most lovely ceremony possible"
-					+ "so can you tell me a bit more about your partner
+		hey Ashley, I need your help, im planning to get married, can you help me
+		 Ashley picks up at this, but seems to be eyeing you suspiciously, why use me? there's a bunch of others if you just need a certificate"
+		 no, i want a proper ceremony, so I can show them just how much I love them, plus, my aunt's maid reckoned that you were the best at traditional one-day marrigages
+		 the hooded shopkeep shuflles around at this compliment, aw jeez, ok lets do this, I'll make sure you have the best, most lovely ceremony possible"
+		 so can you tell me a bit more about your partner
+
+		rummaging about, they pull out a box containing various forms and pamphlets
+		ok this is the official government marriage form, you only have to fill this out once as it's what will be officially filed
+		ashley hands you said form, lookin over it, you see there is enough space for you to write out your own and three others names
 	</p>
 	]]>
 	</htmlContent>
 	
 	<htmlContent tag="MARRIAGE_PLANING_TOO_MANY"><![CDATA[
 	<p>
+		looking at the form and then back at ash, you ask, is there a bigger form? I was planning to get married to more people
+		ash eyes you incredously, how many?
+		[#SPECIAL_PARSE_0]
 		whoa sorry bud, how many people did you want to marry again?"
 					+ [#SPECIAL_PARSE_0], + [#SPECIAL_PARSE_1]
 					+ "yeah sorry not happening bud"
@@ -71,30 +81,31 @@
 	</htmlContent>
 
 	<htmlContent tag="MARRIAGE_PLANING_LOCATION"><![CDATA[
-	#IF(partners == 1)
+	#IF(partners != 1)
 	<p>
-		eurg really, you're marrying two people?"
-					+ "is that going to be a problem?"
-					+ "it won't effect the ceremony, its just that i''m losing what little respect I had for you"
-					+ "they say, writing down notes on your bethrothed
+		eurg really, you're marrying two people?
+		 is that going to be a problem?
+		 it won't effect the ceremony, its just that i'm losing what little respect I had just gained for you
+		 they say, writing down notes on your bethrothed on the form
 	</p>
 	#ELSE
 	<p>
 		Ashley hums in aprovral, good, just one parter
-		why, some kind of problem having two?
+		why, some kind of problem having more?
 		oh there's no difficulty with the process, you just prove yourself to be too horny
 		they say, writing down notes on your bethrothed
+		you decide to avoid furthur conflic and keep your opinions to yourself
 	</p>
 	#ENDIF
-					+ "Anyway, next step is to pick a location"
-					+ "ashley then passes you a brochure"
-					+ "so there's a bunch of options, but these two are the ones i personally recommend, ashley says, pointing at 'Dominion Town Hall' and 'the oaken glade'"
-					+ "the town hall is good for small and simple ceremonies, the glade is fairly prestigious, but I have a few contacts that can get you in there though it'll cost"
+	<p>
+	Anyway, next step is to pick a location, Ashley then passes you a brochure.
+	 so there's a bunch of options, but these two are the ones I personally recommend, they say, pointing at 'Dominion Town Hall' and 'the oaken glade'
+	 The town hall is good for small and simple ceremonies, the glade is fairly prestigious, but I have a few contacts that can get you in there though it'll cost
+	
+	I am however, <i>legally obliged</i>, she says stressing the words, to mention that the Cult of lilith offerers the services of their curches for you ceremony and has <i>excelent</i> deals"
+	 after finishing her obligatory spiel, ashley then makes what apperes to be a gagging motion, though it's a bit hard to tell under their cloak"
 					+ ""
-					+ "I am however, legally obliged, she says stressing the words, to mention that the Cult of lilith offerers the services of their curches for you ceremony and has <i>excelent</i> deals"
-					+ "after finishing her obligatory spiel, ashley then makes a gagging motion, though it's a bit hard to tell under their cloak"
-					+ ""
-					+ "these a few others in  the brochure, letting you have a read of it"
+					+ "these a few others in the brochure, letting you have a read of it"
 					+ "If you have a place yourself, we can do it there"
 					+ "so what are you thinking?
 	</p>
@@ -104,15 +115,15 @@
 	<htmlContent tag="MARRIAGE_PLANING_DRESSING"><![CDATA[
 	<p>
 		okey, now we'll need to pick out what you, your partners, and  the officiant are wearing"
-					+ "Now, I am able tto offer you a large selection of dresses in both traditional and modern styles."
-					+ "I even have a variety on suits, in case, you find a tuxedo too plain
+					+ "Now, I am able to offer you a large selection of dresses in both traditional and modern styles."
+					+ "I even have a variety of suits, in case, you find a tuxedo too plain
 	</p>
 	]]>
 	</htmlContent>
 	
 	<htmlContent tag="MARRIAGE_PLANING_AESTHETICS"><![CDATA[
 	<p>
-		Intrigued by the thought of what this store might offer, you walk up to the entrance and give the door knob a tentative twist; to your dismay, you discover that the store is [style.colourBad(closed)], leaving you with no other option but to step back and consider returning at a later time.
+		next is to pick out the general look. colours, banners, what type of flowers there'll be
 	</p>
 	]]>
 	</htmlContent>
@@ -139,8 +150,8 @@
 		telling them  the type of ceremony you want, ashley nods in approvral / harrumphs in disaproval. i can't belive it, are you doing this just to spite me, or are you that horny? no don't answer that, they say shaking their head. collecting themselves, they continue.
 		 [ashley.speech(ok [pc.name], the type of ceremony that you've chosen comes bundled with a honeymoon package.)] Ashley informs you, before handing you another pamphlet. Opening it up, you see a variety of diifferent seetings. beach side resorts, cosy woodland inns, ornate hotels.
 		 #IF(been to manor house on date)
-		 Flipping through it, a familiar location catches your eye; Manor House resort. you show the pecific page to them
-		 I've been here before on a date with a partner so I know a bit about it already, but can you tell me about these 'lovebird specialties'?
+		 Flipping through it, a familiar location catches your eye; Manor House resort. you show the specific page to them
+		 I've been here before on a date with a partner so I know a bit about it already, but can you tell me about these 'newlywed specialties'?
 		 Not a bad choise this one, as you would already know, there's a lot to do there for the bargin price
 		 #ELSE
 		 Flipping through it, one particular package catches your eye; Manor House resort. you show the pecific page to them
@@ -154,10 +165,13 @@
 	<htmlContent tag="MARRIAGE_PLANING_REVIEW"><![CDATA[
 	<p>
 		[ashley.speech(Ok so now we've covered everything that you need, we can go back and change your mind.
-		 But either way, here's a breakdown of the costs)]
+		 But either way, here's a breakdown of how much it's going to pay for everything)]
 		 looking over the list, you notice a few 'taxes'
-		 So because i'm lewd I have to pay more
-		 yup, you're making me put up with doing this, you're going to pay for it.
+		 So because i'm lewd I have to pay more?
+		
+		[ashley.speech(yup, you're making me put up with doing this, you're going to pay for it.)]
+		 If you wanted to, you could do as ashley said and change some of the planning for the ceremony.
+		 Otherwise, you should let her know that it is fine as is.
 	</p>
 	]]>
 	</htmlContent>
@@ -175,6 +189,4 @@
 	</p>
 	]]>
 	</htmlContent>
-	
-	
 </dialogue>

@@ -6,68 +6,75 @@ DONE
     make sure the game can read it from XML
 
     add addmarriage command
-
     add removemarriage command
     add getmarriages command
 
 TODO
+    Figure out polycule/dating network system
+        if there are relationships AB and AC, causing BC should collapse all three into ABC
+        characters can be monoamorous (one parter only), biamourous (open relationship) or polyamorus (group relationship)
     Add proposition option to well loved npc
         won't be able to marry slaves without freeing
     Possibly need to go on dates with npc before marriage
-    Add to discription text, detailing relationship
+    Add to description text, detailing relationship
     Add saved longs for planning and proposing
-    Add feature to invie npcs to wedding
+    Add feature to invite npcs to wedding
 
 GENERAL IDEAS
-    convince rose and lilaya to get married
-        requires you to have been married AND to have met lilaya's mum
-    if manor house picked as honeymoon, get a 'murder' mystery Black Butler/Midsommar muders style
-        insead of bing murderd, guested get fucked into ahego-mindbreak
+    convince rose and Lilaya to get married
+        requires you to have been married AND to have met Lilaya's mum
+    if manor house picked as honeymoon, get a 'murder' mystery Black Butler/Midsummer murders style
+        instead of being murdered, guested get fucked into ahego-mindbreak
 
 
 DATING
     go on roughly weekly dates to improve passion
-    general idea for a mechanic, NPCs will have a comfortale pay range, if you exceed it (even if you're paying), it might upset them and decrease passion returns
+    general idea for a mechanic, NPCs will have a comfortable pay range, if you exceed it (even if you're paying), it might upset them and decrease passion returns
     if you turn up as something they're not attracted to, they'll cancel the date there and then, and passion will be lost
-    mutual, you have to perform actions to increase their passion towards you, and you have a choise of how to react to certain advancements which will alter your passion to them
+    actions are mutual, you have to perform actions to increase their passion towards you, and you have a choice of how to react to certain advancements which will alter your passion to them
     can do triple dates if forming a polycule, though will be more difficult as you have to convince both your new parter and your old one to like each other
         selfish club partners might already have a partner (or two) that you will have to deal with
-        other clubbers might already be married, if you have a companion, this might lead to a quick 4polycule
+        other clubbers might already be married, if you have a companion, this might lead to a quick 4X polycule
         you can attempt to try and woo all partners, or even try and sabotage their relationship so you can take one of them for yourself
+            I can see this eating all my time already...
 
     Guest
     Offspring
     Dom clubber
-        hey uh npc, this is kinda embarrising for me to say, but even thouh we've only known each other for a little while, i like you
-        well damn, after that, how could i leave such a cute boy/girl like you here, how bout we find somwere to go
+        hey uh npc, this is kinda embarrassing for me to say, but even though we've only known each other for a little while, i like you
+        well damn, after that, how could i leave such a cute boy/girl like you here, how bout we find somewhere to go
         /will stay the night at their place instead of being booted out/
     Sub clubber
-        hey, i really like you how bout i treat you to someplace better than this?
+        hey, i really like you how bout i treat you to some place better than this?
 
 
 MARRIAGE
     at mutual passion 80+, you can get married
     do through ashley, like with nyan
-    max of 4 in a single marriage, so you can only do 3 in a row. Govt ordninace to prevent batchelors?
+    max of 4 in a single marriage, so you can only do 3 in a row. Govt ordinance to prevent bachelors?
     npcs will move in with you, into your room. may limit amount of slaves permitted?
     children born in wedlock will stick about for 2 hours after birth before leaving
+
     the asker will walk/carry the askee down the aisle, unlike western marriages where the bride walks to the groom
-    maybe the parents wait at the aisle to 'challenge' the asker
+    maybe the parents wait at the aisle to 'challenge' the asker, link to lore?
     if using Ashley, can only marry people in Dominion/Submission, Foloi fields have their own system
+
     instead of going door-to-door, to find each partner, go to one on the list and use one single dialogue node describing finding all of them
+        like this idea, saves character walking round nonsense
+        should put in tooltip "are you sure about this, after proposing to X, you will also propose to Y and Z as well"
     next dialogue node will be taking them to location, signing the paper work, getting them dressed
     next dialogue node will be the actual ceremony
     then honeymoon
 
     marriage quest
     1   reach marriageability level with any partner
-    2   talk to lilaya about it, she will guide you to Dream Lover
+    2   talk to Lilaya about it, she will guide you to Dream Lover
     2a      Liliya will prefer your marriage is not a public event, as not to drag her and her mother into it. different matter if post-demon
     3   Ashley will further warm up to you, being less abrasive. gives you ring and organizes wedding
     3a      plan out wedding, choose what people are wearing
     3b      Some time will need to pass to let ashley set it up, also allows you to invite friends to the wedding
     3c      maybe a fade-to-black, auto invites? do it in wedding planner?
-    4   Find partner and give them ring, take them to wedding (if enough physique, describes you as physically picking them up over your shoulder / back if taur)
+    4   Find partner and give them ring, take them to wedding (if enough physique, describes you as physically picking them up over your shoulder / back if 'taur)
     5   Get heckin' married
     6   Final things before Honeymoon
     6a      demon transformation, give ashley a performance review to her government manager
@@ -88,9 +95,9 @@ DATA
     CHARACTER   
         the npc that this character is married to
     BOND
-        the strenght of the relationship between the npc and this character
-        seperate to affection, but will be linked
-        need a minium amount to get married, increased by dates
+        the strength of the relationship between the npc and this character
+        separate to affection, but will be linked
+        need a minimum amount to get married, increased by dates
         if it falls below a certain point, the other will initiate divorce proceedings, which will get expensive
         might be able to get remarried
     STATUS
