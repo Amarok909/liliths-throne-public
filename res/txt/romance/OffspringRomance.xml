@@ -3,18 +3,32 @@
 
 	<htmlContent tag="OFFSPRING_START_DATING"><![CDATA[
 	<p>
-		hey npc, i know we've only known each other for a short while, but I really enjoy spending time with you.
-		 You're really hot, handsome, kind, and you know how to show a [pc.guy] a good time.
-		 This is hard for even me to say, but I really like you, will you be my boyfriend?
-
-		 Look son, you may be an adult, but you'll always be my precious little boy, and I will always love you.
-		 How about I give you one of [pc.daddy]'s make-everything-better kisses, you say, taking your son's head in your hands and placing a kiss on his forehead
-
 		#IF(pc.getTotalTimesHadSex(npc)>=1)
-		#THEN hey npc, ive been thinking. we have a special relationship, I think we should make it offical
+		#THEN hey npc, i'm concerned about your romantic development, A boy your age should really have a partner to depend on not just for sex, but for company.
+				 I know you haven't had the best stt to life, and might not know how to go about this, so ive been thinking.
+				 We have a special relationship, I think we should make it offical, will you be daddy's boyfriend?
+
 		#ELSE hey npc, i'm concerned about your romantic development, I think it's time you got a girlfriend.
 				 but I want you to be prepared when you meet the right person for you, and dont think i haven't noticed the sneak peeks youve been taking at me, so will you be [pc.daddy]'s boyfriend?
 		#ENDIF
+	</p>
+	<p>
+		CONFIDENT	Dad, i'd love to be your boyfreind, your son exclaims
+		SHY			npc stammers, y-yes, i'd love to be your boyfriend
+		KIND		npc smiles, ther's no one better that i would want for a partner
+		SELFISH		But of couse, even you recognise how brilliant i am, your son boasts
+	</p>
+	]]>
+	</htmlContent>
+
+	<htmlContent tag="OFFSPRING_BREAK_UP_GENTLE"><![CDATA[
+	<p>
+		hey kiddo, i know we've been dating for a while, but i don't think things can last like this. I think we should break up
+
+		 Look son, you may be an adult, but you'll always be my precious little [npc.boy], and I will always love you.
+		 How about I give you one of [pc.daddy]'s make-everything-better kisses, you say, taking your son's head in your hands and placing a kiss on his forehead
+
+		I'm sorry I had to end things between us, but it's going to be better for you in the long run.
 
 	</p>
 	]]>

@@ -13,7 +13,7 @@
 		#ELSE
 			#IF npc.isConfident()
 			#THEN Although npc is usally pretty confident, your confession has got him blushing like a schoolboy, [npc.speech([pc.Name]! Hi again! How are you doing?!)]
-			#ELSE [npc.speech(Oh, [pc.name]! Hi! How are you?)]
+			#ELSE npc isn't the most confident of people, but you confession has turned him red as a post box, [npc.speech(Oh, [pc.name]! I can't belive it, yes!)] they say, throwing their arms around you
 			#ENDIF
 		#ENDIF
 	</p>
@@ -35,7 +35,7 @@
 		#ELSE
 			#IF npc.isSelfish()
 			#THEN [npc.speech(Well damn, [pc.babe(npc)], after that, how could I say no. Yeah, I'll be your [npc.man])] npc says, before leaning in and kissing you. [npc.His] tongue abruptly surges forward, and you're suddenly making out with your new boyfriend. Breaking off to let you breathe, [npc.speech(now how could I leave such a cute boy/girl like you here, how 'bout we find go back to mine and I can show you how a real [npc.man] treats [npc.his]#IF(pc.isFeminine()!=npc.isFeminine()) [pc.woman].#ELSE [pc.girlfriend].#ENDIF)]
-			#ELSE [npc.speech(Aw gosh, [pc.name], that was really touching. I would love to be your boyfriend.)] npc says before placing his hands on your hips and pulling you in for a kiss. You start kissing him back as you embrace each other under the clubs strobing lights. Breaking off the kiss, Npc speaks huskily, [npc.speech(Hey, how about)]
+			#ELSE [npc.speech(Aw gosh, [pc.name], that was really touching. I would love to be your boyfriend.)] npc says before placing his hands on your hips and pulling you in for a kiss. You start kissing him back as you embrace each other under the clubs strobing lights. Breaking off the kiss, Npc speaks huskily, [npc.speech(Hey, how about we head on over to my place and I can <i>really</i> show you how much I love you)]
 			#ENDIF
 		#ENDIF
 	</p>
