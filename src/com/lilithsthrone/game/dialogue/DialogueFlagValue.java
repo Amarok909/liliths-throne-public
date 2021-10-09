@@ -90,6 +90,7 @@ public enum DialogueFlagValue {
 	
 	ashleySexToysDiscovered,
 	ashleyAttitude,
+	ashleyLimit,
 	
 	reactedToKatePregnancy,
 	

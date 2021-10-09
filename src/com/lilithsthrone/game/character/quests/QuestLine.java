@@ -85,6 +85,11 @@ public enum QuestLine {
     SIDE_REBEL_BASE_FIREBOMBS("Spicy Meatballs", "You've gotten yourself a steady supply of Arcane Firebombs. At the usual premium, of course.",
             QuestType.SIDE,
             QuestTree.rebelBaseFirebombTree),
+
+	SIDE_MARRIAGE("Wedding Bells", "You've found someone you truely adore, and you want to declare your love for them though holy matrimony",
+    		QuestType.SIDE,
+    		QuestTree.marriageTree),
+	
 	
 	// Romance quests:
 	
