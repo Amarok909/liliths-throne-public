@@ -11,8 +11,15 @@ DONE
 
 TODO
     Figure out polycule/dating network system
-        if there are relationships AB and AC, causing BC should collapse all three into ABC
-        characters can be monoamorous (one parter only), biamourous (open relationship) or polyamorus (group relationship)
+        if there are relationships AB and AC, forming BC should collapse all three into ABC
+        relationships ABC and ABD are separate, require CD to become ABCD
+        relationships ABCD and ABEF are separate, requires CE, CF, DE, DF to become ABCDEF
+            if only CE and CF are formed, then networks ABCDF, ABEF exist?
+        example of mathematical network, can this be done without matrices?
+            in fully connected, links = n(n-1)/2
+        characters can be monoamorous (one parter only), biamourous (open relationship) or polyamorous (group relationship)
+            devoted, open lover, and polyamorous for terms?
+
     Add proposition option to well loved npc
         won't be able to marry slaves without freeing
     Possibly need to go on dates with npc before marriage

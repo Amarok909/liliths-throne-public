@@ -362,7 +362,7 @@ public class OccupantDialogue {
 					&& Main.game.getPlayer().getPassion(occupant()) >= 80) {	// Marriage Mode
 						
 						if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE)) {	// Hasn't started marriage quest
-							return new Response("Marry Quest", UtilText.parse(occupant(), "Need to quest before proposing"), OCCUPANT_START) {
+							return new Response("Marriage Quest", UtilText.parse(occupant(), "Need to quest before proposing"), OCCUPANT_START) {
 								@Override
 								public void effects() {
 									Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().startQuest(QuestLine.SIDE_MARRIAGE));
@@ -385,7 +385,7 @@ public class OccupantDialogue {
 						}
 
 					} else {	// Dating Mode
-						if(occupant().isRelatedTo(Main.game.getPlayer()) && (!Main.game.isIncestEnabled() || !occupant().hasFetish(Fetish.FETISH_INCEST))) {
+						if(occupant().isRelatedTo(Main.game.getPlayer()) && !(Main.game.isIncestEnabled() && occupant().hasFetish(Fetish.FETISH_INCEST))) {
 							return new Response("Ask out", UtilText.parse(occupant(), "[npc.Name] is your adorable [npc.relationTo(pc)]! There's no way you're dating [npc.her]!"), null);
 						}
 

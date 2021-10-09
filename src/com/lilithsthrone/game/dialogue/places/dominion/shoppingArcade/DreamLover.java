@@ -253,7 +253,7 @@ public class DreamLover {
 	public static String pickedHoneymoon = null;
 	public static LocalDateTime prepTime;
 	public static LocalDateTime proposalTime;
-	public static boolean partnerLimit = false;		// do you know about the limit on partners?
+	public static boolean partnerLimit = false;		// does the pc know about the limit on partners?
 
 	private static void resetMarriagePlanner() {
 		pickedPartners.clear();
@@ -264,6 +264,20 @@ public class DreamLover {
 		pickedFlowers = null;
 		pickedBanners = null;
 		pickedHoneymoon = null;
+	}
+
+	private boolean checkRomance(List<GameCharacter> npc) {
+		if(!npc.contains(Main.game.getPlayer())) npc.Add(Main.game.getPlayer());	// pc needs to be compared as well, if not in list, add
+
+		for(int i = 0; i < npc.size(); i++) {
+			for(int j = 0; j < npc.size(); j++) {
+				if(npc.get(i)==npc.get(j)) continue;		// if comparing the same character, skip
+
+				if(npc.get(i).getPassion(npc.get(j)) < 80) return false;	// one npc does not like another enough to get married, so can't happen
+			}
+		}
+
+		return true;	// everyone has at least 80 passion towards everyone else
 	}
 	
 	private static Response goBack() {
@@ -321,6 +335,9 @@ public class DreamLover {
 				if(pickedPartners.size()==0) {
 					return new Response("Next", "you need to select at least one partner before you can proceed", null);
 					
+				} else if(checkRomance(pickedPartners)==false) {	// not enough mutual passion
+					return new Response("Next", "some of your partners aren't passionate enough about each other, they won't want to get married", null);
+
 				// over the limit
 				} else if(maxPartners > 0 && pickedPartners.size() + Main.game.getPlayer().getSpouces().size() >= 1 + maxPartners) {
 					if(!partnerLimit) return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_TOO_MANY) {
