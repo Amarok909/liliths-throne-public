@@ -391,8 +391,7 @@ public abstract class GameCharacter implements XMLSaving {
 	// Relationship stats:
 	/** String is character ID*/
 	private Map<String, Float> affectionMap;
-	private Map<String, Long> datingMap;
-	private Map<String, Map<MaritalStatus, Float>> romanceMap;
+	private Map<String, List<Float>> romanceMap;
 	
 	
 	// Pregnancy:
@@ -546,7 +545,6 @@ public abstract class GameCharacter implements XMLSaving {
 		sexualOrientation = SexualOrientation.AMBIPHILIC; 
 
 		affectionMap = new HashMap<>();
-		datingMap = new HashMap<>();
 		romanceMap = new HashMap<>();
 		
 		obedience = 0;
@@ -2652,10 +2650,7 @@ public abstract class GameCharacter implements XMLSaving {
 						}
 					}
 				}
-
-
-
-
+				
 			}
 		}
 		
@@ -4720,17 +4715,12 @@ public abstract class GameCharacter implements XMLSaving {
 	
 	// Romance
 
-	public Map<String, Map<MaritalStatus, Float>> getRomanceMap() {
+	public Map<String, List<Float>> getRomanceMap() {
 		return this.romanceMap;
 	}
-	
-	public void clearRomanceMap() {	//Only clears this relationship map, does not remove relationship from partner
-		this.romanceMap.clear();
-	}
 
-	
-	
-	public ArrayList<String> getRomanticState(GameCharacter character) {
+
+	public ArrayList<String> getRomanticState(GameCharacter character) {		// mainly a debugging tool, turn into something to add to descriptions?
 		ArrayList<String> Profile = new ArrayList<>();
 		Profile.add(String.valueOf(character.getId()));
 		Profile.add(String.valueOf(getMaritalStatus(character)));
@@ -4739,73 +4729,103 @@ public abstract class GameCharacter implements XMLSaving {
 	}
 	
 	public MaritalStatus getMaritalStatus(GameCharacter character) {
-		if(!hasRelationshipWith(character)) {
-			return MaritalStatus.NONE;
-		}
-		String A = character.getId();
-		return romanceMap.get(A).entrySet().iterator().next().getKey();
+		if(!hasRelationshipWith(character)) return MaritalStatus.NONE;
+
+		int index = this.romanceMap.get(character.getId()).get(0).intValue();
+		return MaritalStatus.values()[index];
 	}
 	
 	public Float getPassion(GameCharacter character) {
-		if(!hasRelationshipWith(character)) {
-			return 0f;
-		}
-		String A = character.getId();
-		MaritalStatus B = getMaritalStatus(character);
-		return romanceMap.get(A).get(B);
-	}
-	
-	
-	
-	public void setRomanticState(String characterID, MaritalStatus status, Float bond) {
-		try {
-			this.getRomanceMap().put(characterID, new HashMap<MaritalStatus, Float>());
-			this.getRomanceMap().get(characterID).put(status, Math.max(-100, Math.min(100, bond)));
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		}
-	}
+		if(!hasRelationshipWith(character)) return 0f;
 
-	public void setRomanticState(GameCharacter character, MaritalStatus status, Float bond) {
-		setRomanticState(character.getId(), status, bond);
+		return this.romanceMap.get(character.getId()).get(1);
 	}
 	
-	public void setPassion(GameCharacter character, Float bond) {
-		this.setRomanticState(character, getMaritalStatus(character), bond);
+	
+	public void setPassion(GameCharacter character, Float bond, Boolean mutual) {
+		this.getRomanceMap().get(character.getId()).set(1, bond);
+		if(mutual) character.getRomanceMap().get(this.getId()).set(1, bond);
 	}
 	
-	public void setMaritalStatus(GameCharacter character, MaritalStatus status) {
-		try {
-			this.setRomanticState(character, status, this.getPassion(character));
-			character.setRomanticState(this, status, character.getPassion(this));
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
+	public void setMaritalStatus(GameCharacter character, MaritalStatus status) {	// mutual by default
+	//	numbers.ensureCapacity(500);	// useful code
+		this.getRomanceMap().get(character.getId()).set(0, (float) status.ordinal());	// this' status towards character
+		character.getRomanceMap().get(this.getId()).set(0, (float) status.ordinal());	// character's status towards this
+	}	
 	
 	
 	public void createRelationship(GameCharacter character) {	// Creates for both parties
-		if( !(this.hasRelationshipWith(character) && character.hasRelationshipWith(this)) ) {
-			
-			Float bond = (this.getAffection(character) + character.getAffection(this))/4f;
-			
-			this.setRomanticState(character, MaritalStatus.DATING, bond);
-			character.setRomanticState(this, MaritalStatus.DATING, bond);
+		if(this.hasRelationshipWith(character) && character.hasRelationshipWith(this)) return;
+
+		List<Float> data = new ArrayList<Float>(Arrays.asList(
+			MaritalStatus.DATING.ordinal() * 1f,								// marital status: dating at creation
+			(this.getAffection(character) + character.getAffection(this))/4f,	// initial bond
+			0f,		// date count
+			-1f,	// next date time
+			0f,		// spares
+			0f,
+			0f,
+			0f
+		));
+
+		this.getRomanceMap().put(character.getId(), data);
+		character.getRomanceMap().put(this.getId(), data);
+	}
+
+	public void createRelationships(List<GameCharacter> characters) {	// Creates for multiple individuals
+		GameCharacter pc = Main.game.getPlayer();
+		if(!characters.contains(pc)) characters.add(pc);	// pc needs to be compared as well, if not in list, add
+		Boolean abort = true;
+		Float bond = 0f;
+		
+		for(int i = 0; i < characters.size(); i++) {
+			for(int j = 0; j < characters.size(); j++) {
+				if(characters.get(i).equals(characters.get(j))) continue;		// if comparing the same character, skip
+				bond += characters.get(i).getAffection(characters.get(j));
+				abort = abort && characters.get(i).hasRelationshipWith(characters.get(j));	// this is a lock-false switch, use or for a lock-true switch
+			}
+		}
+
+		if(abort) return;
+		bond /= 2 * characters.size() * (characters.size()-1);	// half of average attraction
+		List<Float> data = new ArrayList<Float>(Arrays.asList(
+			(float) MaritalStatus.DATING.ordinal(),		// marital status: dating at creation
+			bond,	// initial bond
+			0f,		// date count
+			-1f,	// next date time
+			0f,		// spares
+			0f,
+			0f,
+			0f
+		));
+
+		for(int i = 0; i < characters.size(); i++) {
+			for(int j = 0; j < characters.size(); j++) {
+				if(characters.get(i).equals(characters.get(j))) continue;		// if comparing the same character, skip
+				characters.get(i).getRomanceMap().put(characters.get(j).getId(), data);
+			}
 		}
 	}
 	
+	/**
+	 * Checks if this character has a relationship with the target
+	 * @param character the targeted character
+	 * @param excludeEx whether to only check for Married or Dating relationships
+	 */
 	public boolean hasRelationshipWith(GameCharacter character, Boolean excludeEx) {
-		if(excludeEx) {
-			switch (getMaritalStatus(character)) {
-			case MARRIED: case DATING:
-				return true;
-			default:
-				return false;
-			}
+		if(!excludeEx) {
+			return this.getRomanceMap().keySet().contains(character.getId())
+				&& this.getRomanceMap().get(character.getId())!=null
+				&& this.getRomanceMap().get(character.getId()).size()>=2;
+			// has any type of relationship with this character, and the list is satisfactory
 		}
-		return this.getRomanceMap().keySet().contains(character.getId());
+
+		switch (getMaritalStatus(character)) {
+		case MARRIED: case DATING:
+			return true;
+		default:
+			return false;
+		}
 	}
 	
 	public boolean hasRelationshipWith(GameCharacter character) {
@@ -4814,29 +4834,17 @@ public abstract class GameCharacter implements XMLSaving {
 
 	public void removeRelationship(GameCharacter character, boolean removeAll) {	// Removes the relationship for both parties, not the same as clearRelationsMap
 		if(removeAll) {
-			while(this.getRomanceMap().size()>0) {
-				Entry<String, Map<MaritalStatus, Float>> rel = this.getRomanceMap().entrySet().iterator().next();
-				GameCharacter partner;
+			for(Entry<String, List<Float>> E : this.getRomanceMap().entrySet()) {
 				try {
-					partner = Main.game.getNPCById(rel.getKey());
-					
-					this.getRomanceMap().remove(partner.getId());
-					partner.getRomanceMap().remove(this.getId());
-
-					this.getDatingMap().remove(partner.getId());
+					this.getRomanceMap().remove(E.getKey());
+					Main.game.getNPCById(E.getKey()).getRomanceMap().remove(this.getId());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		} else {
-			this.getRomanceMap().remove(character.getId());
-			character.getRomanceMap().remove(this.getId());
-			this.getDatingMap().remove(character.getId());
-		}
-	}
 
-	public void removeRelationship(GameCharacter character) {
-		this.removeRelationship(character, false);
+		this.getRomanceMap().remove(character.getId());
+		character.getRomanceMap().remove(this.getId());
 	}
 	
 
@@ -4851,8 +4859,8 @@ public abstract class GameCharacter implements XMLSaving {
 	 */
 	public String incrementPassion(GameCharacter character, float passionIncrement, String passionChangeDescription, boolean mutual) {
 
+		this.setPassion(character, this.getPassion(character) + passionIncrement, false);
 		if(!mutual) {
-			setPassion(character, getPassion(character) + passionIncrement);
 			return UtilText.parse(this, character,
 					"<p style='text-align:center'>"
 						+ (passionChangeDescription!=null && !passionChangeDescription.isEmpty()?"<i>"+passionChangeDescription+"</i><br/>":"")
@@ -4860,8 +4868,7 @@ public abstract class GameCharacter implements XMLSaving {
 						+ PassionLevel.getDescription(this, character, getAffectionLevel(character), true)
 					+ "</p>");
 		} else {
-			this.setPassion(character, this.getPassion(character) + passionIncrement);
-			character.setPassion(this, character.getPassion(this) + passionIncrement);
+			character.setPassion(this, character.getPassion(this) + passionIncrement, false);
 			return UtilText.parse(this, character,
 					"<p style='text-align:center'>"
 						+ (passionChangeDescription!=null && !passionChangeDescription.isEmpty()?"<i>"+passionChangeDescription+"</i><br/>":"")
@@ -4873,14 +4880,6 @@ public abstract class GameCharacter implements XMLSaving {
 
 	// Dating
 	
-	public Map<String, Long> getDatingMap() {
-		return this.datingMap;
-	}
-	
-	public void clearDatingMap() {
-		this.datingMap.clear();
-	}
-
 	public void setNextDateTime(String characterID, Long epoch) {
 		this.getDatingMap().put(characterID, epoch);
 		if(Main.game.getSecondsPassed()>epoch) {
@@ -4898,7 +4897,7 @@ public abstract class GameCharacter implements XMLSaving {
 		LocalDateTime today = Main.game.getDateNow();
 		
 		switch(character.getOccupation()) {
-			case NPC_STRIPPER:	//Wan't to keep up their appearance, but has some time to spare, will prefer you pay, but open to personality
+			case NPC_STRIPPER:	//Wants to keep up their appearance, but has some time to spare, will prefer you pay, but open to personality
 				dayWait = Math.max(5, Math.min(7, Util.random.nextInt(9)));
 				switch (today.plusDays(dayWait).getDayOfWeek()) {
 					case MONDAY:
@@ -4949,8 +4948,7 @@ public abstract class GameCharacter implements XMLSaving {
 		long secondsToNextDate = ChronoUnit.SECONDS.between(Main.game.getDateNow(), nextDate);
 		setNextDateTime(character.getId(), secondsToNextDate);
 		return secondsToNextDate;
-			
-	
+		
 	}
 
 	public long getNextDateTime(GameCharacter character) {
@@ -4965,41 +4963,60 @@ public abstract class GameCharacter implements XMLSaving {
 		}
 		return false;
 	}
-	
-	public List<GameCharacter> getSpouces() {
-		ArrayList<GameCharacter> characs = new ArrayList<GameCharacter>();
-		for(Entry<String, Map<MaritalStatus, Float>> E : this.romanceMap.entrySet()) {
-			try {
-				GameCharacter C = Main.game.getNPCById(E.getKey());
-				if(this.getMaritalStatus(C) == MaritalStatus.MARRIED) characs.add(C);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}	return characs;
+
+	public static PayBehaviour getPayBehaviour(GameCharacter npc) {
+		PayBehaviour assigned = null;
+		Integer random = Util.random.nextInt(100);
+
+		if(npc.hasPersonalityTrait(PersonalityTrait.SELFISH)) {
+			if(random < 40) assigned = PayBehaviour.STINGY;
+			if(random < 20) assigned = PayBehaviour.GOLDDIGGER;
+		}
+
+		if(assigned!=null) return assigned;
+
+		for(PayBehaviour P : PayBehaviour.values()) {
+			if(random < P.getBehaviourChance()) assigned = P;
+			break;
+		}
+
+		return assigned;
 	}
 	
-	public List<GameCharacter> getFiances() {
-		ArrayList<GameCharacter> characs = new ArrayList<GameCharacter>();
-		for(Entry<String, Map<MaritalStatus, Float>> E : this.romanceMap.entrySet()) {
+	public List<GameCharacter> getSpouces() {		// returns all npcs this character is married to
+		ArrayList<GameCharacter> npc = new ArrayList<GameCharacter>();
+		for(Entry<String, List<Float>> E : this.romanceMap.entrySet()) {
 			try {
 				GameCharacter C = Main.game.getNPCById(E.getKey());
-				if(this.getMaritalStatus(C) == MaritalStatus.DATING && this.getPassion(C) >= 80) characs.add(C);
+				if(this.getMaritalStatus(C) == MaritalStatus.MARRIED) npc.add(C);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}	return characs;
+		}	return npc;
 	}
 	
-	public List<GameCharacter> getPartners() {
-		ArrayList<GameCharacter> characs = new ArrayList<GameCharacter>();
-		for(Entry<String, Map<MaritalStatus, Float>> E : this.romanceMap.entrySet()) {
+	public List<GameCharacter> getFiances() {		// returns all npcs this character can marry
+		ArrayList<GameCharacter> npc = new ArrayList<GameCharacter>();
+		for(Entry<String, List<Float>> E : this.romanceMap.entrySet()) {
 			try {
 				GameCharacter C = Main.game.getNPCById(E.getKey());
-				if(this.getMaritalStatus(C) == MaritalStatus.DATING) characs.add(C);
+				if(this.getMaritalStatus(C) == MaritalStatus.DATING && this.getPassion(C) >= 80) npc.add(C);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}	return characs;
+		}	return npc;
+	}
+	
+	public List<GameCharacter> getPartners() {		// returns all npcs this npc is dating
+		ArrayList<GameCharacter> npc = new ArrayList<GameCharacter>();
+		for(Entry<String, List<Float>> E : this.romanceMap.entrySet()) {
+			try {
+				GameCharacter C = Main.game.getNPCById(E.getKey());
+				if(this.getMaritalStatus(C) == MaritalStatus.DATING) npc.add(C);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	return npc;
 	}
 	
 	// Slavery:

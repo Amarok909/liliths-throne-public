@@ -37,8 +37,11 @@ GENERAL IDEAS
 DATING
     go on roughly weekly dates to improve passion
     general idea for a mechanic, NPCs will have a comfortable pay range, if you exceed it (even if you're paying), it might upset them and decrease passion returns
-    if you turn up as something they're not attracted to, they'll cancel the date there and then, and passion will be lost
+        remodel this into a 'class' feature? FORMAL FANCY CASUAL SLOPPY
+    if you turn up as something they're not attracted to, they'll cancel the date there and then, and large amount of passion will be lost
+        put up a warning beforehand?
     actions are mutual, you have to perform actions to increase their passion towards you, and you have a choice of how to react to certain advancements which will alter your passion to them
+
     can do triple dates if forming a polycule, though will be more difficult as you have to convince both your new parter and your old one to like each other
         selfish club partners might already have a partner (or two) that you will have to deal with
         other clubbers might already be married, if you have a companion, this might lead to a quick 4X polycule
@@ -57,17 +60,18 @@ DATING
 DATES
     PLANNED
         DAY
-            Museum trip
-		    Fields picnic
-            Home lunch
-            Oaken Glades lunch
+            Home lunch                  | Meet up at Lilaya's place, bonus passion if have cook skill
+            Museum/Zoo trip
+            Oaken Glades lunch          | Meet up at Arcade entrance (either inside or outside the building) 
+		    Fields picnic               | Meet at city gates
         NIGHT
-            Demon home fireworks
-            Helena's hotel restaurant
-			Manor house hotel 
-            High society dance
             Home dinner
+            Demon home fireworks        | Meet up at either demon home entrance
+            Helena's hotel restaurant
             Oaken Glades dinner
+            High society dance
+			Manor house hotel 
+
     IMMEDIATE
         DAY 
             Park visit
@@ -75,7 +79,7 @@ DATES
         NIGHT
             Park visit
             Bar
-            Nightclub
+            Nightclub (Watering hole)
             
     dates can be initiated by either you or your partner(s)
     some can only be started by you, and some only by your parter
@@ -104,7 +108,7 @@ MARRIAGE
     marriage quest
     1   reach marriageability level with any partner
     2   talk to Lilaya about it, she will guide you to Dream Lover
-    2a      Liliya will prefer your marriage is not a public event, as not to drag her and her mother into it. different matter if post-demon
+    2a      Liliya will prefer your marriage is not a public event, as not to drag her and her mother into it. different matter if post-demon?
     3   Ashley will further warm up to you, being less abrasive. gives you ring and organizes wedding
     3a      plan out wedding, choose what people are wearing
     3b      Some time will need to pass to let ashley set it up, also allows you to invite friends to the wedding
@@ -128,17 +132,46 @@ MARRIAGE
 
 DATA
     CHARACTER   
-        the npc that this character is married to
-    BOND
+        the npc that this character is married/dating to
+
+    STATUS          index:0
+        Dating
+        Married
+        Divorced
+
+    BOND            index:1
         the strength of the relationship between the npc and this character
         separate to affection, but will be linked
         need a minimum amount to get married, increased by dates
         if it falls below a certain point, the other will initiate divorce proceedings, which will get expensive
-        might be able to get remarried
-    STATUS
-        Dating
-        Married
-        Divorced
+        might be able to get remarried?
+
+    DATE COUNT      index:2
+        counts amount of dates been on
+
+    DATE WEIGHT     index:3
+        measures who's been paying the most
+        + if you pay
+        - if they pay
+        Golddigger and stringy will get annoyed if goes past -ve limitis
+        GlucoseGuardian and generous are happy if it goes past -ve limitis
+        fair will be upset if it goes too far either way
+            GD  no remore if +ve limit, angry if past -ve limit
+            ST  if goes past +ve limit, will feel guilty and pay, annoyed if past -ve limit
+            FA  annoyed if +ve or -ve limit reached
+            GE  get annoyed/fussy if past +ve limit
+            GG  angry if past +ve limit
+        the value of the date, ie how luxurious it was, will also add to the applied weight
+            park walks are low, planed lunched are medium, high society events are high ect
+            effort, rarity, cost, and difficulty correlate to higher bonuses
+
+    NEXT DATE
+        date of next date in MFS (minutes from start)
+        standard window of 1hr?
+            phone notification system needed? only goes off in neutral scenes
+
+    DATE INDEX
+        what type of date it is
 
 TEXT
     

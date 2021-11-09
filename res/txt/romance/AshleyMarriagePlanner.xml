@@ -20,19 +20,21 @@
 	</p>
 	<p>
         So uh, how come you ask PC?
-        I like my partner NPC a lot, and i stiil plan on going home, its just that they mean a lot to me and I want to show them that our bond means something
+        Well, I've found someone I like... like a lot, and i still plan on going home, its just that they mean a lot to me and I want to show them that our bond means something
         oh PC, congradulations, lilaya says hugging you
 	</p>
 	<p>
-		so how do you get married here? any thing special rules or traditions that i should know about?
-        oh certainly, considering you don't have lilin, i imagine this is different to how it was back on your home world, but marriages usually happen in a day
+		so how do you get married here? any thing special rules or traditions that I should know about?
+        oh certainly, considering you don't have lilin, I imagine this is different to how it was back on your home world, but marriages usually happen in a day
         noting the puzzled look on your face, she continues, uh well, tradition states that you're meant to surprise your betrothed. this comes from an ancient incident where a lilin was swept of her feet and married that day"
 					+ "forbidden lilin marriage, she was swept away one day and married that afternoon, so the ceremony is the same (having to surprise the bride)"
         though you can't just marry anyone, worker protection laws mean you cant marry your own or someone else's slaves. And although you are meant to sweep them off their feet, you can't force them to marry you; no means no.
 	</p>
 	<p>
-        So how do i plan the wedding though?
-        well we do have dedicated wedding vendors and specailists, hmm, i just can't think of any off the top of of my headd though
+        So how do I plan the wedding though?
+        well we do have dedicated wedding vendors and specailists, but—
+		lilaya's expression clouds slightly as she thinks
+		, hmm, i just can't think of any off the top of of my head though
 	</p>
 	<p>
         coming to the rescure of her master, Rose speaks up. mistress, I do know of a particularly good wedding vendor
@@ -91,10 +93,10 @@
 	#ELSE
 	<p>
 		Ashley hums in aprovral, good, just one parter
-		why, some kind of problem having more?
+		why, some kind of problem having more? // surely larger weddings aren't that diffucult to organise?
 		oh there's no difficulty with the process, you just prove yourself to be too horny
 		they say, writing down notes on your bethrothed
-		you decide to avoid furthur conflic and keep your opinions to yourself
+		you decide to avoid furthur conflict and keep your opinions to yourself
 	</p>
 	#ENDIF
 	<p>
@@ -148,7 +150,7 @@
 	<htmlContent tag="MARRIAGE_PLANING_HONEYMOON"><![CDATA[
 	<p>
 		telling them  the type of ceremony you want, ashley nods in approvral / harrumphs in disaproval. i can't belive it, are you doing this just to spite me, or are you that horny? no don't answer that, they say shaking their head. collecting themselves, they continue.
-		 [ashley.speech(ok [pc.name], the type of ceremony that you've chosen comes bundled with a honeymoon package.)] Ashley informs you, before handing you another pamphlet. Opening it up, you see a variety of diifferent seetings. beach side resorts, cosy woodland inns, ornate hotels.
+		 [ashley.speech(ok [pc.name], the type of ceremony that you've chosen comes bundled with a honeymoon package.)] Ashley informs you, before handing you another pamphlet. Opening it up, you see a variety of different seetings. beach side resorts, cosy woodland inns, ornate hotels.
 		 #IF(been to manor house on date)
 		 Flipping through it, a familiar location catches your eye; Manor House resort. you show the specific page to them
 		 I've been here before on a date with a partner so I know a bit about it already, but can you tell me about these 'newlywed specialties'?

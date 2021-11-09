@@ -13,6 +13,9 @@ import com.lilithsthrone.utils.colours.PresetColour;
 public class MarriageLevel {
 	
 	public enum PassionLevel {
+		/**
+		 * How strong the relationship is
+		 */
 		
 		/** -100 to -30*/
 		DIVORCING("divorcing", -100, -30, PresetColour.AFFECTION_NEGATIVE_TWO),
@@ -153,16 +156,19 @@ public class MarriageLevel {
 		}
 	
 		public static PassionLevel getBondLevelFromValue(float value){
-			for(PassionLevel al : PassionLevel.values()) {
-				if(value>=al.getMinimumValue() && value<al.getMaximumValue())
-					return al;
+			for(PassionLevel pl : PassionLevel.values()) {
+				if(value>=pl.getMinimumValue() && value<pl.getMaximumValue())
+					return pl;
 			}
 			return SOULMATES;
 		}
 	}
 	
 	public enum MaritalStatus {
-	
+		/**
+		 * The current status of the relationship
+		 */
+
 		DATING,
 	
 	    BROKEN_UP,
@@ -173,7 +179,61 @@ public class MarriageLevel {
 		
 		CRUSH,
 		
-		NONE;
+		NONE;		// only used if no relationship exists
 		
 	}
+
+	public enum PayBehaviour {
+		/**
+		 * How the npc reacts to paying on dates
+		 * first value is their chance to offer to pay
+		 * second value is the weight of them (not) paying. Pc's weight is always 1. if exceeds a certain value, passion can be lost
+		 * third value is the culmative chance of an npc spawning with this behaviour
+		 */
+		// 
+		// 
+		GOLDDIGGER(1/25f, 6, 10),		// 1:24 pay split, 10%
+
+		STINGY(1/5f, 3, 30),			// 1:4 pay split, 20%
+
+		FAIR(1/2f, 1, 70),				// 1:1 pay split, 40%
+
+		GENEROUS(4/5f, 3, 90),			// 4:1 pay split, 20%
+
+		GLUCOSEGUARDIAN(24/25f, 6, 100);// 24:1 pay split, 10%
+
+		private Float payChance;
+		private Float payWeight;
+		private Float behaviourChance;
+
+		private PayBehaviour(Float payChance, Integer payWeight, Integer behaviourChance) {
+			this.payChance = payChance;
+			this.payWeight = (float) payWeight;
+			this.behaviourChance = (float) behaviourChance;
+		}
+
+		public Float getPayChance() {
+			return payChance;
+		}
+
+		public Float getPayWeight() {
+			return payWeight;
+		}
+
+		public Float getBehaviourChance() {
+			return behaviourChance;
+		} 
+	}
+
+	public enum DateClass {
+		/**
+		 * How fancy npc is / type of date enjoyed
+		 */
+	}
+
+	
+
+	/**
+	 * I want to combine axes of money(occupation) and personality(traits) to determine how the npc will behave
+	 */
 }

@@ -162,6 +162,7 @@ import com.lilithsthrone.game.dialogue.responses.ResponseCombat;
 import com.lilithsthrone.game.dialogue.responses.ResponseEffectsOnly;
 import com.lilithsthrone.game.dialogue.responses.ResponseSex;
 import com.lilithsthrone.game.dialogue.responses.ResponseTrade;
+import com.lilithsthrone.game.dialogue.romance.RomanceUtil;
 import com.lilithsthrone.game.dialogue.utils.BodyChanging;
 import com.lilithsthrone.game.dialogue.utils.CharactersPresentDialogue;
 import com.lilithsthrone.game.dialogue.utils.DebugDialogue;
@@ -297,6 +298,9 @@ public class Game implements XMLSaving {
 	
 	// Slavery:
 	private OccupancyUtil occupancyUtil = new OccupancyUtil();
+	
+	// Romance:
+	private RomanceUtil romanceUtil = new RomanceUtil();
 
 	public Game() {
 		worlds = new HashMap<>();
@@ -4748,6 +4752,10 @@ public class Game implements XMLSaving {
 
 	public OccupancyUtil getOccupancyUtil() {
 		return occupancyUtil;
+	}
+	
+	public RomanceUtil getRomanceUtil() {
+		return romanceUtil;
 	}
 	
 	/**

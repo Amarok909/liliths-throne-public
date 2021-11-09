@@ -27,7 +27,7 @@ public class GuestRomanceDialogue {
 		}
 	};
 
-	public static final DialogueNode GUEST_OFFER_DATE = new DialogueNode("Go on a date", "take your firend off for a date", true, true) {
+	public static final DialogueNode GUEST_OFFER_DATE = new DialogueNode("Go on a date", "take your friend off for a date", true, true) {
 		@Override
 		public String getAuthor() {
 			return "Amarok";
@@ -40,7 +40,7 @@ public class GuestRomanceDialogue {
 		public Response getResponse(int responseTab, int index) {
 			// TODO Auto-generated method stub
 			if(index==0) {
-				return new Response("Back", "Decide against taking npc on a date, being lead on like this is sure to dissapont them", null);
+				return new Response("Back", "Decide against taking [npc.name] on a date, being lead on like this is sure to disappoint [npc.her]", null);
 
 			} else if(index==1) {
 				return new Response("Plan", "Instead of going on a date right now, plan one out", GUEST_DATE_PLANNER);
@@ -50,7 +50,7 @@ public class GuestRomanceDialogue {
 		}
 	};
 
-	public static final DialogueNode GUEST_DATE_PLANNER = new DialogueNode("Date planner", "take your firend off for a date", true, true) {
+	public static final DialogueNode GUEST_DATE_PLANNER = new DialogueNode("Date planner", "take your friend off for a date", true, true) {
 		@Override
 		public String getAuthor() {
 			return "Amarok";
