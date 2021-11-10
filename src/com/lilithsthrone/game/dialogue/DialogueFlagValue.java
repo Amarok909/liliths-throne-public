@@ -27,6 +27,8 @@ public enum DialogueFlagValue {
 	stormTextUpdateRequired,
 	hasSnowedThisWinter,
 	
+	priorManorHouse,			// with enough dialogue flags, move this to it's own subsection
+	
 	foundHappiness,
 	visitedSubmission,
 	mommyFound,

@@ -1236,13 +1236,13 @@ public abstract class GameCharacter implements XMLSaving {
 		if(this.getRomanceMap().size()>=1) {		//Keep the XML File clean, if no marriages, no need to add it in
 			Element characterMarriage = doc.createElement("characterMarriages");
 			properties.appendChild(characterMarriage);
-			for(Entry<String, Map<MaritalStatus, Float>> entry : this.getRomanceMap().entrySet()){
-				Element relationship = doc.createElement("marriage");
+			for(Entry<String, List<Float>> entry : this.getRomanceMap().entrySet()){
+				Element relationship = doc.createElement("relationship");
 				characterMarriage.appendChild(relationship);
 				
 				String A = entry.getKey();
-				MaritalStatus B = this.getRomanceMap().get(A).entrySet().iterator().next().getKey();
-				Float C = this.getRomanceMap().get(A).get(B);
+				MaritalStatus B = MaritalStatus.values()[this.getRomanceMap().get(A).get(0).intValue()];
+				Float C = this.getRomanceMap().get(A).get(1);
 				
 				XMLUtil.addAttribute(doc, relationship, "character", A);
 				XMLUtil.addAttribute(doc, relationship, "status", String.valueOf(B));
@@ -1250,17 +1250,6 @@ public abstract class GameCharacter implements XMLSaving {
 				
 			//	XMLUtil.addAttribute(doc, relationship, "character", entry.getKey());
 			//	XMLUtil.addAttribute(doc, relationship, "time", String.valueOf(Main.game.getSecondsPassed() + 100000 + Util.random.nextInt(100000)));
-			}
-			if(this.isPlayer()) {	// Only the player really needs the timers
-				Element dating = doc.createElement("dating");
-				characterMarriage.appendChild(dating);
-				for(Entry<String, Long> entry : this.getDatingMap().entrySet()){
-					Element counter = doc.createElement("cooldown");
-					dating.appendChild(counter);
-					
-					XMLUtil.addAttribute(doc, counter, "character", entry.getKey());
-					XMLUtil.addAttribute(doc, counter, "time", String.valueOf(entry.getValue()));
-				}
 			}
 		}
 		
@@ -2616,41 +2605,21 @@ public abstract class GameCharacter implements XMLSaving {
 			nodes = parentElement.getElementsByTagName("characterMarriages");								// Looks for the characterMarriages container in the xml file
 			element = (Element) nodes.item(0);																// finds the first (and only) instance of said container
 			if(element!=null) {																				// checks that it is there
-				NodeList marriageElements = element.getElementsByTagName("marriage");						// creates a list of all the marriage tags in the container
+				NodeList marriageElements = element.getElementsByTagName("relationship");					// creates a list of all the relationship tags in the container
 				for(int i=0; i<marriageElements.getLength(); i++){											// iterates through each instance of a countdown
+					
 					Element e = ((Element)marriageElements.item(i));										// temp variable e is the currently selected countdown instance
-				
 					String characterId = e.getAttribute("character");										// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
-					MaritalStatus B = MaritalStatus.valueOf(e.getAttribute("status"));
-					Float C = Float.valueOf(e.getAttribute("passion"));
-				//	Float D = Float.valueOf(e.getAttribute("time"));
 	
 					if(!characterId.equals("NOT_SET")) {													// checks if character is a fully baked NPC
+						Float B = (float) MaritalStatus.valueOf(e.getAttribute("status")).ordinal();
+						Float C = Float.valueOf(e.getAttribute("passion"));
+					//	Float D = Float.valueOf(e.getAttribute("time"));
+						
 						character.setRomanticState(characterId, B, C);
 						Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Relationship: "+characterId +" , "+ B);
-					}
-					
+					}	
 				}
-		
-				nodes = element.getElementsByTagName("dating");												// Looks for the dating sub-container inside of characterMarriges
-				if(nodes.getLength()>0) {																	// checks that dating has any content
-					element = (Element) nodes.item(0);														// finds the first (and only) instance of said container
-					if(element!=null) {																		// checks that it is there
-						NodeList datingElements = element.getElementsByTagName("cooldown");				// creates a list of all the countdown tags in the container
-						for(int i=0; i<datingElements.getLength(); i++){									// iterates through each instance of a marriage
-							Element e = ((Element)datingElements.item(i));									// temp variable e is the currently selected marriage instance
-						
-							String characterId = e.getAttribute("character");								// collects the character attribute from the selected marriage tag, example output: "61,DominionAlleywayAttacker"
-							
-							if(!characterId.equals("NOT_SET")) {											// checks if character is a fully baked NPC
-						//		character.setBond(characterId, Long.valueOf(e.getAttribute("time")));		// finally sets the bond value of this character to the target NPC of this instance
-								character.setNextDateTime(characterId, Long.valueOf(e.getAttribute("time")));
-								Main.game.getCharacterUtils().appendToImportLog(log, "<br/>Set Date time: "+characterId +" , "+ Float.valueOf(e.getAttribute("value")));
-							}
-						}
-					}
-				}
-				
 			}
 		}
 		
@@ -4742,6 +4711,12 @@ public abstract class GameCharacter implements XMLSaving {
 	}
 	
 	
+	public void setRomanticState(String characterID, Float... inputs) {
+		List<Float> data = new ArrayList<Float>();
+		for(int i = 0; i < Math.min(8, inputs.length); i++)	data.add(inputs[i]);
+		this.getRomanceMap().put(characterID, data);
+	}
+	
 	public void setPassion(GameCharacter character, Float bond, Boolean mutual) {
 		this.getRomanceMap().get(character.getId()).set(1, bond);
 		if(mutual) character.getRomanceMap().get(this.getId()).set(1, bond);
@@ -4842,6 +4817,7 @@ public abstract class GameCharacter implements XMLSaving {
 					e.printStackTrace();
 				}
 			}
+		}
 
 		this.getRomanceMap().remove(character.getId());
 		character.getRomanceMap().remove(this.getId());
@@ -4880,16 +4856,16 @@ public abstract class GameCharacter implements XMLSaving {
 
 	// Dating
 	
-	public void setNextDateTime(String characterID, Long epoch) {
-		this.getDatingMap().put(characterID, epoch);
-		if(Main.game.getSecondsPassed()>epoch) {
-			this.getDatingMap().put(characterID, Main.game.getSecondsPassed());
-		}
-	}
-
-	public void setNextDateTime(GameCharacter character, Long epoch) {
-		setNextDateTime(character.getId(), epoch);
-	}
+//	public void setNextDateTime(String characterID, Long epoch) {
+//		this.getDatingMap().put(characterID, epoch);
+//		if(Main.game.getSecondsPassed()>epoch) {
+//			this.getDatingMap().put(characterID, Main.game.getSecondsPassed());
+//		}
+//	}
+//
+//	public void setNextDateTime(GameCharacter character, Long epoch) {
+//		setNextDateTime(character.getId(), epoch);
+//	}
 	
 	public long setNextDateTimeFromJob(GameCharacter character) {	//generates date avalibility based on NPC occupation status, at most, 10 day days between dates. at least 2
 		int dayWait = Math.max(7, Math.min(9, Util.random.nextInt(9))); //Overworked, struggles to find time for you
@@ -4946,23 +4922,23 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		nextDate = LocalDateTime.of(nextDate.getYear(), nextDate.getMonth(), nextDate.getDayOfMonth(), 12, 0).plusMinutes(minutes);
 		long secondsToNextDate = ChronoUnit.SECONDS.between(Main.game.getDateNow(), nextDate);
-		setNextDateTime(character.getId(), secondsToNextDate);
+	//	setNextDateTime(character.getId(), secondsToNextDate);
 		return secondsToNextDate;
 		
 	}
 
-	public long getNextDateTime(GameCharacter character) {
-		return this.getDatingMap().get(character.getId());
-	}
-
-	public boolean canHaveDate(GameCharacter character) {
-		long currentTime = Main.game.getSecondsPassed() / 60;
-		long dateTime = this.getNextDateTime(character) / 60;
-		if(currentTime>dateTime) {
-			return true;
-		}
-		return false;
-	}
+//	public long getNextDateTime(GameCharacter character) {
+//		return this.getDatingMap().get(character.getId());
+//	}
+//
+//	public boolean canHaveDate(GameCharacter character) {
+//		long currentTime = Main.game.getSecondsPassed() / 60;
+//		long dateTime = this.getNextDateTime(character) / 60;
+//		if(currentTime>dateTime) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public static PayBehaviour getPayBehaviour(GameCharacter npc) {
 		PayBehaviour assigned = null;

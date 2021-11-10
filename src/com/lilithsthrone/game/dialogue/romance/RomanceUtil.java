@@ -57,14 +57,8 @@ public class RomanceUtil implements XMLSaving {
 	public HashMap<String, String> pickedOutfits = new HashMap<String, String>();
 	public ArrayList<String> pickedDecisions = new ArrayList<String>(7);
 
-	String pickedCeremony = null;
-	String pickedColour = null;
-	String pickedFlowers = null;
-	String pickedBanners = null;
-	String pickedHoneymoon = null;
-
-	LocalDateTime prepTime;
-	LocalDateTime proposalTime;
+	public LocalDateTime prepTime;
+	public LocalDateTime proposalTime;
 	
 	// methods
 	/**
@@ -77,9 +71,11 @@ public class RomanceUtil implements XMLSaving {
 	/**
 	 * an array list containing info on the picked Location, Ceremony, Colours, Flowers, Banners, Honeymoon
 	 */
-	public static ArrayList<String> pickedDecisions() {return Main.game.getRomanceUtil().pickedDesicions;}
+	public static ArrayList<String> pickedDecisions() {return Main.game.getRomanceUtil().pickedDecisions;}
 	
 	public static boolean partnerLimit() {return Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.ashleyLimit);}
+
+	public static boolean priorManorHouse() {return Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.priorManorHouse);}
 	
 	public static void resetMarriagePlanner() {
 		Main.game.getRomanceUtil().pickedPartners.clear();
@@ -89,8 +85,10 @@ public class RomanceUtil implements XMLSaving {
 		Main.game.getRomanceUtil().proposalTime = null;
 	}
 	
-	public void setProposalTimes() {
-		LocalDateTime now = Main.game.getDateNow();
+	public static void setProposalTimes() {
+		LocalDateTime date = Main.game.getDateNow();
+		Main.game.getRomanceUtil().prepTime = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0, 0, 0).plusDays(1);
+		Main.game.getRomanceUtil().proposalTime = Main.game.getRomanceUtil().prepTime.plusDays(7);
 	}
 
 	//************ Other Utils ************//

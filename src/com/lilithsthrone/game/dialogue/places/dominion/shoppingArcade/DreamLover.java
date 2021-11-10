@@ -262,7 +262,7 @@ public class DreamLover {
 	static ArrayList<GameCharacter> pickedPartners = RomanceUtil.pickedPartners();
 	static HashMap<String, String> pickedOutfits = RomanceUtil.pickedOutfits();
 	static ArrayList<String> pickedDecisions = RomanceUtil.pickedDecisions();
-	// Location Ceremony Colours Flowers Banners Honeymoon
+	// Location Colours Flowers Banners Ceremony Honeymoon
 
 	public static final DialogueNode MARRIAGE_PLANING_START = new DialogueNode("Dream Lover", "-", true, false) {
 		
@@ -286,11 +286,13 @@ public class DreamLover {
 				if(pickedPartners.size()==0) {
 					return new Response("Next", "you need to select at least one partner before you can proceed", null);
 					
-				} else if(RomanceUtil.checkCompatability(pickedPartners, true, false)==false) {	// not enough mutual passion
+				} else if(RomanceUtil.checkCompatibility(pickedPartners, true, false)==false) {	// not enough mutual passion
 					return new Response("Next", "some of your partners aren't passionate enough about each other, they won't want to get married", null);
+					
+				} else if(RomanceUtil.checkCompatibility(pickedPartners, false, true)==false) {	// one of the chosen have too many partners
+					return new Response("Next", "at least one of your partners is already married to "+Util.intToString(RomanceUtil.MAX_POLYCULE - 1)+" others and legally can't get married", null);
 
-				// over the limit
-				} else if(RomanceUtil.checkCompatability(pickedPartners, false, true)==false) {
+				} else if(pickedPartners.size()>RomanceUtil.MAX_POLYCULE) {		// over the limit
 					if(!partnerLimit) return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_TOO_MANY) {
 						@Override
 						public void effects() {Main.game.getDialogueFlags().setFlag(DialogueFlagValue.ashleyLimit, true);}
@@ -299,7 +301,6 @@ public class DreamLover {
 				
 				} else {				// under the limit or no limit
 					return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_LOCATION);
-
 				}
 
 			} else if(index==2) {		// Select all
@@ -405,7 +406,7 @@ public class DreamLover {
 				goBack();
 
 			} else if(index==1) {
-				if(pickedDecisions.get(0).isEmpty() /*|| pickedDecisions.get(0)==null*/) return new Response("Next", "you can't move on until you pick a location", null);
+				if(pickedDecisions.get(0).isEmpty()) return new Response("Next", "you can't move on until you pick a location", null);
 				return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_DRESSING);
 			}
 			
@@ -413,7 +414,7 @@ public class DreamLover {
 				if(index==i+2 && locations.get(i)!=null) {
 					final String C = locations.get(i);
 					
-					return new ResponseEffectsOnly(C, "pick this location as the wedding location") {
+					return new ResponseEffectsOnly(C, "pick this location for the wedding venue") {
 						@Override
 						public void effects() {pickedDecisions.set(0, C);}
 						@Override
@@ -443,19 +444,13 @@ public class DreamLover {
 		
 		@Override
 		public String getResponseTabTitle(int index) {
-			if(index == 0) {
-				return "[style.colourTfPartial(Player)]";
-				
-			} for(int i = 0; i < pickedPartners.size(); i++) {
-				if(index==i+1) {
-					return UtilText.parse(pickedPartners.get(i), "[npc.Name]");
-				}
-				
-			} if(index == 1 + pickedPartners.size()) {
-				return "[style.colourTfPartial(Officiant)]";
-				
+			if(index == 0) return "[style.colourTfPartial(You)]";
+			
+			for(int i = 0; i < pickedPartners.size(); i++) {
+				if(index==i+1) return UtilText.parse(pickedPartners.get(i), "[npc.Name]");	
 			} 
-
+			
+			if(index == 1 + pickedPartners.size()) return "[style.colourTfPartial(the Officiant)]";
 			return null;
 		}
 
@@ -476,29 +471,28 @@ public class DreamLover {
 					return new Response("Next", "you can't move on until you've decided everyone's outfits!", null);
 				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_CEREMONY);
 				
-			}
-			
-			else if(index==6) {
+			} else if(index==6) {
 				return new Response("Change betrothed", "description", MARRIAGE_PLANING_START);
+				
 			}
-			
-			
+
 			for (int i = 0; i < outfits.size(); i++) {
 				if(index==i+2 && outfits.get(i)!=null) {
 					final String C = outfits.get(i);
 					
 					return new ResponseEffectsOnly(C, "select this outfit for " + this.getResponseTabTitle(responseTab)) {
-						@Override
-						public void effects() {
-							while (pickedOutfits.size() < responseTab + 1) {	// if suddenly more partners, creates blanks to be overwritten
-								pickedOutfits.add(null);
-							}
-							pickedOutfits.set(responseTab, C);
-						}
+						
+						String id = responseTab==0
+								? Main.game.getPlayer().getId()
+								: responseTab==pickedPartners.size()+1
+										? "NOT_SET"
+										: pickedPartners.get(responseTab-1).getId();
 						
 						@Override
+						public void effects() {pickedOutfits.put(id, C);}
+						@Override
 						public Colour getHighlightColour() {
-							if(pickedOutfits.get(responseTab)==C) return PresetColour.GENERIC_MINOR_GOOD;
+							if(pickedOutfits.get(id)==C) return PresetColour.GENERIC_MINOR_GOOD;
 							return PresetColour.TEXT;
 						}
 					};
@@ -552,10 +546,9 @@ public class DreamLover {
 				goBack();
 				
 			} else if(index==1) {
-				if (pickedColour==null || pickedFlowers==null || pickedBanners==null) {
-					return new Response("Next", "you can't move on until you've decided on the colour pallet, banners, and flowers for the ceremony!", null);
+				if (pickedDecisions.get(1)==null || pickedDecisions.get(2)==null || pickedDecisions.get(3)==null) {
+					return new Response("Next", "you can't move on until you've decided on the colours, banners, and flowers for the ceremony!", null);
 				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_CEREMONY);
-				
 			}
 			
 			if(responseTab==0) {			// colour selection
@@ -582,10 +575,10 @@ public class DreamLover {
 						
 						return new ResponseEffectsOnly(C, "select this type of flowers for decorations") {
 							@Override
-							public void effects() {pickedFlowers = C;}
+							public void effects() {pickedDecisions.set(2, C);}
 							@Override
 							public Colour getHighlightColour() {
-								if(pickedFlowers==C) return PresetColour.GENERIC_MINOR_GOOD;
+								if(pickedDecisions.get(2)==C) return PresetColour.GENERIC_MINOR_GOOD;
 								return PresetColour.TEXT;
 							}
 						};
@@ -599,10 +592,10 @@ public class DreamLover {
 						
 						return new ResponseEffectsOnly(C, "select this type of banner for decorations") {
 							@Override
-							public void effects() {pickedBanners = C;}
+							public void effects() {pickedDecisions.set(3, C);}
 							@Override
 							public Colour getHighlightColour() {
-								if(pickedBanners==C) return PresetColour.GENERIC_MINOR_GOOD;
+								if(pickedDecisions.get(3)==C) return PresetColour.GENERIC_MINOR_GOOD;
 								return PresetColour.TEXT;
 							}
 						};
@@ -659,15 +652,15 @@ public class DreamLover {
 					"Exuberant		|	walk to aisle, words exchanged, kiss, party, off to honeymoon",
 					"Lewd			|	walk to aisle, words exchanged, fuck on altar, off to honeymoon",
 					null, null,
-					"Royal",
 					"Casual			|	words exchanged, kiss, off to honeymoon",
-					"Debaucherous	|	walk to aisle, words exchanged, fuck on altar, orgy, off to honeymoon"));
+					"Debaucherous	|	walk to aisle, words exchanged, fuck on altar, orgy, off to honeymoon",
+					"Royal"));
 			
 			if(index==0) {
 				goBack();
 				
 			} else if(index==1) {
-				if (pickedCeremony == null) {
+				if (pickedDecisions.get(4) == null) {
 					return new Response("Next", "you can't move on until you've decided on a ceremony style!", null);
 				}	return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_RING);
 				
@@ -678,12 +671,12 @@ public class DreamLover {
 					final String C = ceremony.get(i).split("\\|")[0];	// ceremony name
 					final String D = ceremony.get(i).split("\\|")[1];	// ceremony description
 					
-					return new ResponseEffectsOnly(C, "select this type of ceremony<br>" + D) {
+					return new ResponseEffectsOnly(C, "select this type of ceremony:<br>" + D) {
 						@Override
-						public void effects() {pickedCeremony = C;}
+						public void effects() {pickedDecisions.set(4, C);}
 						@Override
 						public Colour getHighlightColour() {
-							if(pickedCeremony==C) return PresetColour.GENERIC_MINOR_GOOD;
+							if(pickedDecisions.get(4)==C) return PresetColour.GENERIC_MINOR_GOOD;
 							return PresetColour.TEXT;
 						}
 					};
@@ -709,12 +702,34 @@ public class DreamLover {
 
 		@Override
 		public Response getResponse(int responseTab, int index) {
+			ArrayList<String> locations = new ArrayList<String>(Arrays.asList(
+				"Manor House hotel	|	spend your honeymoon at the Manor House hotel, an upmarket resort on the outskirts of dominion",
+				""));
+			
 			if(index==0) {
 				goBack();
 
 			} else if(index==1) {
-				return new Response("Manor House hotel", "spend your honeymoon at the Manor House hotel, an upmarket resort on the outskirts of dominion", MARRIAGE_PLANING_REVIEW);
+				if(pickedDecisions.get(5).isEmpty() /*|| pickedDecisions.get(0)==null*/) return new Response("Next", "you can't move on until you pick a location", null);
+				return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_DRESSING);
 			}
+			
+			for (int i = 0; i < locations.size(); i++) {
+				if(index==i+2 && locations.get(i)!=null) {
+					final String C = locations.get(i);
+					
+					return new ResponseEffectsOnly(C, "pick this location as the wedding location") {
+						@Override
+						public void effects() {pickedDecisions.set(5, C);}
+						@Override
+						public Colour getHighlightColour() {
+							if(pickedDecisions.get(5)==C) return PresetColour.GENERIC_MINOR_GOOD;
+							return PresetColour.TEXT;
+						}
+					};
+				}
+			}
+			
 			return null;
 		}
 		
@@ -730,9 +745,7 @@ public class DreamLover {
 		@Override
 		public void applyPreParsingEffects() {
 			reviewMode = true;
-			LocalDateTime date = Main.game.getDateNow();
-			prepTime = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0, 0, 0).plusDays(1);
-			proposalTime = prepTime.plusDays(7);
+			RomanceUtil.setProposalTimes();
 		}
 
 		@Override
@@ -746,21 +759,38 @@ public class DreamLover {
 				return new Response("Quit", "decide against planning a wedding", EXTERIOR) {
 					@Override
 					public void effects() {
-					//	Main.game.getTextEndStringBuilder().append(UtilText.parseFromXMLFile("places/dominion/shoppingArcade/dreamLover", "SEX_TOY_DISCOVERY"));
 						Main.game.getTextEndStringBuilder().append("well thanks for wasting my time!");
 						RomanceUtil.resetMarriagePlanner();
 						reviewMode = false;
 					}
 				};
+				
 			} else if(index==1) {
 				return new Response("Finish and Pay", "Everything looks to be in order, review the prices and then pay", MARRIAGE_PLANING_PAY);
+				
 			} else if(index==2) {
 				return new Response("Partners", "Change your partners", MARRIAGE_PLANING_START);
+				
 			} else if(index==3) {
 				return new Response("Location", "Change the location for the ceremony", MARRIAGE_PLANING_LOCATION);
+				
+			} else if(index==4) {
+				return new Response("Outfits", "Change the chosen outfits", MARRIAGE_PLANING_DRESSING);
+				
+			} else if(index==5) {
+				return new Response("Aesthetics", "Change the visual aesthetics of the ceremony", MARRIAGE_PLANING_AESTHETICS);
+				
+			} else if(index==6) {
+				return new Response("Ring", "Change the ring for your partners", MARRIAGE_PLANING_RING);
+				
+			} else if(index==7) {
+				return new Response("Ceremony", "Change the type of ceremony", MARRIAGE_PLANING_CEREMONY);
+				
+			} else if(index==8) {
+				return new Response("Honeymoon", "Change where your honeymoon will be", MARRIAGE_PLANING_HONEYMOON);
+				
 			}
 			return null;
-		//	return MARRIAGE_PLANING_START.getResponse(responseTab, index);
 		}
 	};
 	
@@ -773,6 +803,8 @@ public class DreamLover {
 
 		@Override
 		public String getContent() {
+			LocalDateTime prepTime = Main.game.getRomanceUtil().prepTime;
+			LocalDateTime proposalTime = Main.game.getRomanceUtil().proposalTime;
 			UtilText.addSpecialParsingString(prepTime.getMonth() + " " + prepTime.getDayOfMonth(), true);
 			UtilText.addSpecialParsingString(proposalTime.getMonth() + " " + proposalTime.getDayOfMonth(), false);
 			UtilText.addSpecialParsingString("20000", false);
