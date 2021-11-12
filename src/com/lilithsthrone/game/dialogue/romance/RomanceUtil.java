@@ -91,6 +91,13 @@ public class RomanceUtil implements XMLSaving {
 		Main.game.getRomanceUtil().proposalTime = Main.game.getRomanceUtil().prepTime.plusDays(7);
 	}
 
+	public static boolean canPropose() {
+		LocalDateTime now = Main.game.getDateNow();
+		LocalDateTime prepTime = Main.game.getRomanceUtil().prepTime;
+		LocalDateTime proposalTime = Main.game.getRomanceUtil().proposalTime;
+		return !(prepTime==null || proposalTime==null) && now.isAfter(prepTime) && now.isBefore(proposalTime);
+	}
+
 	//************ Other Utils ************//
 	
 	public static boolean checkCompatibility(ArrayList<GameCharacter> npc, Boolean passions, Boolean marriage) {

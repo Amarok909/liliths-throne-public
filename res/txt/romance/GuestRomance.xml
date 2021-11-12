@@ -11,5 +11,13 @@
 	</p>
 	]]>
 	</htmlContent>
+
+	<htmlContent tag="GUEST_DATE_PLANNER"><![CDATA[
+	<p>
+		looking at your [npc.boyfriend], you think how to treat them. you could do something spontaneous, or plan something out.
+		you wonder if you should also bring some others along and make this a group thing?
+	</p>
+	]]>
+	</htmlContent>
 	
 </dialogue>

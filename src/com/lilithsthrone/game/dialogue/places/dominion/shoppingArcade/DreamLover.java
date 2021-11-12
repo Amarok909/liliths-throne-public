@@ -283,23 +283,23 @@ public class DreamLover {
 				goBack();
 
 			} else if(index==1) {		// Next
-				if(pickedPartners.size()==0) {
+				if(pickedPartners.size()==0) {													// no partners selected
 					return new Response("Next", "you need to select at least one partner before you can proceed", null);
 					
 				} else if(RomanceUtil.checkCompatibility(pickedPartners, true, false)==false) {	// not enough mutual passion
 					return new Response("Next", "some of your partners aren't passionate enough about each other, they won't want to get married", null);
 					
 				} else if(RomanceUtil.checkCompatibility(pickedPartners, false, true)==false) {	// one of the chosen have too many partners
-					return new Response("Next", "at least one of your partners is already married to "+Util.intToString(RomanceUtil.MAX_POLYCULE - 1)+" others and legally can't get married", null);
+					return new Response("Next", "at least one of your partners is already married to "+Util.intToString(RomanceUtil.MAX_POLYCULE - 1)+" others and can't get married", null);
 
-				} else if(pickedPartners.size()>RomanceUtil.MAX_POLYCULE) {		// over the limit
+				} else if(pickedPartners.size()>RomanceUtil.MAX_POLYCULE) {						// over the limit
 					if(!partnerLimit) return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_TOO_MANY) {
 						@Override
 						public void effects() {Main.game.getDialogueFlags().setFlag(DialogueFlagValue.ashleyLimit, true);}
 					};
 					return new Response("Next", "Ashley has already told you that you can't be married to more than "+Util.intToString(RomanceUtil.MAX_POLYCULE)+" partners, you'll need to deselect some", null);	// FIXME, polycule existing partners
 				
-				} else {				// under the limit or no limit
+				} else {																		// under the limit or no limit
 					return new Response("Next", "move on to the next stage of planning your wedding", MARRIAGE_PLANING_LOCATION);
 				}
 
@@ -327,6 +327,7 @@ public class DreamLover {
 			for(int i = 0; i < Main.game.getPlayer().getFiances().size(); i++) {		// Pick individually
 				if(index == i + 4) {
 					GameCharacter npc = Main.game.getPlayer().getFiances().get(i);
+					
 					if(pickedPartners.contains(npc)) {									// list contains character
 						return new ResponseEffectsOnly(npc.getName(), "Remove "+npc.getName()) {
 
@@ -349,6 +350,7 @@ public class DreamLover {
 								Main.game.updateResponses();
 							}
 						};
+						
 					}
 				}
 			}

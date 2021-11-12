@@ -35,6 +35,8 @@ import com.lilithsthrone.utils.time.DateAndTime;
 import com.lilithsthrone.utils.time.SolarElevationAngle;
 import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.PlaceType;
+import com.lilithsthrone.game.dialogue.romance.GuestRomanceDialogue;
+import com.lilithsthrone.game.dialogue.romance.RomanceUtil;
 
 /**
  * @since 0.2.10
@@ -357,31 +359,33 @@ public class OccupantDialogue {
 					}
 					
 				} else if (index == 8) {
+					ArrayList<GameCharacter> npc = new ArrayList<GameCharacter>();
+					npc.add(occupant());
+					GuestRomanceDialogue.initDialogue(occupant());
+					
 					if(Main.game.getPlayer().getMaritalStatus(occupant())!=MaritalStatus.MARRIED
-					&& occupant().getPassion(Main.game.getPlayer()) >= 80
-					&& Main.game.getPlayer().getPassion(occupant()) >= 80) {	// Marriage Mode
+							&& RomanceUtil.checkCompatibility(npc, true, false)) {	// Marriage Mode
 						
 						if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_MARRIAGE)) {	// Hasn't started marriage quest
-							return new Response("Marriage Quest", UtilText.parse(occupant(), "Need to quest before proposing"), OCCUPANT_START) {
+							return new Response("Propose", UtilText.parse(occupant(), "Propose to [npc.Name]"), OCCUPANT_START) {
 								@Override
-								public void effects() {
-									Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().startQuest(QuestLine.SIDE_MARRIAGE));
-								}
+								public void effects() {Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().startQuest(QuestLine.SIDE_MARRIAGE));}
 							};
 
-						} else if(Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_ONE)) {	// planned out marriage
+						} else if(Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_ONE) && !RomanceUtil.canPropose()) {	// no planned wedding
+							return new Response("Propose", "You have no wedding planned, go see Ashley in the arcade to organise one", null);
+							
+						} else if(Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.SIDE_MARRIAGE, Quest.MARRIAGE_ONE) && RomanceUtil.canPropose()) {	// planned out wedding
 							return new Response("Propose", UtilText.parse(occupant(), "Propose to [npc.Name]"), null) {
 								@Override
 								public void effects() {
-									Main.game.getPlayer().setPassion(occupant(), Main.game.getPlayer().getPassion(occupant()) + 10);
-									occupant().setPassion(Main.game.getPlayer(), occupant().getPassion(Main.game.getPlayer()) + 10);
+									Main.game.getPlayer().incrementPassion(occupant(), 100, null, true);
 									Main.game.getPlayer().setMaritalStatus(occupant(), MaritalStatus.MARRIED);
-									occupant().setMaritalStatus(Main.game.getPlayer(), MaritalStatus.MARRIED);
 								}
 							};
 
 						} else {	// Started marriage quest, but has not seen Lilaya yet
-							return null;
+							return new Response("Propose", UtilText.parse(occupant(), "you want to propose to [npc.Name], but you don't know what to do. You should talk to Lilaya."), null);
 						}
 
 					} else {	// Dating Mode
@@ -392,17 +396,13 @@ public class OccupantDialogue {
 						if(Main.game.getPlayer().hasRelationshipWith(occupant())) {
 							return new Response("Date", UtilText.parse(occupant(), "Go on another date with [npc.Name]"), null) {
 								@Override
-								public void effects() {
-									Main.game.getTextEndStringBuilder().append(Main.game.getPlayer().incrementPassion(occupant(), 10, "", true));
-								}
+								public void effects() {}
 							};
 						}
 						
 						return new Response("Ask out", UtilText.parse(occupant(), "Ask [npc.Name] to be your [npc.boyfriend]"), null) {	// Start dating content
 							@Override
-							public void effects() {
-								Main.game.getPlayer().createRelationship(occupant);
-							}
+							public void effects() {Main.game.getPlayer().createRelationship(occupant);}
 						};
 					}
 					
