@@ -125,7 +125,9 @@
 	
 	<htmlContent tag="MARRIAGE_PLANING_AESTHETICS"><![CDATA[
 	<p>
-		next is to pick out the general look. colours, banners, what type of flowers there'll be
+		next is to pick out the general look. colours, banners, what type of flowers there'll be.
+		Colours are for things like cushions, lighting and banners
+		Flowers are fairly obvious, even for you, 
 	</p>
 	]]>
 	</htmlContent>
@@ -186,8 +188,10 @@
 		
 		Then after that, you only have a week to propose to your fiance. After a week, my contractors will consider this a no-show and will cancel their preparations. If you actually want to marry them, <i>which you should have done that week</i>, then you'll need to come back here so we can organise another wedding.
 
-		In short, you've got until [#SPECIAL_PARSE0] to make any last changes, and [#SPECIAL_PARSE1] to get married.
-		All in all, that comes to [#SPECIAL_PARSE2] flames.
+		In short, you've got until [#SPECIAL_PARSE_0] to make any last changes, and [#SPECIAL_PARSE_1] to get married.
+		All in all, that comes to [#SPECIAL_PARSE_3] flames.
+
+		[#SPECIAL_PARSE_2]
 	</p>
 	]]>
 	</htmlContent>

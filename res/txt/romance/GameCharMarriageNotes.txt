@@ -17,7 +17,7 @@ TODO
             if only CE and CF are formed, then networks ABCDF, ABEF exist?
         example of mathematical network, can this be done without matrices?
             in fully connected, links = n(n-1)/2
-        characters can be monoamorous (one parter only), biamourous (open relationship) or polyamorous (group relationship)
+        characters can be monoamorous/exclusive (one parter only), biamourous (open relationship) or polyamorous (group relationship)
             devoted, open lover, and polyamorous for terms?
 
     Add proposition option to well loved npc
@@ -86,6 +86,7 @@ DATES
     some might result in sex, some might not
     planned dates let you choose which partners to bring along
     immediate dates only allow present partners
+    how long a partner will wait about depends on their personalities, nice waits longer, selfish waits shorter
 
 MARRIAGE
     at mutual passion 80+, you can get married
@@ -130,7 +131,23 @@ MARRIAGE
         Pay
 
 
-DATA
+MANAGER DATA
+    DATES
+        TIME
+            date of next date in MFS (minutes from start)
+        LIST
+        LOCATION
+        DATE INDEX
+            what type of date it is
+
+    CLUBBERS
+        LEAD ID
+            id of leading partner
+        LIST
+            ids of all npcs romantically assosiated with and including romantic partner
+
+
+CHARACTER DATA
     CHARACTER   
         the npc that this character is married/dating to
 
@@ -169,9 +186,7 @@ DATA
         date of next date in MFS (minutes from start)
         standard window of 1hr?
             phone notification system needed? only goes off in neutral scenes
-
-    DATE INDEX
-        what type of date it is
+    
 
 TEXT
     
