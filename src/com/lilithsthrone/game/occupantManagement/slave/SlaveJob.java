@@ -736,6 +736,26 @@ public enum SlaveJob {
 		public AbstractWorldType getWorldLocation(GameCharacter character) {
 			return WorldType.LILAYAS_HOUSE_GROUND_FLOOR;
 		}
+
+		@Override
+		public float getObedienceGain(int hour, GameCharacter slave) {
+			float obd = this.obedienceGain;
+			if(!Main.game.getWorlds().get(WorldType.LILAYAS_HOUSE_GROUND_FLOOR).getCells(PlaceUpgrade.LILAYA_SPA_BAR).isEmpty()) {
+				obd += PlaceUpgrade.LILAYA_SPA_BAR.getHourlyObedienceGain();
+			}
+			Cell c = this.getWorkDestinationCell(hour, slave);
+			return obd + (c==null?0:c.getPlace().getHourlyAffectionChange());
+		}
+		
+		@Override
+		public float getAffectionGain(int hour, GameCharacter slave) {
+			float aff = this.affectionGain;
+			if(!Main.game.getWorlds().get(WorldType.LILAYAS_HOUSE_GROUND_FLOOR).getCells(PlaceUpgrade.LILAYA_SPA_BAR).isEmpty()) {
+				aff += PlaceUpgrade.LILAYA_SPA_BAR.getHourlyAffectionGain();
+			}
+			Cell c = this.getWorkDestinationCell(hour, slave);
+			return aff + (c==null?0:c.getPlace().getHourlyAffectionChange());
+		}
 	},
 
 	SPA_RECEPTIONIST(PresetColour.BASE_BLUE_STEEL,
@@ -822,7 +842,7 @@ public enum SlaveJob {
 	private String nameFeminine;
 	private String nameMasculine;
 	private String description;
-	private float obedienceGain;
+	protected float obedienceGain;
 	protected float affectionGain;
 	private int income;
 	private float obedienceIncomeModifier;
@@ -914,6 +934,10 @@ public enum SlaveJob {
 	public int getSlaveLimit() {
 		return slaveLimit;
 	}
+
+	public int getCellSlaveLimit() {
+		return slaveLimit;
+	}
 	
 	public float getHourlyStaminaDrain() {
 		return hourlyStaminaDrain;
@@ -941,12 +965,12 @@ public enum SlaveJob {
 	
 	public float getObedienceGain(int hour, GameCharacter slave) {
 		Cell c = this.getWorkDestinationCell(hour, slave);
-		return obedienceGain + (c==null?0:c.getPlace().getHourlyObedienceChange());
+		return obedienceGain + (c==null?0:c.getPlace().getHourlyObedienceChange(slave.isSlave()));
 	}
 
 	public float getAffectionGain(int hour, GameCharacter slave) {
 		Cell c = this.getWorkDestinationCell(hour, slave);
-		return affectionGain + (c==null?0:c.getPlace().getHourlyAffectionChange());
+		return affectionGain + (c==null?0:c.getPlace().getHourlyAffectionChange(slave.isSlave()));
 	}
 
 	public int getIncome() {

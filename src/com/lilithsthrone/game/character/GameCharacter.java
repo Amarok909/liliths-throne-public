@@ -4413,7 +4413,7 @@ public abstract class GameCharacter implements XMLSaving {
 
 		// Rounding is to get rid of floating point ridiculousness (e.g. 2.3999999999999999999999):
 		if(this.getSlaveJob(hour)==SlaveJob.IDLE) {
-			return (Math.round(this.getHomeLocationPlace().getHourlyObedienceChange()*100)/100f) * (this.isSlave() && this.getOwner().hasTrait(Perk.JOB_TEACHER, true)?3:1);
+			return (Math.round(this.getHomeLocationPlace().getHourlyObedienceChange(this.isSlave())*100)/100f) * (this.isSlave() && this.getOwner().hasTrait(Perk.JOB_TEACHER, true)?3:1);
 		}
 		return (Math.round(job.getObedienceGain(hour, this)*100)/100f) * (this.isSlave() && this.getOwner().hasTrait(Perk.JOB_TEACHER, true)?3:1);
 	}
@@ -4424,7 +4424,7 @@ public abstract class GameCharacter implements XMLSaving {
 		for (int hour = 0; hour < 24; hour++) {
 			SlaveJob job = this.getSlaveJob(hour);
 			if(this.getSlaveJob(hour)==SlaveJob.IDLE) {
-				totalObedienceChange += this.getHomeLocationPlace().getHourlyObedienceChange();
+				totalObedienceChange += this.getHomeLocationPlace().getHourlyObedienceChange(this.isSlave());
 			} else {
 				totalObedienceChange += job.getObedienceGain(hour, this);
 			}

@@ -217,14 +217,15 @@ public class OccupancyUtil implements XMLSaving {
 			try {
 				NPC occupant = (NPC) Main.game.getNPCById(id);
 				if(!Main.game.getPlayer().isActive() || !Main.game.getCharactersPresent().contains(occupant)) { // If the player isn't interacting with them, then move them:
-//					if(!occupant.getHistory().getOccupationTags().contains(OccupationTag.LOWLIFE)) {
-						if(occupant.getHistory().isAtWork(hour)) {
-							occupant.setLocation(WorldType.EMPTY, PlaceType.GENERIC_HOLDING_CELL);
-						} else {
-							occupant.setLocation(occupant.getHomeWorldLocation(), occupant.getHomeLocation(), false);
-						}
-//					}
+					if(occupant.getHistory().isAtWork(hour)) {
+						occupant.setLocation(WorldType.EMPTY, PlaceType.GENERIC_HOLDING_CELL);
+					} else {
+						occupant.setLocation(occupant.getHomeWorldLocation(), occupant.getHomeLocation(), false);
+					}
 				}
+				occupant.incrementAffection(Main.game.getPlayer(), occupant.getHourlyAffectionChange(hour));
+				occupant.incrementObedience(occupant.getHourlyObedienceChange(hour), false);
+				
 			} catch (Exception e) {
 				Util.logGetNpcByIdError("performHourlyUpdate(), getFriendlyOccupants() section.", id);
 			}

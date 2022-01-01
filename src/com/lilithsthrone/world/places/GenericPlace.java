@@ -285,10 +285,30 @@ public class GenericPlace implements XMLSaving {
 		}
 		return affectionChange;
 	}
+
+	public float getHourlyAffectionChange(boolean slaveUpgrades) {
+		float affectionChange = 0;
+		for(AbstractPlaceUpgrade pu : placeUpgrades) {
+			boolean skip = pu.isSlaverUpgrade()!=slaveUpgrades;
+			if(skip) continue;
+			affectionChange+=pu.getHourlyAffectionGain();
+		}
+		return affectionChange;
+	}
 	
 	public float getHourlyObedienceChange() {
 		float obedienceChange = 0;
 		for(AbstractPlaceUpgrade pu : placeUpgrades) {
+			obedienceChange+=pu.getHourlyObedienceGain();
+		}
+		return obedienceChange;
+	}
+
+	public float getHourlyObedienceChange(boolean slaveUpgrades) {
+		float obedienceChange = 0;
+		for(AbstractPlaceUpgrade pu : placeUpgrades) {
+			boolean skip = pu.isSlaverUpgrade()!=slaveUpgrades;
+			if(skip) continue;
 			obedienceChange+=pu.getHourlyObedienceGain();
 		}
 		return obedienceChange;

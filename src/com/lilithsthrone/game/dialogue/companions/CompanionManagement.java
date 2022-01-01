@@ -52,6 +52,7 @@ import com.lilithsthrone.utils.colours.PresetColour;
 import com.lilithsthrone.world.Cell;
 import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.PlaceType;
+import com.lilithsthrone.world.places.PlaceUpgrade;
 
 /**
  * @since 0.3.5.1
@@ -1013,6 +1014,11 @@ public class CompanionManagement {
 					
 					for(SlaveJobSetting setting : entry.getValue()) {
 						boolean settingActive = character.hasSlaveJobSetting(job, setting);
+						
+						if(job==SlaveJob.BEDROOM
+								&& setting==SlaveJobSetting.BEDROOM_SLEEP_IN_BED
+								&& Main.game.getWorlds().get(WorldType.LILAYAS_HOUSE_FIRST_FLOOR).getCell(PlaceType.LILAYA_HOME_ROOM_PLAYER).getPlace().getPlaceUpgrades().contains(PlaceUpgrade.LILAYA_PLAYER_ROOM_SPOUSE)
+						) continue;	// makes the sleep on bed option unavailable when the spouse accommodations have been acquired
 						
 
 						String id = settingActive

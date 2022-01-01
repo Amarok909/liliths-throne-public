@@ -972,7 +972,7 @@ public abstract class NPC extends GameCharacter implements XMLSaving {
 		
 		// Rounding is to get rid of floating point ridiculousness (e.g. 2.3999999999999999999999):
 		if(this.getSlaveJob(hour)==SlaveJob.IDLE) {
-			return Math.round(this.getHomeLocationPlace().getHourlyAffectionChange()*100)/100f;
+			return Math.round(this.getHomeLocationPlace().getHourlyAffectionChange(this.isSlave())*100)/100f;
 		} else {
 			return Math.round(job.getAffectionGain(hour, this)*100)/100f;
 		}
@@ -984,7 +984,7 @@ public abstract class NPC extends GameCharacter implements XMLSaving {
 		for (int hour = 0; hour < 24; hour++) {
 			SlaveJob job = this.getSlaveJob(hour);
 			if(this.getSlaveJob(hour)==SlaveJob.IDLE) {
-				totalAffectionChange += this.getHomeLocationPlace().getHourlyAffectionChange();
+				totalAffectionChange += this.getHomeLocationPlace().getHourlyAffectionChange(this.isSlave());
 			} else {
 				totalAffectionChange += job.getAffectionGain(hour, this);
 			}

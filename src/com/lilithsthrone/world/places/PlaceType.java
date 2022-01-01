@@ -2145,7 +2145,8 @@ public class PlaceType {
 				@Override
 				public ArrayList<AbstractPlaceUpgrade> getAvailablePlaceUpgrades(Set<AbstractPlaceUpgrade> upgrades) {
 					return Util.newArrayListOfValues(
-							PlaceUpgrade.LILAYA_PLAYER_ROOM_BED);
+							PlaceUpgrade.LILAYA_PLAYER_ROOM_BED,
+							PlaceUpgrade.LILAYA_PLAYER_ROOM_SPOUSE);
 				}
 				@Override
 				public boolean isAbleToBeUpgraded() {

@@ -6,8 +6,10 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.AffectionLevel;
@@ -24,11 +26,13 @@ import com.lilithsthrone.game.occupantManagement.slaveEvent.SlaveEventType;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.rendering.SVGImages;
 import com.lilithsthrone.utils.Util;
+import com.lilithsthrone.utils.Vector2i;
 import com.lilithsthrone.utils.colours.Colour;
 import com.lilithsthrone.utils.colours.PresetColour;
 import com.lilithsthrone.world.AbstractWorldType;
 import com.lilithsthrone.world.Cell;
 import com.lilithsthrone.world.WorldType;
+import com.lilithsthrone.world.places.AbstractPlaceType;
 import com.lilithsthrone.world.places.AbstractPlaceUpgrade;
 import com.lilithsthrone.world.places.GenericPlace;
 import com.lilithsthrone.world.places.PlaceType;
@@ -647,18 +651,48 @@ public class OccupantManagementDialogue {
 		@Override
 		public String getContent() {
 			UtilText.nodeContentSB.setLength(0);
+
+			List<NPC> occupants = Main.game.getNonCompanionCharactersPresent();
+				occupants.removeIf((npc) -> npc.isElemental());
+			List<NPC> guests = Main.game.getCharactersTreatingCellAsHome(cellToInspect);
+			List<NPC> slaves = new ArrayList<>(occupants);
+				slaves.removeAll(guests);
+				
+			GenericPlace place = cellToInspect.getPlace();
+			int guestCap = place.getCapacity();		// max amount of guests or slaves that can LIVE in a cell
+			int slaveCap = 0;						// max amount of slaves that can WORK in a cell
+			float affectionChange = place.getHourlyAffectionChange(guestCap==0 || place.isSlaveCell());
+			float obedienceChange = place.getHourlyObedienceChange(guestCap==0 || place.isSlaveCell());
+
+			// set slaveCap based on what job is present in a cell
+			if(place.getPlaceUpgrades().contains(PlaceUpgrade.LILAYA_MILKING_ROOM))	slaveCap = SlaveJob.MILKING.getCellSlaveLimit();
+			else if(place.getPlaceUpgrades().contains(PlaceUpgrade.LILAYA_OFFICE))	slaveCap = SlaveJob.OFFICE.getCellSlaveLimit();
+			else if(place.getPlaceType().equals(PlaceType.LILAYA_HOME_ROOM_PLAYER))	slaveCap = SlaveJob.BEDROOM.getCellSlaveLimit();
 			
+			else if(place.getPlaceUpgrades().contains(PlaceUpgrade.LILAYA_SPA)) {
+				slaveCap = SlaveJob.SPA.getCellSlaveLimit() + SlaveJob.SPA_RECEPTIONIST.getCellSlaveLimit();
+				
+				Vector2i local1 = Main.game.getWorlds().get(WorldType.LILAYAS_HOUSE_GROUND_FLOOR).getCell(PlaceType.LILAYA_HOME_SPA).getLocation();
+				List<NPC> slaves2 = Main.game.getCharactersPresent(WorldType.LILAYAS_HOUSE_GROUND_FLOOR, local1);
+				slaves2.removeIf((npc) -> Main.game.getPlayer().hasCompanion(npc) || npc.isElemental() || (npc.getPartyLeader()!=null && Main.game.getPlayer().hasCompanion(npc.getPartyLeader())));
+				slaves.addAll(slaves2);
+				occupants.addAll(slaves2);
+			}	// since spa covers multiple cells, extra logic needed to collect all slaves present
+			
+			boolean mode = (slaves.size() + slaveCap>=1) && (guests.size() + guestCap==0);
+			
+			// Headers
 			UtilText.nodeContentSB.append(
 					"<div class='container-full-width' style='text-align:center;'>"
 							+ "<h6 style='color:"+PresetColour.GENERIC_EXCELLENT.toWebHexString()+"; text-align:center;'>Overview (Total Values for this Room)</h6>"
-							+"<div class='container-full-width' style='margin-bottom:0;'>"
+							+ "<div class='container-full-width' style='margin-bottom:0;'>"
 								+ "<div style='width:20%; float:left; font-weight:bold; margin:0; padding:0;'>"
 									+ "Name"
 								+ "</div>"
-								+ "<div style='width:20%; float:left; font-weight:bold; margin:0; padding:0;'>"
-									+ "Occupants"
+								+ "<div style='width:20%; float:left; font-weight:bold; margin:0 0 0 2.5%; padding:0;'>"
+									+ (mode ? "Workers" : "Occupants")
 								+ "</div>"
-								+ "<div style='float:left; width:15%; font-weight:bold; margin:0; padding:0;'>"
+								+ "<div style='float:left; width:10%; font-weight:bold; margin:0 2.5% 0 0; padding:0;'>"
 									+ "<b>Capacity</b>"
 								+"</div>"
 								+ "<div style='float:left; width:15%; font-weight:bold; margin:0; padding:0;'>"
@@ -672,60 +706,101 @@ public class OccupantManagementDialogue {
 								+"</div>"
 							+ "</div>");
 			
-			
-			GenericPlace place = cellToInspect.getPlace();
-			float affectionChange = place.getHourlyAffectionChange();
-			float obedienceChange = place.getHourlyObedienceChange();
-			
 			UtilText.nodeContentSB.append(
-					"<div class='container-full-width inner' style='margin-bottom:0;'>"
-							+ "<div style='width:20%; float:left; font-weight:bold; margin:0; padding:0;'>"
-								+ "<form style='float:left; width:85%; margin:0; padding:0;'><input type='text' id='nameInput' value='"+ UtilText.parseForHTMLDisplay(cellToInspect.getPlace().getName())+ "' style='width:100%; margin:0; padding:0;'></form>"
-								+ "<div class='SM-button' id='rename_room_button' style='float:left; width:15%; height:28px; line-height:28px; margin:0; padding:0;'>"
-									+ "&#10003;"
+							"<div class='container-full-width inner' style='margin-bottom:0;'>"
+								+ "<div style='width:20%; float:left; font-weight:bold; margin:0; padding:0;'>"
+									+ "<form style='float:left; width:85%; margin:0; padding:0;'><input type='text' id='nameInput' value='"+ UtilText.parseForHTMLDisplay(place.getName())+ "' style='width:100%; margin:0; padding:0;'></form>"
+									+ "<div class='SM-button' id='rename_room_button' style='float:left; width:15%; height:28px; line-height:28px; margin:0; padding:0;'>"
+										+ "&#10003;"
+									+ "</div>"
 								+ "</div>"
-							+ "</div>"
-							+ "<div style='width:20%; float:left; margin:0; padding:0;'>");
+								+ "<div style='width:20%; float:left; margin:0 0 0 2.5%; padding:0;'>");
 			
-			int i=0;
-			List<NPC> occupants = Main.game.getCharactersTreatingCellAsHome(cellToInspect);
+			int i=0;	StringBuilder slaveList = new StringBuilder();
+			int j=0;	StringBuilder guestList = new StringBuilder();
 			for(NPC occupant : occupants) {
-				if(occupant.isSlave()) {
-					UtilText.nodeContentSB.append("<b style='color:"+occupant.getFemininity().getColour().toWebHexString()+";'>"+occupant.getName(true)+"</b>"+(i+1==occupants.size()?"":"<br/>"));
+				String line = "<b style='color:"+occupant.getFemininity().getColour().toWebHexString()+";'>"+occupant.getName(true)+"</b>"+((i+1==slaves.size())||(j+1==guests.size())?"":"<br/>");
+				if(slaves.contains(occupant)) {
+					slaveList.append(line);
 					i++;
+				} else {
+					guestList.append(line);
+					j++;
 				}
 			}
-			if(i==0) {
+			
+			if((guestCap>=1 && j==0) || (guestCap==0 && i==0)) {
 				UtilText.nodeContentSB.append("<b style='color:"+PresetColour.TEXT_GREY.toWebHexString()+";'>Empty</b>");
+			} else {
+				UtilText.nodeContentSB.append((mode ? slaveList.toString() : guestList.toString()));
 			}
 			
-			
 			UtilText.nodeContentSB.append(
-					"</div>"
-							+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
-								+ i+"/"+place.getCapacity()
-							+"</div>"
-							+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
-								+ "<span style='color:"+(affectionChange==0?PresetColour.BASE_GREY:(affectionChange>0?PresetColour.GENERIC_GOOD:PresetColour.GENERIC_BAD)).toWebHexString()+";'>"+(affectionChange>0?"+":"")
-									+decimalFormat.format(affectionChange)+"</span>/hour"
-							+"</div>"
-							+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
-								+ "<span style='color:"+(obedienceChange==0?PresetColour.BASE_GREY:(obedienceChange>0?PresetColour.GENERIC_GOOD:PresetColour.GENERIC_BAD)).toWebHexString()+";'>"+(obedienceChange>0?"+":"")
-									+decimalFormat.format(obedienceChange)+"</span>/hour"
-							+"</div>"
-							+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
-								+ (place.getUpkeep()>0
-											?UtilText.formatAsMoney(-place.getUpkeep(), "span", PresetColour.GENERIC_BAD)
-											:UtilText.formatAsMoney(-place.getUpkeep(), "span", PresetColour.GENERIC_GOOD))+"/day"
-							+"</div>"
-						+ "</div>"
-						+ "</div>");
+								"</div>"
+								+ "<div style='float:left; width:10%; margin:0; padding:0 2.5% 0 0;'>"
+									+ (mode
+											? i+"/"+slaveCap
+											: j+"/"+place.getCapacity())
+								+"</div>"
+								+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
+									+ "<span style='color:"+(affectionChange==0?PresetColour.BASE_GREY:(affectionChange>0?PresetColour.GENERIC_GOOD:PresetColour.GENERIC_BAD)).toWebHexString()+";'>"+(affectionChange>0?"+":"")
+										+decimalFormat.format(affectionChange)+"</span>/hour"
+								+"</div>"
+								+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
+									+ "<span style='color:"+(obedienceChange==0?PresetColour.BASE_GREY:(obedienceChange>0?PresetColour.GENERIC_GOOD:PresetColour.GENERIC_BAD)).toWebHexString()+";'>"+(obedienceChange>0?"+":"")
+										+decimalFormat.format(obedienceChange)+"</span>/hour"
+								+"</div>"
+								+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
+									+ (place.getUpkeep()>0
+												?UtilText.formatAsMoney(-place.getUpkeep(), "span", PresetColour.GENERIC_BAD)
+												:UtilText.formatAsMoney(-place.getUpkeep(), "span", PresetColour.GENERIC_GOOD))+"/day"
+								+"</div>"
+							+ "</div>");
 			
+			// second box
+			affectionChange = place.getHourlyAffectionChange(true);
+			obedienceChange = place.getHourlyObedienceChange(true);
+			if((guestCap + guests.size() >= 1) && (slaveCap + slaves.size() >= 1)) UtilText.nodeContentSB.append(
+							"<div class='container-full-width' style='margin-bottom:0;'>"
+								+ "<div style='width:20%; float:left; font-weight:bold; margin:0 0 0 22.5%; padding:0;'>"
+									+ "Workers"
+								+ "</div>"
+								+ "<div style='float:left; width:10%; font-weight:bold; margin:0 2.5% 0 0; padding:0;'>"
+									+ "<b>Capacity</b>"
+								+"</div>"
+								+ "<div style='float:left; width:15%; font-weight:bold; margin:0; padding:0;'>"
+									+ "<b style='color:"+PresetColour.AFFECTION.toWebHexString()+";'>Affection</b>"
+								+"</div>"
+								+ "<div style='float:left; width:15%; font-weight:bold; margin:0 15% 0 0; padding:0;'>"
+									+ "<b style='color:"+PresetColour.OBEDIENCE.toWebHexString()+";'>Obedience</b>"
+								+"</div>"
+							+"</div>"
+						
+							+"<div class='container-full-width inner' style='margin-bottom:0;'>"
+								+ "<div style='width:20%; float:left; margin:0 0 0 22.5%; padding:0;'>"
+									+ (i==0
+										? "<b style='color:"+PresetColour.TEXT_GREY.toWebHexString()+";'>Empty</b>"
+										: slaveList.toString())
+								+ "</div>"
+								+ "<div style='float:left; width:10%; margin:0 2.5% 0 0; padding:0;'>"
+									+ i+"/"+slaveCap
+								+"</div>"
+								+ "<div style='float:left; width:15%; margin:0; padding:0;'>"
+									+ "<span style='color:"+(affectionChange==0?PresetColour.BASE_GREY:(affectionChange>0?PresetColour.GENERIC_GOOD:PresetColour.GENERIC_BAD)).toWebHexString()+";'>"+(affectionChange>0?"+":"")
+										+decimalFormat.format(affectionChange)+"</span>/hour"
+								+"</div>"
+								+ "<div style='float:left; width:15%; margin:0 15% 0 0; padding:0;'>"
+									+ "<span style='color:"+(obedienceChange==0?PresetColour.BASE_GREY:(obedienceChange>0?PresetColour.GENERIC_GOOD:PresetColour.GENERIC_BAD)).toWebHexString()+";'>"+(obedienceChange>0?"+":"")
+										+decimalFormat.format(obedienceChange)+"</span>/hour"
+								+"</div>"
+							+ "</div>");
 			
 			// Normal upgrades:
-			UtilText.nodeContentSB.append("<div class='container-full-width' style='text-align:center;'>"
-											+ "<h6 style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+"; text-align:center;'>Modifications</h6>"
-											+ getRoomUpgradeHeader());
+			UtilText.nodeContentSB.append(
+					"</div>"
+					+ "<div class='container-full-width' style='text-align:center;'>"
+							+ "<h6 style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+"; text-align:center;'>Modifications</h6>"
+							+ getRoomUpgradeHeader());
 			
 			List<AbstractPlaceUpgrade> coreUpgrades = new ArrayList<>();
 			for(AbstractPlaceUpgrade upgrade : place.getPlaceType().getAvailablePlaceUpgrades(place.getPlaceUpgrades())) {
@@ -745,13 +820,15 @@ public class OccupantManagementDialogue {
 						+ "</div>");
 			}
 			
-			UtilText.nodeContentSB.append("</div>");
+			UtilText.nodeContentSB.append(
+					"</div>");
 			
 			// Core upgrades:
-			UtilText.nodeContentSB.append("<div class='container-full-width' style='text-align:center;'>"
-					+ "<h6 style='color:"+PresetColour.GENERIC_ARCANE.toWebHexString()+"; text-align:center;'>Core Modifications</h6>"
-					+"<p><i>Purchasing a [style.boldArcane(core modification)] will remove [style.boldBad(all)] other modifications in this room!</i></p>"
-					+ getRoomUpgradeHeader());
+			UtilText.nodeContentSB.append(
+					"<div class='container-full-width' style='text-align:center;'>"
+							+ "<h6 style='color:"+PresetColour.GENERIC_ARCANE.toWebHexString()+"; text-align:center;'>Core Modifications</h6>"
+							+"<p><i>Purchasing a [style.boldArcane(core modification)] will remove [style.boldBad(all)] other modifications in this room!</i></p>"
+							+ getRoomUpgradeHeader());
 
 			
 //			for (PlaceUpgrade upgrade : place.getPlaceUpgrades()) {
@@ -772,7 +849,8 @@ public class OccupantManagementDialogue {
 						+ "</div>");
 			}
 			
-			UtilText.nodeContentSB.append("</div>"
+			UtilText.nodeContentSB.append(
+					"</div>"
 					+ "<p id='hiddenFieldName' style='display:none;'></p>");
 			
 			return UtilText.nodeContentSB.toString();
@@ -897,10 +975,10 @@ public class OccupantManagementDialogue {
 	
 	private static String getRoomUpgradeHeader() {
 		return "<div class='container-full-width' style='margin-bottom:0;'>"
-					+ "<div style='width:30%; float:left; font-weight:bold; margin:0; padding:0;'>"
+					+ "<div style='width:20%; float:left; font-weight:bold; margin:0 0 0 5%; padding:0;'>"
 						+ "Upgrade"
 					+ "</div>"
-					+ "<div style='float:left; width:10%; font-weight:bold; margin:0; padding:0;'>"
+					+ "<div style='float:left; width:15%; font-weight:bold; margin:0; padding:0;'>"
 						+ "Capacity"
 					+"</div>"
 					+ "<div style='float:left; width:15%; font-weight:bold; margin:0; padding:0;'>"
@@ -935,16 +1013,14 @@ public class OccupantManagementDialogue {
 						+ "<div style='width:5%; float:left; margin:0; padding:0;'>"
 							+ "<div class='title-button no-select' id='ROOM_MOD_INFO_"+PlaceUpgrade.getIdFromPlaceUpgrade(upgrade)+"' style='position:relative; top:0;'>"+SVGImages.SVG_IMAGE_PROVIDER.getInformationIcon()+"</div>"
 						+ "</div>"
-						+ "<div style='width:25%; float:left; margin:0; padding:0;'>"
+						+ "<div style='width:20%; float:left; margin:0; padding:0;'>"
 							+ (owned
 									?"<b style='color:"+PresetColour.GENERIC_GOOD.toWebHexString()+";'>"+Util.capitaliseSentence(upgrade.getName())+"</b>"
 									:(!availableForPurchase
 											?"<b style='color:"+PresetColour.GENERIC_BAD.toWebHexString()+";'>"+Util.capitaliseSentence(upgrade.getName())+"</b>"
 											:"<b>"+Util.capitaliseSentence(upgrade.getName())+"</b>"))
-//							+ "<div class='item-inline' id='ROOM_MOD_INFO_"+upgrade+"' style='float:right;'>"+SVGImages.SVG_IMAGE_PROVIDER.getInformationIcon()+"</div>"
-//							+"<div class='overlay' id=''></div>"
 						+ "</div>"
-						+ "<div style='width:10%; float:left; margin:0; padding:0;'>"
+						+ "<div style='width:15%; float:left; margin:0; padding:0;'>"
 							+ (upgrade.getCapacity()>0
 									?"<b style='color:"+PresetColour.GENERIC_EXCELLENT.toWebHexString()+";'>+"+upgrade.getCapacity()+"</b>"
 									:(upgrade.getCapacity()<0

@@ -21,6 +21,8 @@ import com.lilithsthrone.game.character.attributes.IntelligenceLevel;
 import com.lilithsthrone.game.character.attributes.ObedienceLevelBasic;
 import com.lilithsthrone.game.character.effects.StatusEffect;
 import com.lilithsthrone.game.character.npc.NPC;
+import com.lilithsthrone.game.character.persona.Occupation;
+import com.lilithsthrone.game.character.persona.Relationship;
 import com.lilithsthrone.game.character.persona.SexualOrientation;
 import com.lilithsthrone.game.character.race.Subspecies;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
@@ -981,16 +983,47 @@ public class RoomPlayer {
 			sb.append(LilayaHomeGeneric.getRoomModificationsDescription(false));
 
 			List<NPC> charactersPresent = LilayaHomeGeneric.getSlavesAndOccupantsPresent();
-			if(!charactersPresent.isEmpty()) {
+			List<NPC> slavesPresent = charactersPresent.stream().filter(e -> e.isSlave() && e.getOwner()==Main.game.getPlayer()).collect(Collectors.toList());
+			
+			List<NPC> familyPresent = charactersPresent.stream().filter(e -> e.isAtHome() && Main.game.getPlayer().isRelatedTo(e)).collect(Collectors.toList());
+			List<NPC> friendsPresent = charactersPresent.stream().filter(e -> e.isAtHome() && !Main.game.getPlayer().isRelatedTo(e)).collect(Collectors.toList());
+			
+			boolean slaveOnly = (familyPresent.isEmpty() && friendsPresent.isEmpty());
+			if(!slaveOnly) {
+				String term = familyPresent.isEmpty()
+						? friendsPresent.size()==1
+								? "is your friend"
+								: "are your friends"
+						: friendsPresent.size()>=1
+								? "are your family and friends"
+								: "is your " + (familyPresent.size()==1
+										? UtilText.parse(familyPresent.get(0), "[npc.relation(pc)]")
+										: "family");
+				
 				List<String> names = new ArrayList<>();
-				boolean soloSlave = charactersPresent.size()==1;
-				for(NPC npc : charactersPresent) {
+				familyPresent.addAll(friendsPresent);
+				for(NPC npc : familyPresent) {
+					names.add("<span style='color:"+npc.getFemininity().getColour().toWebHexString()+";'>"+npc.getName()+"</span>");
+				}
+				
+				sb.append("<p>"
+						+ "Currently living in your room with you " + term+"; "+Util.stringsToStringList(names, false)+"."
+						+ " Noticing that you've entered the room " + (familyPresent.size()>=2
+								? "they smile at you before returning to what they were doing before."
+								: UtilText.parse(familyPresent.get(0), "[npc.she] smiles at you before returning to what [npc.she] was doing before."))
+						+"</p>");
+			}
+			
+			if(!slavesPresent.isEmpty()) {
+				List<String> names = new ArrayList<>();
+				boolean soloSlave = slavesPresent.size()==1;
+				for(NPC npc : slavesPresent) {
 					names.add("<span style='color:"+npc.getFemininity().getColour().toWebHexString()+";'>"+npc.getName()+"</span>");
 				}
 				sb.append("<p>"
-							+ "Assigned to your room "+(soloSlave?"is your slave":"are your slaves")+"; "+Util.stringsToStringList(names, false)+".");
+							+ (slaveOnly?"Assigned":"Also assigned")+" to your room "+(soloSlave?"is your slave":"are your slaves")+"; "+Util.stringsToStringList(names, false)+".");
 				
-				List<NPC> greetings = charactersPresent.stream().filter(npc -> npc.hasSlaveJobSetting(SlaveJob.BEDROOM, SlaveJobSetting.BEDROOM_GREETING)).collect(Collectors.toList());
+				List<NPC> greetings = slavesPresent.stream().filter(npc -> npc.hasSlaveJobSetting(SlaveJob.BEDROOM, SlaveJobSetting.BEDROOM_GREETING)).collect(Collectors.toList());
 				names = new ArrayList<>();
 				for(NPC npc : greetings) {
 					names.add(npc.getName());
@@ -999,7 +1032,7 @@ public class RoomPlayer {
 				if(!greetings.isEmpty()) {
 					sb.append(" Having been instructed to greet you upon your arrival, "
 								+(soloSlave
-										?UtilText.parse(charactersPresent.get(0), "[npc.she] steps forwards and welcomes you back.")
+										?UtilText.parse(slavesPresent.get(0), "[npc.she] steps forwards and welcomes you back.")
 										:Util.stringsToStringList(names, false)+" step forwards and welcome you back.")
 							+ "</p>");
 

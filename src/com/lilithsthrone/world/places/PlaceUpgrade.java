@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.effects.StatusEffect;
 import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.character.npc.dominion.Arthur;
@@ -20,6 +21,8 @@ import com.lilithsthrone.game.dialogue.places.dominion.lilayashome.LilayaOfficeD
 import com.lilithsthrone.game.dialogue.places.dominion.lilayashome.LilayaSpa;
 import com.lilithsthrone.game.dialogue.places.dominion.lilayashome.RoomArthur;
 import com.lilithsthrone.game.occupantManagement.MilkingRoom;
+import com.lilithsthrone.game.occupantManagement.slave.SlaveJob;
+import com.lilithsthrone.game.occupantManagement.slave.SlaveJobSetting;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.Units;
 import com.lilithsthrone.utils.Util;
@@ -177,38 +180,40 @@ public class PlaceUpgrade {
 	
 	public static final AbstractPlaceUpgrade LILAYA_PLAYER_ROOM_SPOUSE = new AbstractPlaceUpgrade(false,
 			PresetColour.AFFECTION_POSITIVE_FOUR,
-			"Spousal Accomidation",
-			"have some new furniture put in so your spouse can move in",
-			"you have had new furniture put in",
-			"you have had new",
-			5000,
-			-5000,
+			"Room-mate Accommodation",
+			"have some new furniture put in so some room-mates can move in."
+			+ "<br/>[style.italicsbad(Slaves will not be able to sleep in bed as to make room for your room-mates.)]",
+			"you have had new furniture put in so any family or friends can share the room with you."
+			+ "<br/>[style.italicsbad(There will be no room for your slaves to join you in bed as it has been set aside for your room-mates.)]",
+			"you have had new furniture put in so any family or friends can share the room with you."
+			+ " This constitutes of extra cupboards around the room and more pillows for your bed.",
+			10000,
+			-2500,
 			0,
 			4,
-			0f,
+			0.05f,
 			0f,
 			null) {
 		public Value<Boolean, String> getAvailability(Cell cell) {
 			return new Value<>(true, "");
 		}
-	};
-	
-	public static final AbstractPlaceUpgrade LILAYA_PLAYER_ROOM_FRIEND = new AbstractPlaceUpgrade(false,
-			PresetColour.AFFECTION_POSITIVE_ONE,
-			"Friend Accomidation",
-			"have some new furniture put in so your friend can bunk with you",
-			"you have had new furniture put in",
-			"you have had new",
-			500,
-			-500,
-			0,
-			1,
-			0f,
-			0f,
-			null) {
-		public Value<Boolean, String> getAvailability(Cell cell) {
-			if(cell.getPlace().getPlaceUpgrades().contains(LILAYA_PLAYER_ROOM_SPOUSE)) {
-				return new Value<>(false, "");
+
+		@Override
+		public boolean isSlaverUpgrade() {
+			return false;
+		}
+
+		@Override
+		public void applyInstallationEffects(Cell cell) {
+			for(GameCharacter npc : Main.game.getPlayer().getSlavesOwnedAsCharacters()) {
+				npc.removeSlaveJobSettings(SlaveJob.BEDROOM, SlaveJobSetting.BEDROOM_SLEEP_IN_BED);
+			}
+		}
+		
+		@Override
+		public Value<Boolean, String> getRemovalAvailability(Cell cell) {
+			if(!Main.game.getCharactersTreatingCellAsHome(cell).isEmpty()) {
+				return new Value<>(false, "This room needs to be unoccupied in order to remove this modification.");
 			}
 			return new Value<>(true, "");
 		}
